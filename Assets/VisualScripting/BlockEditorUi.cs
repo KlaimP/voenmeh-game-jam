@@ -8,40 +8,76 @@ public partial class BlockEditorUi : Control
 	[Export]
 	public PackedScene GraphNode;
 
+	[Export]
+	private OptionButton SelectCommandButton;
+
+	[Export]
+	private Button AddButton;
+
+	[Export]
+	private Button StartGame;
+
 	private GraphEdit graphEdit;
 
 	private Start startScript = new Start();
+
+
+	private GlobalSignals globals;
+
 	public override void _Ready()
 	{
+		globals = GetNode("/root/GlobalSignals") as GlobalSignals;
+		globals.StartGame += StartGameReceived;
+
 		graphEdit = GetNode<GraphEdit>("GraphEdit");
 
 		graphEdit.ConnectionRequest += OnConnectionRequest;
 		graphEdit.DisconnectionRequest += OnDisconnectionRequest;
+		StartGame.ButtonDown += () =>
+		{
+			globals.EmitSignal(GlobalSignals.SignalName.StartGame);
+		};
 		
 
 		BlockNodeUI StartBlock = (BlockNodeUI)GraphNode.Instantiate();
 
-		StartBlock.Initialize(startScript);
+		StartBlock.Initialize(startScript, false, true);
 
 		graphEdit.AddChild(StartBlock);
 
-		
-		ForwardMove forwardScript = new ForwardMove();
+		SelectCommandButton.AddItem("ForwardMove");
+		SelectCommandButton.AddItem("Rotate");
+		AddButton.ButtonDown += OnCommandSelected;
+	}
 
-		BlockNodeUI ForwardBlock = (BlockNodeUI)GraphNode.Instantiate();
+	private void StartGameReceived()
+	{
+		startScript.Execute(new Robot());
+	}
 
-		ForwardBlock.Initialize(forwardScript);
+	private void OnCommandSelected()
+	{
+		int index = SelectCommandButton.Selected;
 
-		graphEdit.AddChild(ForwardBlock);
+		string commandName = SelectCommandButton.GetItemText((int)index);
+		GD.Print("Click	");
 
-		
-		ForwardMove forwardScript2 = new ForwardMove();
+		BlockScriptClass command = commandName switch
+		{
+			"ForwardMove" => new ForwardMove(),
+			"Rotate" => new Rotate(),
+			_ => null
+		};
 
-		BlockNodeUI ForwardBlock2 = (BlockNodeUI)GraphNode.Instantiate();
+		if (command == null)
+		{
+			GD.Print("Command null");
+			return;
+		}
 
-		ForwardBlock2.Initialize(forwardScript2);
-
-		graphEdit.AddChild(ForwardBlock2);
+		BlockNodeUI newBlock = (BlockNodeUI)GraphNode.Instantiate();
+		newBlock.Initialize(command, true, true);
+		graphEdit.AddChild(newBlock);
 
 	}
 
@@ -97,6 +133,27 @@ public partial class BlockEditorUi : Control
 		{
 			fromBlock.next = null;
 			graphEdit.DisconnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
+		}
+	}
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("Delete"))
+		{
+			GD.Print("Delete");
+			foreach(var x in graphEdit.GetChildren())
+			{
+				if(x is GraphNode)
+				{
+					GraphNode node = (GraphNode)x;
+					BlockNodeUI nodeUI = (BlockNodeUI)x;
+					if (node.Selected)
+					{
+						graphEdit.RemoveChild(x);
+						nodeUI.Block.next = null;
+					}
+				}
+			}
+
 		}
 	}
 }
