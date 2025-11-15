@@ -153,18 +153,26 @@ public partial class Robot : GridObject
 		GD.Print($"РОБОТ: повернул направо. Угол: {Mathf.RadToDeg(Rotation)}°");
 	}
 
-	
-
-	// Получение направления движения
+	// Получение направления движения (с нормализацией)
 	private Vector2I GetForwardDirection()
 	{
-		float degrees = Mathf.RadToDeg(Rotation);
-		degrees = (degrees % 360 + 360) % 360; // Нормализуем в [0, 360)
+		// Нормализуем угол только при получении направления
+		float normalizedRotation = NormalizeAngle(Rotation);
+		float degrees = Mathf.RadToDeg(normalizedRotation);
 		
 		if (degrees >= 315 || degrees < 45) return new Vector2I(0, -1);  // Вверх
 		if (degrees >= 45 && degrees < 135) return new Vector2I(1, 0);   // Вправо
 		if (degrees >= 135 && degrees < 225) return new Vector2I(0, 1);  // Вниз
 		return new Vector2I(-1, 0);                                      // Влево
+	}
+
+	// Нормализация угла в диапазон [0, 2π)
+	private float NormalizeAngle(float angle)
+	{
+		angle = angle % (2 * Mathf.Pi);
+		if (angle < 0)
+			angle += 2 * Mathf.Pi;
+		return angle;
 	}
 
 	// Толкание одного объекта
@@ -274,55 +282,3 @@ public partial class Robot : GridObject
 		return targetObj == null || targetObj is TrapObject;
 	}
 }
-
-	/* // Движение назад (опционально, если надо)
-	public async Task MoveBackward()
-	{
-		if (_isMoving) return;
-		_isMoving = true;
-		
-		Vector2I direction = GetForwardDirection();
-		Vector2I newPosition = GridPosition - direction;
-		
-		GD.Print($"РОБОТ: попытка движения назад в {newPosition}");
-		
-		if (_grid.IsCellEmpty(newPosition))
-		{
-			await MoveToGridPosition(newPosition, MoveDuration);
-		}
-		else
-		{
-			GD.Print("РОБОТ: движение назад невозможно!");
-		}
-		
-		_isMoving = false;
-	}*/
-
-	/* // Движение вперёд (прошлая версия, шаг = 1)
-	public async Task MoveForward()
-	{
-		if (_isMoving) return;
-		_isMoving = true;
-		
-		Vector2I direction = GetForwardDirection();
-		Vector2I newPosition = GridPosition + direction;
-		
-		GD.Print($"РОБОТ: попытка движения из {GridPosition} в {newPosition}");
-
-		if (_grid.IsCellEmpty(newPosition))
-		{
-			// Свободная клетка - просто двигаемся
-			await MoveToGridPosition(newPosition, MoveDuration);
-		}
-		else if (CanPushObject(newPosition, direction))
-		{
-			// Можно толкнуть объект
-			await PushSingleObject(newPosition, direction);
-		}
-		else
-		{
-			GD.Print("РОБОТ: движение невозможно!");
-		}
-		
-		_isMoving = false;
-	}*/

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://byymuryf3dloc"]
+[gd_scene load_steps=9 format=3 uid="uid://byymuryf3dloc"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Assets/Scripts/Objects/Obstacle/Obstacle.tscn" id="4_tw4xh"]
 [ext_resource type="PackedScene" uid="uid://dkwxqas7tbcdt" path="res://Assets/Scripts/Objects/Saw/Saw.tscn" id="5_kqtap"]
 [ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
+[ext_resource type="Script" uid="uid://cr74tmbabicf6" path="res://Assets/Scripts/Levels/RestartButton.cs" id="8_2x7io"]
 
 [node name="Level1" type="Node2D" node_paths=PackedStringArray("LevelGrid", "blockEditorUi")]
 script = ExtResource("1_0twix")
@@ -48,3 +49,12 @@ custom_minimum_size = Vector2(0, 544)
 layout_mode = 2
 scroll_offset = Vector2(-419, -506.71)
 minimap_enabled = false
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 74.0
+offset_top = 909.0
+offset_right = 159.0
+offset_bottom = 940.0
+text = "Restart"
+script = ExtResource("8_2x7io")
