@@ -35,7 +35,7 @@ offset_bottom = 1080.0
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-split_offset = 1460
+split_offset = 1280
 touch_dragger_enabled = true
 
 [node name="Control" type="Control" parent="Control/SplitContainer"]
@@ -44,5 +44,5 @@ layout_mode = 2
 [node name="GraphEdit" parent="Control/SplitContainer" instance=ExtResource("6_tw4xh")]
 custom_minimum_size = Vector2(0, 544)
 layout_mode = 2
-scroll_offset = Vector2(-448, -506.71)
+scroll_offset = Vector2(-40, -506.71)
 minimap_enabled = false

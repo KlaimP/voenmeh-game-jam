@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqdo5ohnh78ge"]
+
+[sub_resource type="Theme" id="Theme_6gkyh"]
+default_base_scale = 1.0
+default_font_size = 64
+
+[node name="Count" type="HSplitContainer"]
+theme = SubResource("Theme_6gkyh")
+dragging_enabled = false
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Count"
+
+[node name="SpinBox" type="SpinBox" parent="."]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+min_value = 1.0
+value = 1.0
+alignment = 1

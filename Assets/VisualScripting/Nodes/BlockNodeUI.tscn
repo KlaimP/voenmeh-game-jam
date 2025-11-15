@@ -6,26 +6,26 @@
 subpixel_positioning = 0
 msdf_pixel_range = 14
 msdf_size = 128
-cache/0/18/0/ascent = 0.0
-cache/0/18/0/descent = 0.0
-cache/0/18/0/underline_position = 0.0
-cache/0/18/0/underline_thickness = 0.0
-cache/0/18/0/scale = 1.0
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/32/0/ascent = 0.0
-cache/0/32/0/descent = 0.0
-cache/0/32/0/underline_position = 0.0
-cache/0/32/0/underline_thickness = 0.0
-cache/0/32/0/scale = 1.0
 cache/0/64/0/ascent = 0.0
 cache/0/64/0/descent = 0.0
 cache/0/64/0/underline_position = 0.0
 cache/0/64/0/underline_thickness = 0.0
 cache/0/64/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/18/0/ascent = 0.0
+cache/0/18/0/descent = 0.0
+cache/0/18/0/underline_position = 0.0
+cache/0/18/0/underline_thickness = 0.0
+cache/0/18/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
 
 [sub_resource type="Theme" id="Theme_tamrr"]
 default_font = SubResource("FontFile_tamrr")
@@ -34,7 +34,7 @@ default_font_size = 64
 [node name="GraphNode" type="GraphNode"]
 clip_contents = true
 offset_right = 557.0
-offset_bottom = 303.0
+offset_bottom = 206.0
 theme = SubResource("Theme_tamrr")
 title = "Привет"
 slot/0/left_enabled = false
@@ -46,15 +46,6 @@ slot/0/right_type = 0
 slot/0/right_color = Color(1, 1, 1, 1)
 slot/0/right_icon = null
 slot/0/draw_stylebox = true
-slot/1/left_enabled = false
-slot/1/left_type = 0
-slot/1/left_color = Color(1, 1, 1, 1)
-slot/1/left_icon = null
-slot/1/right_enabled = false
-slot/1/right_type = 0
-slot/1/right_color = Color(1, 1, 1, 1)
-slot/1/right_icon = null
-slot/1/draw_stylebox = true
 script = ExtResource("1_uepl2")
 
 [node name="Description" type="Label" parent="."]
@@ -62,13 +53,3 @@ custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
 theme_override_font_sizes/font_size = 64
 autowrap_mode = 3
-
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="HSplitContainer"]
-layout_mode = 2
-text = "Count"
-
-[node name="SpinBox" type="SpinBox" parent="HSplitContainer"]
-layout_mode = 2
