@@ -41,35 +41,6 @@ public partial class Robot : GridObject
 	}
 
 	// ------------ КОМАНДЫ РОБОТА ------------ */
-	// Движение вперёд
-	public async Task MoveForward()
-	{
-		if (_isMoving) return;
-		_isMoving = true;
-		
-		Vector2I direction = GetForwardDirection();
-		Vector2I newPosition = GridPosition + direction;
-		
-		GD.Print($"РОБОТ: попытка движения из {GridPosition} в {newPosition}");
-
-		if (_grid.IsCellEmpty(newPosition))
-		{
-			// Свободная клетка - просто двигаемся
-			await MoveToGridPosition(newPosition, MoveDuration);
-		}
-		else if (CanPushObject(newPosition, direction))
-		{
-			// Можно толкнуть объект
-			await PushSingleObject(newPosition, direction);
-		}
-		else
-		{
-			GD.Print("РОБОТ: движение невозможно!");
-		}
-		
-		_isMoving = false;
-	}
-
 	// Движение вперёд на указанное количество шагов
 	public async Task MoveForward(int steps = 1)
 	{
@@ -85,11 +56,21 @@ public partial class Robot : GridObject
 			
 			GD.Print($"Шаг {step}/{steps}: попытка движения из {GridPosition} в {newPosition}");
 
-			if (_grid.IsCellEmpty(newPosition))
+			// Сначала проверяем что в целевой клетке
+			GridObject targetObject = _grid.GetObjectAt(newPosition);
+			
+			if (targetObject == null)
 			{
 				// Свободная клетка - просто двигаемся
 				await MoveToGridPosition(newPosition, MoveDuration);
 				GD.Print($"✓ Шаг {step} выполнен");
+			}
+			else if (targetObject is TrapObject)
+			{
+				// Клетка с ловушкой - двигаемся и активируем ловушку
+				await MoveToGridPosition(newPosition, MoveDuration);
+				GD.Print($"✓ Шаг {step} выполнен (на ловушку)");
+				targetObject.OnRobotEnter(this);
 			}
 			else if (CanPushObject(newPosition, direction))
 			{
@@ -111,7 +92,29 @@ public partial class Robot : GridObject
 		GD.Print($"РОБОТ: движение завершено (выполнено шагов: {steps})");
 		_isMoving = false;
 	}
-	
+
+    // Функция получения урона
+    public void TakeDamage(int damage)
+    {
+        GD.Print($"💥 РОБОТ ПОЛУЧИЛ УРОН: {damage}");
+        
+        // Визуальный эффект получения урона
+        PlayDamageEffect();
+        
+        // Здесь можно добавить логику здоровья:
+        // - Уменьшение HP
+        // - Проверка на смерть
+        // - Воспроизведение звука
+        // - Анимация мигания
+    }
+
+    private void PlayDamageEffect()
+    {
+        var tween = CreateTween();
+        tween.TweenProperty(this, "modulate", new Color(1, 0.3f, 0.3f, 1), 0.1f);
+        tween.TweenProperty(this, "modulate", new Color(1, 1, 1, 1), 0.1f);
+    }
+
 	// Поворот налево
 	public async Task TurnLeft()
 	{
@@ -150,28 +153,7 @@ public partial class Robot : GridObject
 		GD.Print($"РОБОТ: повернул направо. Угол: {Mathf.RadToDeg(Rotation)}°");
 	}
 
-	/* // Движение назад (опционально, если надо)
-	public async Task MoveBackward()
-	{
-		if (_isMoving) return;
-		_isMoving = true;
-		
-		Vector2I direction = GetForwardDirection();
-		Vector2I newPosition = GridPosition - direction;
-		
-		GD.Print($"РОБОТ: попытка движения назад в {newPosition}");
-		
-		if (_grid.IsCellEmpty(newPosition))
-		{
-			await MoveToGridPosition(newPosition, MoveDuration);
-		}
-		else
-		{
-			GD.Print("РОБОТ: движение назад невозможно!");
-		}
-		
-		_isMoving = false;
-	}*/
+	
 
 	// Получение направления движения
 	private Vector2I GetForwardDirection()
@@ -215,21 +197,59 @@ public partial class Robot : GridObject
 			return;
 		}
 		
-		if (_grid.HasSolidObjectAt(newObjectPos))
+		// Проверяем, что в целевой позиции
+		GridObject targetObject = _grid.GetObjectAt(newObjectPos);
+		if (targetObject != null)
 		{
-			GD.PrintErr("РОБОТ: объект нельзя толкнуть - целевая позиция занята!");
-			return;
+			if (targetObject is TrapObject)
+			{
+				// Толкаем на ловушку - объект уничтожается
+				GD.Print($"РОБОТ: объект {objectToPush.ObjectType} толкается на ловушку!");
+				await DestroyObjectOnTrap(objectToPush, newObjectPos);
+			}
+			else
+			{
+				GD.PrintErr("РОБОТ: объект нельзя толкнуть - целевая позиция занята!");
+				return;
+			}
 		}
-		
-		GD.Print($"РОБОТ: толкаю {objectToPush.ObjectType} из {objectPosition} в {newObjectPos}");
-		
-		// Двигаем объект
-		await objectToPush.MoveToGridPosition(newObjectPos, MoveDuration);
+		else
+		{
+			// Обычное толкание на свободную клетку
+			GD.Print($"РОБОТ: толкаю {objectToPush.ObjectType} из {objectPosition} в {newObjectPos}");
+			await objectToPush.MoveToGridPosition(newObjectPos, MoveDuration);
+		}
 		
 		// Двигаем робота на место объекта
 		await MoveToGridPosition(objectPosition, MoveDuration);
 		
-		GD.Print($"РОБОТ: успешно толкнул {objectToPush.ObjectType}");
+		GD.Print($"РОБОТ: успешно завершил действие");
+	}
+
+	// Уничтожение объекта при толкании на ловушку
+	private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)
+	{
+		GD.Print($"УНИЧТОЖЕНИЕ: объект {objectToDestroy.ObjectType} уничтожен ловушкой в {trapPosition}");
+		
+		// Визуальные эффекты уничтожения
+		await PlayDestructionEffects(objectToDestroy);
+		
+		// Удаляем объект из сетки
+		_grid.RemoveObjectFromGrid(objectToDestroy.GridPosition);
+		
+		// Уничтожаем объект
+		objectToDestroy.QueueFree();
+	}
+
+	// Визуальные эффекты уничтожения
+	private async Task PlayDestructionEffects(GridObject obj)
+	{
+		// Анимация исчезновения
+		var tween = CreateTween();
+		tween.TweenProperty(obj, "scale", Vector2.Zero, 0.2f);
+		tween.TweenProperty(obj, "modulate", new Color(1, 0, 0, 0.5f), 0.2f);
+		
+		await ToSignal(tween, "finished");
 	}
 
 	// Проверка возможности толкания объекта
@@ -243,8 +263,66 @@ public partial class Robot : GridObject
 		// Проверяем, есть ли толкаемый объект
 		if (obj == null || !obj.CanBePushed) return false;
 		
-		// Проверяем, свободна ли следующая позиция
+		// Проверяем следующую позицию
 		Vector2I nextPos = objectPosition + direction;
-		return _grid.IsInGridBounds(nextPos) && _grid.IsCellEmpty(nextPos);
+		if (!_grid.IsInGridBounds(nextPos)) return false;
+		
+		// Можно толкать если:
+		// 1. Клетка пустая ИЛИ
+		// 2. В клетке ловушка (объект уничтожится)
+		GridObject targetObj = _grid.GetObjectAt(nextPos);
+		return targetObj == null || targetObj is TrapObject;
 	}
 }
+
+	/* // Движение назад (опционально, если надо)
+	public async Task MoveBackward()
+	{
+		if (_isMoving) return;
+		_isMoving = true;
+		
+		Vector2I direction = GetForwardDirection();
+		Vector2I newPosition = GridPosition - direction;
+		
+		GD.Print($"РОБОТ: попытка движения назад в {newPosition}");
+		
+		if (_grid.IsCellEmpty(newPosition))
+		{
+			await MoveToGridPosition(newPosition, MoveDuration);
+		}
+		else
+		{
+			GD.Print("РОБОТ: движение назад невозможно!");
+		}
+		
+		_isMoving = false;
+	}*/
+
+	/* // Движение вперёд (прошлая версия, шаг = 1)
+	public async Task MoveForward()
+	{
+		if (_isMoving) return;
+		_isMoving = true;
+		
+		Vector2I direction = GetForwardDirection();
+		Vector2I newPosition = GridPosition + direction;
+		
+		GD.Print($"РОБОТ: попытка движения из {GridPosition} в {newPosition}");
+
+		if (_grid.IsCellEmpty(newPosition))
+		{
+			// Свободная клетка - просто двигаемся
+			await MoveToGridPosition(newPosition, MoveDuration);
+		}
+		else if (CanPushObject(newPosition, direction))
+		{
+			// Можно толкнуть объект
+			await PushSingleObject(newPosition, direction);
+		}
+		else
+		{
+			GD.Print("РОБОТ: движение невозможно!");
+		}
+		
+		_isMoving = false;
+	}*/
