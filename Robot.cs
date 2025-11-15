@@ -69,6 +69,48 @@ public partial class Robot : GridObject
 		
 		_isMoving = false;
 	}
+
+	// Движение вперёд на указанное количество шагов
+	public async Task MoveForward(int steps = 1)
+	{
+		if (_isMoving) return;
+		_isMoving = true;
+		
+		GD.Print($"РОБОТ: начинаю движение на {steps} шагов");
+		
+		for (int step = 1; step <= steps; step++)
+		{
+			Vector2I direction = GetForwardDirection();
+			Vector2I newPosition = GridPosition + direction;
+			
+			GD.Print($"Шаг {step}/{steps}: попытка движения из {GridPosition} в {newPosition}");
+
+			if (_grid.IsCellEmpty(newPosition))
+			{
+				// Свободная клетка - просто двигаемся
+				await MoveToGridPosition(newPosition, MoveDuration);
+				GD.Print($"✓ Шаг {step} выполнен");
+			}
+			else if (CanPushObject(newPosition, direction))
+			{
+				// Можно толкнуть объект
+				await PushSingleObject(newPosition, direction);
+				GD.Print($"✓ Шаг {step} выполнен (с толканием объекта)");
+			}
+			else
+			{
+				GD.Print($"❌ Шаг {step} невозможен! Движение прервано.");
+				break;
+			}
+			
+			// Небольшая пауза между шагами для лучшей анимации
+			if (step < steps)
+				await Task.Delay(50);
+		}
+		
+		GD.Print($"РОБОТ: движение завершено (выполнено шагов: {steps})");
+		_isMoving = false;
+	}
 	
 	// Поворот налево
 	public async Task TurnLeft()
