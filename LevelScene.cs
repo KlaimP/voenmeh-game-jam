@@ -7,7 +7,9 @@ public partial class LevelScene : Node2D
     [Export] public Grid LevelGrid { get; set; }
     // Робот (Префаб)
     [Export] public PackedScene RobotPrefab { get; set; }
+    // Ящик (Префаб)
     [Export] public PackedScene BoxPrefab { get; set; }
+    // Стенка (Префаб)
     [Export] public PackedScene ObstaclePrefab { get; set; }
 
     // Инициализация уровня
@@ -41,28 +43,15 @@ public partial class LevelScene : Node2D
     {
         var objectsContainer = GetNode<Node2D>("Objects");
         
+        /* Генерация уровня здесь */
         GD.Print("=== НАЧАЛО ИНИЦИАЛИЗАЦИИ УРОВНЯ ===");
-        LevelGrid.PrintStateMatrix("До создания объектов");
-        
-        /*
-        GD.Print("Создание стен...");
-        CreateWalls(objectsContainer);
-        LevelGrid.PrintStateMatrix("После создания стен");
-        
-        GD.Print("Создание препятствий...");
-        CreateObstacles(objectsContainer);
-        LevelGrid.PrintStateMatrix("После создания препятствий");*/
-        
-        GD.Print("Создание ящиков...");
-        CreateBoxes(objectsContainer);
-        LevelGrid.PrintStateMatrix("После создания ящиков");
-        
         GD.Print("Создание робота...");
         CreateRobot(objectsContainer);
-        LevelGrid.PrintStateMatrix("После создания робота");
-        
+        GD.Print("Создание ящиков...");
+        CreateBoxes(objectsContainer);
+        GD.Print("Создание препятствий...");
+        CreateObstacles(objectsContainer);
         GD.Print("=== УРОВЕНЬ СОЗДАН ===");
-        LevelGrid.PrintStateMatrix("ФИНАЛЬНОЕ СОСТОЯНИЕ");
     }
 
     // Создание робота
@@ -75,13 +64,11 @@ public partial class LevelScene : Node2D
         // Ждем один кадр для полной инициализации
         CallDeferred(nameof(DeferredAddRobot), robot, new Vector2I(2, 2));
     }
-    // Добавление робота на сетку
     private void DeferredAddRobot(Robot robot, Vector2I position)
     {
         if (LevelGrid.AddObjectToGrid(robot, position))
         {
             GD.Print($"✓ Робот создан в позиции {position}");
-            // Принудительно обновляем визуальную позицию
             robot.UpdateWorldPositionImmediately();
         }
         else
@@ -90,8 +77,8 @@ public partial class LevelScene : Node2D
         }
     }
 
-    // Функции добавления других объектов
-    
+    /* ------------ Функции добавления объектов сцены ------------ */
+    // Создание ящиков
     private void CreateBoxes(Node2D container)
     {
         var boxPositions = new Vector2I[] { 
@@ -110,13 +97,11 @@ public partial class LevelScene : Node2D
             CallDeferred(nameof(DeferredAddBox), box, pos, i + 1);
         }
     }
-
     private void DeferredAddBox(BoxObject box, Vector2I position, int boxNumber)
     {
         if (LevelGrid.AddObjectToGrid(box, position))
         {
             GD.Print($"✓ Ящик {boxNumber} создан в позиции {position}");
-            // Принудительно обновляем визуальную позицию
             box.UpdateWorldPositionImmediately();
         }
         else
@@ -125,6 +110,7 @@ public partial class LevelScene : Node2D
         }
     }
 
+    // Создание препятствий (стенки)
     private void CreateObstacles(Node2D container)
     {
         var obstaclePositions = new Vector2I[] { 
@@ -143,13 +129,11 @@ public partial class LevelScene : Node2D
             CallDeferred(nameof(DeferredAddObstacle), obstacle, pos, i + 1);
         }
     }
-
     private void DeferredAddObstacle(ObstacleObject obstacle, Vector2I position, int obstacleNumber)
     {
         if (LevelGrid.AddObjectToGrid(obstacle, position))
         {
             GD.Print($"✓ Препятствие {obstacleNumber} создано в позиции {position}");
-            // Принудительно обновляем визуальную позицию
             obstacle.UpdateWorldPositionImmediately();
         }
         else
@@ -157,38 +141,4 @@ public partial class LevelScene : Node2D
             GD.PrintErr($"✗ Не удалось создать препятствие {obstacleNumber} в {position}");
         }
     }
-
-    private void CreateWalls(Node2D container)
-    {
-        GD.Print("Создание нижней стены...");
-        // Нижняя стена
-        for (int x = 0; x < LevelGrid.GridWidth; x++)
-        {
-            var obstacle = ObstaclePrefab.Instantiate<ObstacleObject>();
-            container.AddChild(obstacle);
-            var pos = new Vector2I(x, LevelGrid.GridHeight - 1);
-            CallDeferred(nameof(DeferredAddWall), obstacle, pos);
-        }
-        
-        GD.Print("Создание правой стены...");
-        // Правая стена
-        for (int y = 0; y < LevelGrid.GridHeight - 1; y++)
-        {
-            var obstacle = ObstaclePrefab.Instantiate<ObstacleObject>();
-            container.AddChild(obstacle);
-            var pos = new Vector2I(LevelGrid.GridWidth - 1, y);
-            CallDeferred(nameof(DeferredAddWall), obstacle, pos);
-        }
-        
-        GD.Print("✓ Стены созданы по границам уровня");
-    }
-
-    private void DeferredAddWall(ObstacleObject obstacle, Vector2I position)
-    {
-        if (LevelGrid.AddObjectToGrid(obstacle, position))
-        {
-            obstacle.UpdateWorldPositionImmediately();
-        }
-    }
-    
 }
