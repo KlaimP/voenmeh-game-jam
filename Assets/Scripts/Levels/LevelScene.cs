@@ -11,7 +11,9 @@ public partial class LevelScene : Node2D
 	[Export] public PackedScene BoxPrefab { get; set; }
 	// Стенка (Префаб)
 	[Export] public PackedScene ObstaclePrefab { get; set; }
-
+	// Ловушка - Пила (Префаб)
+	[Export] public PackedScene SawTrapPrefab { get; set; }
+	// IDE Робота
 	[Export] public BlockEditorUi blockEditorUi { get; set; }
 
 	// Инициализация уровня
@@ -25,7 +27,7 @@ public partial class LevelScene : Node2D
 			return;
 		}
 
-		if (RobotPrefab == null || BoxPrefab == null || ObstaclePrefab == null)
+		if (RobotPrefab == null || BoxPrefab == null || ObstaclePrefab == null || SawTrapPrefab == null)
 		{
 			GD.PrintErr("ОШИБКА: Не все префабы назначены в инспекторе!");
 			return;
@@ -53,6 +55,9 @@ public partial class LevelScene : Node2D
 		CreateBoxes(objectsContainer);
 		GD.Print("Создание препятствий...");
 		CreateObstacles(objectsContainer);
+		GD.Print("-- Создание ловушек... --");
+		GD.Print("Создание пил...");
+		CreateSawTraps(objectsContainer);
 		GD.Print("=== УРОВЕНЬ СОЗДАН ===");
 	}
 
@@ -145,4 +150,41 @@ public partial class LevelScene : Node2D
 			GD.PrintErr($"✗ Не удалось создать препятствие {obstacleNumber} в {position}");
 		}
 	}
+
+	// Создание пил (ловушки)
+	private void CreateSawTraps(Node2D container)
+	{
+		var sawPositions = new Vector2I[] { 
+			new Vector2I(2, 3), 
+			new Vector2I(6, 6), 
+			new Vector2I(4, 6) 
+		};
+		
+		for (int i = 0; i < sawPositions.Length; i++)
+		{
+			var sawTrap = SawTrapPrefab.Instantiate<SawTrap>();
+			container.AddChild(sawTrap);
+			
+			// Ждем один кадр для полной инициализации
+			var pos = sawPositions[i];
+			CallDeferred(nameof(DeferredAddSawTrap), sawTrap, pos, i + 1);
+		}
+	}
+
+	private void DeferredAddSawTrap(SawTrap sawTrap, Vector2I position, int trapNumber)
+	{
+		if (LevelGrid.AddObjectToGrid(sawTrap, position))
+		{
+			GD.Print($"✓ Пила-ловушка {trapNumber} создана в позиции {position}");
+			sawTrap.UpdateWorldPositionImmediately();
+		}
+		else
+		{
+			GD.PrintErr($"✗ Не удалось создать пилу-ловушку {trapNumber} в {position}");
+			sawTrap.QueueFree();
+		}
+	}
+
+
+
 }

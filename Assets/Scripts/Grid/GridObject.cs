@@ -1,7 +1,7 @@
 using Godot;
 using System.Threading.Tasks;
 
-/* Объект сетки
+/* Базовый класс: Объект сетки
    (Родитель всех элементов на сетке) 
 */
 public partial class GridObject : Node2D
@@ -86,4 +86,7 @@ public partial class GridObject : Node2D
 			
 		return true;
 	}
+
+	// Виртуальный метод для обработки наступления робота
+    public virtual void OnRobotEnter(Robot robot) { }
 }
