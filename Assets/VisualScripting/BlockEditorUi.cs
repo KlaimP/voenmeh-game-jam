@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using VoenmehGameJam.Scripts;
 
-public partial class BlockEditorUi : Control
+public partial class BlockEditorUi : GraphEdit
 {
 	[Export]
 	public PackedScene GraphNode;
@@ -17,8 +17,6 @@ public partial class BlockEditorUi : Control
 	[Export]
 	private Button StartGame;
 
-	private GraphEdit graphEdit;
-
 	private Start startScript = new Start();
 
 
@@ -29,10 +27,9 @@ public partial class BlockEditorUi : Control
 		globals = GetNode("/root/GlobalSignals") as GlobalSignals;
 		globals.StartGame += StartGameReceived;
 
-		graphEdit = GetNode<GraphEdit>("GraphEdit");
 
-		graphEdit.ConnectionRequest += OnConnectionRequest;
-		graphEdit.DisconnectionRequest += OnDisconnectionRequest;
+		this.ConnectionRequest += OnConnectionRequest;
+		this.DisconnectionRequest += OnDisconnectionRequest;
 		StartGame.ButtonDown += () =>
 		{
 			globals.EmitSignal(GlobalSignals.SignalName.StartGame);
@@ -43,7 +40,7 @@ public partial class BlockEditorUi : Control
 
 		StartBlock.Initialize(startScript, false, true);
 
-		graphEdit.AddChild(StartBlock);
+		this.AddChild(StartBlock);
 
 		SelectCommandButton.AddItem("ForwardMove");
 		SelectCommandButton.AddItem("Rotate");
@@ -77,7 +74,7 @@ public partial class BlockEditorUi : Control
 
 		BlockNodeUI newBlock = (BlockNodeUI)GraphNode.Instantiate();
 		newBlock.Initialize(command, true, true);
-		graphEdit.AddChild(newBlock);
+		this.AddChild(newBlock);
 
 	}
 
@@ -85,13 +82,13 @@ public partial class BlockEditorUi : Control
 	{
 		GD.Print("OnConnectionRequest");
 
-		var fromGraphNode = graphEdit.GetNode<GraphNode>(fromNode.ToString());
-		var toGraphNode = graphEdit.GetNode<GraphNode>(toNode.ToString());
+		var fromGraphNode = this.GetNode<GraphNode>(fromNode.ToString());
+		var toGraphNode = this.GetNode<GraphNode>(toNode.ToString());
 
 		var fromBlock = (fromGraphNode as IBlockNode)?.Block;
 		var toBlock = (toGraphNode as IBlockNode)?.Block;
 
-		foreach (var child in graphEdit.GetChildren())
+		foreach (var child in this.GetChildren())
 		{
 			if (child is BlockNodeUI node)
 			{
@@ -114,7 +111,7 @@ public partial class BlockEditorUi : Control
 		else if (fromBlock != null && toBlock != null)
 		{
 			fromBlock.next = toBlock;
-			graphEdit.ConnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
+			this.ConnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
 			GD.Print($"{fromBlock.Name} {fromSlot} -> {toBlock.Name} {toSlot}");
 		}
 	}
@@ -123,8 +120,8 @@ public partial class BlockEditorUi : Control
 	{
 		GD.Print("OnDisconnectionRequest");
 
-		var fromGraphNode = graphEdit.GetNode<GraphNode>(fromNode.ToString());
-		var toGraphNode = graphEdit.GetNode<GraphNode>(toNode.ToString());
+		var fromGraphNode = this.GetNode<GraphNode>(fromNode.ToString());
+		var toGraphNode = this.GetNode<GraphNode>(toNode.ToString());
 
 		var fromBlock = (fromGraphNode as IBlockNode)?.Block;
 		var toBlock = (toGraphNode as IBlockNode)?.Block;
@@ -132,7 +129,7 @@ public partial class BlockEditorUi : Control
 		if (fromBlock != null && toBlock != null)
 		{
 			fromBlock.next = null;
-			graphEdit.DisconnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
+			this.DisconnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
 		}
 	}
 	public override void _Input(InputEvent @event)
@@ -140,7 +137,7 @@ public partial class BlockEditorUi : Control
 		if (@event.IsActionPressed("Delete"))
 		{
 			GD.Print("Delete");
-			foreach(var x in graphEdit.GetChildren())
+			foreach(var x in this.GetChildren())
 			{
 				if(x is GraphNode)
 				{
@@ -148,7 +145,7 @@ public partial class BlockEditorUi : Control
 					BlockNodeUI nodeUI = (BlockNodeUI)x;
 					if (node.Selected)
 					{
-						graphEdit.RemoveChild(x);
+						this.RemoveChild(x);
 						nodeUI.Block.next = null;
 					}
 				}
