@@ -3,16 +3,10 @@
 [ext_resource type="Script" uid="uid://dn5v283nwo6gu" path="res://Assets/VisualScripting/BlockEditorUi.cs" id="1_rsvqg"]
 [ext_resource type="PackedScene" uid="uid://blxojs67eotb" path="res://Assets/VisualScripting/Nodes/BlockNodeUI.tscn" id="2_djcbr"]
 
-[node name="BlockEditorUi" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_rsvqg")
-GraphNode = ExtResource("2_djcbr")
-
-[node name="GraphEdit" type="GraphEdit" parent="."]
-layout_mode = 0
-offset_right = 932.0
-offset_bottom = 579.0
+[node name="GraphEdit" type="GraphEdit" node_paths=PackedStringArray("SelectCommandButton", "AddButton", "StartGame")]
+offset_right = 1152.0
+offset_bottom = 648.0
+scroll_offset = Vector2(-470, -318)
 right_disconnects = true
 connections = Array[Dictionary]([{
 "from_node": &"",
@@ -21,3 +15,31 @@ connections = Array[Dictionary]([{
 "to_node": &"",
 "to_port": 0
 }])
+script = ExtResource("1_rsvqg")
+GraphNode = ExtResource("2_djcbr")
+SelectCommandButton = NodePath("GridContainer/AddCommandButton")
+AddButton = NodePath("GridContainer/AddButton")
+StartGame = NodePath("GridContainer/Start")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 53.0
+offset_right = 308.0
+offset_bottom = 203.0
+columns = 2
+
+[node name="AddCommandButton" type="OptionButton" parent="GridContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+
+[node name="AddButton" type="Button" parent="GridContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "Add"
+
+[node name="Start" type="Button" parent="GridContainer"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+text = "Start"

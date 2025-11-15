@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://byymuryf3dloc"]
+[gd_scene load_steps=7 format=3 uid="uid://byymuryf3dloc"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://LevelScene.cs" id="1_0twix"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Robot.tscn" id="2_aswjh"]
 [ext_resource type="Script" uid="uid://b2itdovntf6rq" path="res://Grid.cs" id="2_ub1qs"]
 [ext_resource type="PackedScene" uid="uid://3be76dk6kxpo" path="res://Box.tscn" id="3_6dcgm"]
 [ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Obstacle.tscn" id="4_tw4xh"]
+[ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
 
 [node name="Level1" type="Node2D" node_paths=PackedStringArray("LevelGrid")]
 script = ExtResource("1_0twix")
@@ -12,6 +13,20 @@ LevelGrid = NodePath("Grid")
 RobotPrefab = ExtResource("2_aswjh")
 BoxPrefab = ExtResource("3_6dcgm")
 ObstaclePrefab = ExtResource("4_tw4xh")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1153.0
+offset_bottom = 647.0
+
+[node name="GraphEdit" parent="Control" instance=ExtResource("6_tw4xh")]
+layout_mode = 0
+offset_left = 583.0
+offset_top = -1.0
+offset_right = 1153.0
+offset_bottom = 647.0
+scroll_offset = Vector2(-532, -72)
 
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource("2_ub1qs")

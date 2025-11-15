@@ -3,45 +3,78 @@ using System;
 using System.Collections.Generic;
 using VoenmehGameJam.Scripts;
 
-public partial class BlockEditorUi : Control
+public partial class BlockEditorUi : GraphEdit
 {
 	[Export]
 	public PackedScene GraphNode;
 
-	private GraphEdit graphEdit;
+	[Export]
+	private OptionButton SelectCommandButton;
+
+	[Export]
+	private Button AddButton;
+
+	[Export]
+	private Button StartGame;
 
 	private Start startScript = new Start();
+
+
+	private GlobalSignals globals;
+
 	public override void _Ready()
 	{
-		graphEdit = GetNode<GraphEdit>("GraphEdit");
+		globals = GetNode("/root/GlobalSignals") as GlobalSignals;
+		globals.StartGame += StartGameReceived;
 
-		graphEdit.ConnectionRequest += OnConnectionRequest;
-		graphEdit.DisconnectionRequest += OnDisconnectionRequest;
+
+		this.ConnectionRequest += OnConnectionRequest;
+		this.DisconnectionRequest += OnDisconnectionRequest;
+		StartGame.ButtonDown += () =>
+		{
+			globals.EmitSignal(GlobalSignals.SignalName.StartGame);
+		};
 		
 
 		BlockNodeUI StartBlock = (BlockNodeUI)GraphNode.Instantiate();
 
-		StartBlock.Initialize(startScript);
+		StartBlock.Initialize(startScript, false, true);
 
-		graphEdit.AddChild(StartBlock);
+		this.AddChild(StartBlock);
 
-		
-		ForwardMove forwardScript = new ForwardMove();
+		SelectCommandButton.AddItem("ForwardMove");
+		SelectCommandButton.AddItem("Rotate");
+		AddButton.ButtonDown += OnCommandSelected;
+	}
 
-		BlockNodeUI ForwardBlock = (BlockNodeUI)GraphNode.Instantiate();
+	private void StartGameReceived()
+	{
+		startScript.Execute(new Robot());
+	}
 
-		ForwardBlock.Initialize(forwardScript);
+	private void OnCommandSelected()
+	{
+		int index = SelectCommandButton.Selected;
 
-		graphEdit.AddChild(ForwardBlock);
+		string commandName = SelectCommandButton.GetItemText((int)index);
+		GD.Print("Click	");
 
-		
-		ForwardMove forwardScript2 = new ForwardMove();
+		BlockScriptClass command = commandName switch
+		{
+			"ForwardMove" => new ForwardMove(),
+			"Rotate" => new Rotate(),
+			_ => null
+		};
 
-		BlockNodeUI ForwardBlock2 = (BlockNodeUI)GraphNode.Instantiate();
+		if (command == null)
+		{
+			GD.Print("Command null");
+			return;
+		}
 
-		ForwardBlock2.Initialize(forwardScript2);
-
-		graphEdit.AddChild(ForwardBlock2);
+		BlockNodeUI newBlock = (BlockNodeUI)GraphNode.Instantiate();
+		newBlock.Initialize(command, true, true);
+		this.AddChild(newBlock);
 
 	}
 
@@ -49,13 +82,13 @@ public partial class BlockEditorUi : Control
 	{
 		GD.Print("OnConnectionRequest");
 
-		var fromGraphNode = graphEdit.GetNode<GraphNode>(fromNode.ToString());
-		var toGraphNode = graphEdit.GetNode<GraphNode>(toNode.ToString());
+		var fromGraphNode = this.GetNode<GraphNode>(fromNode.ToString());
+		var toGraphNode = this.GetNode<GraphNode>(toNode.ToString());
 
 		var fromBlock = (fromGraphNode as IBlockNode)?.Block;
 		var toBlock = (toGraphNode as IBlockNode)?.Block;
 
-		foreach (var child in graphEdit.GetChildren())
+		foreach (var child in this.GetChildren())
 		{
 			if (child is BlockNodeUI node)
 			{
@@ -78,7 +111,7 @@ public partial class BlockEditorUi : Control
 		else if (fromBlock != null && toBlock != null)
 		{
 			fromBlock.next = toBlock;
-			graphEdit.ConnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
+			this.ConnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
 			GD.Print($"{fromBlock.Name} {fromSlot} -> {toBlock.Name} {toSlot}");
 		}
 	}
@@ -87,8 +120,8 @@ public partial class BlockEditorUi : Control
 	{
 		GD.Print("OnDisconnectionRequest");
 
-		var fromGraphNode = graphEdit.GetNode<GraphNode>(fromNode.ToString());
-		var toGraphNode = graphEdit.GetNode<GraphNode>(toNode.ToString());
+		var fromGraphNode = this.GetNode<GraphNode>(fromNode.ToString());
+		var toGraphNode = this.GetNode<GraphNode>(toNode.ToString());
 
 		var fromBlock = (fromGraphNode as IBlockNode)?.Block;
 		var toBlock = (toGraphNode as IBlockNode)?.Block;
@@ -96,7 +129,28 @@ public partial class BlockEditorUi : Control
 		if (fromBlock != null && toBlock != null)
 		{
 			fromBlock.next = null;
-			graphEdit.DisconnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
+			this.DisconnectNode(fromNode, (int)fromSlot, toNode, (int)toSlot);
+		}
+	}
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("Delete"))
+		{
+			GD.Print("Delete");
+			foreach(var x in this.GetChildren())
+			{
+				if(x is GraphNode)
+				{
+					GraphNode node = (GraphNode)x;
+					BlockNodeUI nodeUI = (BlockNodeUI)x;
+					if (node.Selected)
+					{
+						this.RemoveChild(x);
+						nodeUI.Block.next = null;
+					}
+				}
+			}
+
 		}
 	}
 }
