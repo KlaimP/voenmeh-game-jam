@@ -14,20 +14,6 @@ RobotPrefab = ExtResource("2_aswjh")
 BoxPrefab = ExtResource("3_6dcgm")
 ObstaclePrefab = ExtResource("4_tw4xh")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1153.0
-offset_bottom = 647.0
-
-[node name="GraphEdit" parent="Control" instance=ExtResource("6_tw4xh")]
-layout_mode = 0
-offset_left = 583.0
-offset_top = -1.0
-offset_right = 1153.0
-offset_bottom = 647.0
-scroll_offset = Vector2(-532, -72)
-
 [node name="Grid" type="Node2D" parent="."]
 position = Vector2(1, -1)
 script = ExtResource("2_ub1qs")
@@ -37,3 +23,16 @@ GridHeight = 9
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Objects" type="Node2D" parent="."]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1153.0
+offset_bottom = 647.0
+
+[node name="GraphEdit" parent="Control" instance=ExtResource("6_tw4xh")]
+layout_mode = 0
+offset_left = 512.0
+offset_right = 1024.0
+offset_bottom = 580.0
+scroll_offset = Vector2(-512, -113)
