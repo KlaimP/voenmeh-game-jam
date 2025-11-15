@@ -10,7 +10,6 @@ public partial class BoxObject : GridObject
         ObjectType = "BOX";
         IsSolid = true;
         CanBePushed = true;
-        
         _sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
         base._Ready();
     }
