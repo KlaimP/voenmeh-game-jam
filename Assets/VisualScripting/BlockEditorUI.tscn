@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://deb3tl8suw5of"]
+
+[ext_resource type="Script" uid="uid://dn5v283nwo6gu" path="res://Assets/VisualScripting/BlockEditorUi.cs" id="1_rsvqg"]
+[ext_resource type="PackedScene" uid="uid://blxojs67eotb" path="res://Assets/VisualScripting/Nodes/BlockNodeUI.tscn" id="2_djcbr"]
+
+[node name="BlockEditorUi" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_rsvqg")
+GraphNode = ExtResource("2_djcbr")
+
+[node name="GraphEdit" type="GraphEdit" parent="."]
+layout_mode = 0
+offset_right = 932.0
+offset_bottom = 579.0
+right_disconnects = true
+connections = Array[Dictionary]([{
+"from_node": &"",
+"from_port": 0,
+"keep_alive": true,
+"to_node": &"",
+"to_port": 0
+}])

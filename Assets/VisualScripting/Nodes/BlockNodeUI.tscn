@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://blxojs67eotb"]
+
+[ext_resource type="Script" uid="uid://x55bkp3xl2us" path="res://Assets/VisualScripting/Nodes/BlockNodeUI.cs" id="1_uepl2"]
+
+[node name="GraphNode" type="GraphNode"]
+offset_right = 212.0
+offset_bottom = 145.0
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+script = ExtResource("1_uepl2")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
