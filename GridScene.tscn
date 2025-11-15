@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4uglopxkycew"]
+
+[ext_resource type="Script" uid="uid://b2itdovntf6rq" path="res://Grid.cs" id="1_f1ctt"]
+
+[node name="Grid" type="Node2D"]
+script = ExtResource("1_f1ctt")
+GridWidth = 16
+GridHeight = 9
+GridColor = Color(0.27232513, 0.30792785, 0.33411404, 1)
+BackgroundColor = Color(0.12591085, 0.12591085, 0.12591082, 1)
