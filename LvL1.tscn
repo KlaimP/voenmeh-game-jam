@@ -7,12 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Obstacle.tscn" id="4_tw4xh"]
 [ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
 
-[node name="Level1" type="Node2D" node_paths=PackedStringArray("LevelGrid")]
+[node name="Level1" type="Node2D" node_paths=PackedStringArray("LevelGrid", "blockEditorUi")]
 script = ExtResource("1_0twix")
 LevelGrid = NodePath("Grid")
 RobotPrefab = ExtResource("2_aswjh")
 BoxPrefab = ExtResource("3_6dcgm")
 ObstaclePrefab = ExtResource("4_tw4xh")
+blockEditorUi = NodePath("Control/FoldableContainer/GraphEdit")
 
 [node name="Grid" type="Node2D" parent="."]
 position = Vector2(1, -1)
@@ -30,9 +31,14 @@ anchors_preset = 0
 offset_right = 1153.0
 offset_bottom = 647.0
 
-[node name="GraphEdit" parent="Control" instance=ExtResource("6_tw4xh")]
+[node name="FoldableContainer" type="FoldableContainer" parent="Control"]
 layout_mode = 0
-offset_left = 512.0
-offset_right = 1024.0
-offset_bottom = 580.0
-scroll_offset = Vector2(-512, -113)
+offset_left = 505.0
+offset_top = 1.0
+offset_right = 1025.0
+offset_bottom = 374.665
+
+[node name="GraphEdit" parent="Control/FoldableContainer" instance=ExtResource("6_tw4xh")]
+custom_minimum_size = Vector2(512, 544)
+layout_mode = 2
+scroll_offset = Vector2(-512, -128)

@@ -12,6 +12,8 @@ public partial class LevelScene : Node2D
 	// Стенка (Префаб)
 	[Export] public PackedScene ObstaclePrefab { get; set; }
 
+	[Export] public BlockEditorUi blockEditorUi { get; set; }
+
 	// Инициализация уровня
 	public override void _Ready()
 	{
@@ -60,7 +62,9 @@ public partial class LevelScene : Node2D
 		// Создание объекта робота
 		var robot = RobotPrefab.Instantiate<Robot>();
 		container.AddChild(robot);
-		
+
+		blockEditorUi.Robot = robot;
+
 		// Ждем один кадр для полной инициализации
 		CallDeferred(nameof(DeferredAddRobot), robot, new Vector2I(2, 2));
 	}

@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://deb3tl8suw5of"]
+[gd_scene load_steps=4 format=3 uid="uid://deb3tl8suw5of"]
 
 [ext_resource type="Script" uid="uid://dn5v283nwo6gu" path="res://Assets/VisualScripting/BlockEditorUi.cs" id="1_rsvqg"]
 [ext_resource type="PackedScene" uid="uid://blxojs67eotb" path="res://Assets/VisualScripting/Nodes/BlockNodeUI.tscn" id="2_djcbr"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djcbr"]
+bg_color = Color(0.1764706, 0.1764706, 0.1764706, 1)
+
 [node name="GraphEdit" type="GraphEdit" node_paths=PackedStringArray("SelectCommandButton", "AddButton", "StartGame")]
 offset_right = 1152.0
 offset_bottom = 648.0
-scroll_offset = Vector2(-470, -318)
+theme_override_styles/panel = SubResource("StyleBoxFlat_djcbr")
 right_disconnects = true
 connections = Array[Dictionary]([{
 "from_node": &"",

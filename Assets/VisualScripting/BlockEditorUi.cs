@@ -17,6 +17,9 @@ public partial class BlockEditorUi : GraphEdit
 	[Export]
 	private Button StartGame;
 
+	[Export]
+	public Robot Robot;
+
 	private Start startScript = new Start();
 
 
@@ -49,7 +52,7 @@ public partial class BlockEditorUi : GraphEdit
 
 	private void StartGameReceived()
 	{
-		startScript.Execute(new Robot());
+		startScript.Execute(Robot);
 	}
 
 	private void OnCommandSelected()
@@ -143,8 +146,9 @@ public partial class BlockEditorUi : GraphEdit
 				{
 					GraphNode node = (GraphNode)x;
 					BlockNodeUI nodeUI = (BlockNodeUI)x;
-					if (node.Selected)
+					if (node.Selected && nodeUI.Title != "Start")
 					{
+						GD.Print(nodeUI.Name);
 						this.RemoveChild(x);
 						nodeUI.Block.next = null;
 					}
