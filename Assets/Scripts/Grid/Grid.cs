@@ -141,6 +141,26 @@ public partial class Grid : Node2D
 		return false;
 	}
 
+	// Полная очистка словаря (и удаление объектов)
+	public void ClearGrid()
+	{
+		GD.Print($"Очистка сетки: {_gridObjects.Count} объектов");
+		
+		// Сначала уничтожаем все объекты
+		foreach (var kvp in _gridObjects)
+		{
+			GridObject obj = kvp.Value;
+			if (IsInstanceValid(obj)) obj.QueueFree();
+		}
+		
+		// Потом очищаем словарь
+		_gridObjects.Clear();
+		
+		// Очищаем матрицу состояния
+		InitializeStateMatrix();
+		
+		GD.Print("Сетка очищена");
+	}
 
 
 
@@ -229,7 +249,6 @@ public partial class Grid : Node2D
 	/* ------------ Проверки по сетке и словарю ------------ */
 	// Проверка наличия любого объекта в позиции
 	public bool HasAnyObjectAt(Vector2I position) => _gridObjects.ContainsKey(position); 
-	
 	// Проверка ячейки на пустоту
 	public bool IsCellEmpty(Vector2I position)
 	{
