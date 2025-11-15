@@ -4,8 +4,8 @@ public partial class MainMenu : Control
 {
 	public override void _Ready()
 	{
-		var playButton = GetNode<Button>("VBoxContainer/PlayButton");
-		var exitButton = GetNode<Button>("VBoxContainer/ExitButton");
+		var playButton = GetNode<Button>("PlayButton");
+		var exitButton = GetNode<Button>("ExitButton");
 
 		playButton.Pressed += OnPlayButtonPressed;
 		exitButton.Pressed += OnExitButtonPressed;

@@ -61,6 +61,6 @@ public partial class LevelSelection : Control
 	private void OnBackButtonPressed()
 	{
 		// Возвращаемся в главное меню
-		GetTree().ChangeSceneToFile("res://MainMenu/MainMenu.tscn");
+		GetTree().ChangeSceneToFile("res://Assets/Scripts/MainMenu/MainMenu.tscn");
 	}
 }
