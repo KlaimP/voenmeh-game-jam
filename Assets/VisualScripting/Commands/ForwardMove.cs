@@ -7,6 +7,8 @@ namespace VoenmehGameJam.Scripts
 	{
 		public ForwardMove() : base("ForwardMove()", "Команда заставляет робота переместиться вперёд на одну клетку по сетке.\n") { }
 
+		public int Step { get; set; }
+
 		public async override void Execute(Robot robot)
 		{
 			GD.Print("Script: \"ForwardMove\"");
