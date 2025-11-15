@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://deb3tl8suw5of"]
+[gd_scene load_steps=5 format=3 uid="uid://deb3tl8suw5of"]
 
 [ext_resource type="Script" uid="uid://dn5v283nwo6gu" path="res://Assets/VisualScripting/BlockEditorUi.cs" id="1_rsvqg"]
 [ext_resource type="PackedScene" uid="uid://blxojs67eotb" path="res://Assets/VisualScripting/Nodes/BlockNodeUI.tscn" id="2_djcbr"]
@@ -6,10 +6,18 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djcbr"]
 bg_color = Color(0.1764706, 0.1764706, 0.1764706, 1)
 
+[sub_resource type="SystemFont" id="SystemFont_djcbr"]
+multichannel_signed_distance_field = true
+msdf_pixel_range = 32
+msdf_size = 64
+
 [node name="GraphEdit" type="GraphEdit" node_paths=PackedStringArray("SelectCommandButton", "AddButton", "StartGame")]
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_left = -21.0
+offset_top = -10.0
+offset_right = 1026.0
+offset_bottom = 1083.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_djcbr")
+scroll_offset = Vector2(-530.545, -506.71)
 right_disconnects = true
 connections = Array[Dictionary]([{
 "from_node": &"",
@@ -18,31 +26,43 @@ connections = Array[Dictionary]([{
 "to_node": &"",
 "to_port": 0
 }])
+zoom = 0.5
 script = ExtResource("1_rsvqg")
 GraphNode = ExtResource("2_djcbr")
 SelectCommandButton = NodePath("GridContainer/AddCommandButton")
 AddButton = NodePath("GridContainer/AddButton")
-StartGame = NodePath("GridContainer/Start")
+StartGame = NodePath("Start")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 0
 offset_left = 10.0
-offset_top = 53.0
+offset_top = 54.0
 offset_right = 308.0
-offset_bottom = 203.0
+offset_bottom = 204.0
 columns = 2
 
 [node name="AddCommandButton" type="OptionButton" parent="GridContainer"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-
-[node name="AddButton" type="Button" parent="GridContainer"]
-custom_minimum_size = Vector2(50, 0)
-layout_mode = 2
-text = "Add"
-
-[node name="Start" type="Button" parent="GridContainer"]
 texture_filter = 1
 texture_repeat = 1
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
+
+[node name="AddButton" type="Button" parent="GridContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Add"
+
+[node name="Start" type="Button" parent="."]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 0
+offset_left = 312.0
+offset_top = 10.0
+offset_right = 465.0
+offset_bottom = 45.0
+theme_override_fonts/font = SubResource("SystemFont_djcbr")
+theme_override_font_sizes/font_size = 18
 text = "Start"

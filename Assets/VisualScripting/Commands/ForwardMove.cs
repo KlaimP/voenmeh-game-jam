@@ -5,7 +5,7 @@ namespace VoenmehGameJam.Scripts
 {
 	public class ForwardMove : BlockScriptClass
 	{
-		public ForwardMove() : base("ForwardMove", "Команда заставляет робота переместиться вперёд на одну клетку по сетке.\n") { }
+		public ForwardMove() : base("ForwardMove()", "Команда заставляет робота переместиться вперёд на одну клетку по сетке.\n") { }
 
 		public async override void Execute(Robot robot)
 		{
