@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://blxojs67eotb"]
 
-[ext_resource type="Script" uid="uid://x55bkp3xl2us" path="res://Assets/VisualScripting/Nodes/BlockNodeUI.cs" id="1_uepl2"]
+[ext_resource type="Script" uid="uid://x55bkp3xl2us" path="res://Assets/Scripts/VisualScripting/Nodes/BlockNodeUI.cs" id="1_uepl2"]
 
 [sub_resource type="FontFile" id="FontFile_tamrr"]
 subpixel_positioning = 0

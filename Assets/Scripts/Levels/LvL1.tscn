@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://byymuryf3dloc"]
 
-[ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://LevelScene.cs" id="1_0twix"]
-[ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Robot.tscn" id="2_aswjh"]
-[ext_resource type="Script" uid="uid://b2itdovntf6rq" path="res://Grid.cs" id="2_ub1qs"]
-[ext_resource type="PackedScene" uid="uid://3be76dk6kxpo" path="res://Box.tscn" id="3_6dcgm"]
-[ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Obstacle.tscn" id="4_tw4xh"]
-[ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
+[ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
+[ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
+[ext_resource type="Script" uid="uid://b2itdovntf6rq" path="res://Assets/Scripts/Grid/Grid.cs" id="2_ub1qs"]
+[ext_resource type="PackedScene" uid="uid://3be76dk6kxpo" path="res://Assets/Scripts/Objects/Box/Box.tscn" id="3_6dcgm"]
+[ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Assets/Scripts/Objects/Obstacle/Obstacle.tscn" id="4_tw4xh"]
+[ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
 
 [node name="Level1" type="Node2D" node_paths=PackedStringArray("LevelGrid", "blockEditorUi")]
 script = ExtResource("1_0twix")
@@ -44,5 +44,5 @@ layout_mode = 2
 [node name="GraphEdit" parent="Control/SplitContainer" instance=ExtResource("6_tw4xh")]
 custom_minimum_size = Vector2(0, 544)
 layout_mode = 2
-scroll_offset = Vector2(-40, -506.71)
+scroll_offset = Vector2(-419, -506.71)
 minimap_enabled = false

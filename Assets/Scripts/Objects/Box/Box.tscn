@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://3be76dk6kxpo"]
 
-[ext_resource type="Script" uid="uid://bifdpb7hd5urn" path="res://BoxObject.cs" id="1_0bkxv"]
-[ext_resource type="Texture2D" uid="uid://ctmkn1grx47wi" path="res://box.jpg" id="2_jm3vu"]
+[ext_resource type="Script" uid="uid://bifdpb7hd5urn" path="res://Assets/Scripts/Objects/Box/BoxObject.cs" id="1_0bkxv"]
+[ext_resource type="Texture2D" uid="uid://ctmkn1grx47wi" path="res://Assets/Textures/Objects/box.jpg" id="2_jm3vu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_speaj"]
 size = Vector2(64, 64)

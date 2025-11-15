@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://8e1m25hqjyrw"]
 
-[ext_resource type="Script" uid="uid://botoyd6amdg38" path="res://Robot.cs" id="1_lhh6t"]
-[ext_resource type="Texture2D" uid="uid://c0eiwq0obl58s" path="res://Robot.jpg" id="2_8mo4m"]
+[ext_resource type="Script" uid="uid://botoyd6amdg38" path="res://Assets/Scripts/Robot/Robot.cs" id="1_lhh6t"]
+[ext_resource type="Texture2D" uid="uid://c0eiwq0obl58s" path="res://Assets/Textures/Robot/Robot.jpg" id="2_8mo4m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mo4m"]
 size = Vector2(64, 64)

@@ -14,7 +14,7 @@ public partial class MainMenu : Control
 	private void OnPlayButtonPressed()
 	{
 		// Загружаем сцену выбора уровня
-		GetTree().ChangeSceneToFile("res://Assets/MainMenu/LevelSelection.tscn");
+		GetTree().ChangeSceneToFile("res://Assets/Scripts/MainMenu/LevelSelection.tscn");
 	}
 
 	private void OnExitButtonPressed()

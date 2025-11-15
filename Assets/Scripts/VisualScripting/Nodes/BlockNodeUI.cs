@@ -20,7 +20,7 @@ public partial class BlockNodeUI : GraphNode, IBlockNode
 
 		if(block is ForwardMove forwardMove)
 		{
-			HSplitContainer splitContainer = (HSplitContainer)ResourceLoader.Load<PackedScene>("res://Assets/VisualScripting/Nodes/Childs/graphNodeChild.tscn").Instantiate();
+			HSplitContainer splitContainer = (HSplitContainer)ResourceLoader.Load<PackedScene>("res://Assets/Scripts/VisualScripting/Nodes/Childs/graphNodeChild.tscn").Instantiate();
 			this.AddChild(splitContainer);
 
 			SpinBox stepsSpinBox = splitContainer.GetNode<SpinBox>("SpinBox");

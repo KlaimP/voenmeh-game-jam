@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dwmk8ys7ydfl5"]
 
-[ext_resource type="Script" uid="uid://bj7piytf8pctt" path="res://ObstacleObject.cs" id="1_qaun2"]
-[ext_resource type="Texture2D" uid="uid://d0hjj734gisn" path="res://rock.png" id="2_0pemi"]
+[ext_resource type="Script" uid="uid://bj7piytf8pctt" path="res://Assets/Scripts/Objects/Obstacle/ObstacleObject.cs" id="1_qaun2"]
+[ext_resource type="Texture2D" uid="uid://d0hjj734gisn" path="res://Assets/Textures/Objects/rock.png" id="2_0pemi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_speaj"]
 size = Vector2(64, 64)

@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://be3nhjn02b07u"
-path="res://.godot/imported/MatrixTypeDisplay-Regular.otf-cd08fbb09cdd34e119fec9b92691b4ab.fontdata"
+path="res://.godot/imported/MatrixTypeDisplay-Regular.otf-24d21dae6bb25c002d2e930dfa58bb78.fontdata"
 
 [deps]
 
-source_file="res://fonts/MatrixTypeDisplay-Regular.otf"
-dest_files=["res://.godot/imported/MatrixTypeDisplay-Regular.otf-cd08fbb09cdd34e119fec9b92691b4ab.fontdata"]
+source_file="res://Assets/Fonts/MatrixTypeDisplay-Regular.otf"
+dest_files=["res://.godot/imported/MatrixTypeDisplay-Regular.otf-24d21dae6bb25c002d2e930dfa58bb78.fontdata"]
 
 [params]
 

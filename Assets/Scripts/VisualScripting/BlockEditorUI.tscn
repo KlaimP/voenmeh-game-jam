@@ -1,12 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://deb3tl8suw5of"]
 
-[ext_resource type="Script" uid="uid://dn5v283nwo6gu" path="res://Assets/VisualScripting/BlockEditorUi.cs" id="1_rsvqg"]
-[ext_resource type="PackedScene" uid="uid://blxojs67eotb" path="res://Assets/VisualScripting/Nodes/BlockNodeUI.tscn" id="2_djcbr"]
+[ext_resource type="Script" uid="uid://dn5v283nwo6gu" path="res://Assets/Scripts/VisualScripting/BlockEditorUi.cs" id="1_rsvqg"]
+[ext_resource type="PackedScene" uid="uid://blxojs67eotb" path="res://Assets/Scripts/VisualScripting/Nodes/BlockNodeUI.tscn" id="2_djcbr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_djcbr"]
 bg_color = Color(0.1764706, 0.1764706, 0.1764706, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_djcbr"]
+subpixel_positioning = 0
 multichannel_signed_distance_field = true
 msdf_pixel_range = 32
 msdf_size = 64
@@ -17,7 +18,6 @@ offset_top = -10.0
 offset_right = 1026.0
 offset_bottom = 1083.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_djcbr")
-scroll_offset = Vector2(-530.545, -506.71)
 right_disconnects = true
 connections = Array[Dictionary]([{
 "from_node": &"",

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djhd717vf3yu4"
-path="res://.godot/imported/SawBlade.png-0408ddf619172c7823232903f979ff09.ctex"
+uid="uid://d0hjj734gisn"
+path="res://.godot/imported/rock.png-d62f5420aae06ba1c4fcac67bce4aa67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SawBlade.png"
-dest_files=["res://.godot/imported/SawBlade.png-0408ddf619172c7823232903f979ff09.ctex"]
+source_file="res://Assets/Textures/Objects/rock.png"
+dest_files=["res://.godot/imported/rock.png-d62f5420aae06ba1c4fcac67bce4aa67.ctex"]
 
 [params]
 
