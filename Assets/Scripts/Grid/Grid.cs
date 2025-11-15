@@ -75,11 +75,12 @@ public partial class Grid : Node2D
 			GD.PrintErr($"Позиция {position} вне границ сетки!");
 			return false;
 		}
-		
-		// Проверка позиции и в ней объекта
-		if (HasSolidObjectAt(position)) 
+
+		// Проверка позиции на занятость (любым объектом)
+		if (HasAnyObjectAt(position)) 
 		{
-			GD.PrintErr($"Позиция {position} уже занята твердым объектом {_gridObjects[position].ObjectType}!");
+			var existingObject = _gridObjects[position];
+			GD.PrintErr($"Позиция {position} уже занята объектом {existingObject.ObjectType}!");
 			return false;
 		}
 
@@ -126,6 +127,20 @@ public partial class Grid : Node2D
 		return null;
 	}
 
+	// Удаление объекта по позиции
+	public bool RemoveObjectFromGrid(Vector2I position)
+	{
+		if (_gridObjects.ContainsKey(position))
+		{
+			GridObject obj = _gridObjects[position];
+			_gridObjects.Remove(position);
+			UpdateStateMatrix();
+			GD.Print($"Объект {obj.ObjectType} удален из позиции {position}");
+			return true;
+		}
+		return false;
+	}
+
 
 
 
@@ -164,6 +179,7 @@ public partial class Grid : Node2D
 			if      (obj is Robot) StateMatrix[position.X, position.Y] = 1;
 			else if (obj is BoxObject) StateMatrix[position.X, position.Y] = 2;
 			else if (obj is ObstacleObject) StateMatrix[position.X, position.Y] = 3;
+			else if (obj is SawTrap) StateMatrix[position.X, position.Y] = 4;
 		}
 	}
 
@@ -192,6 +208,7 @@ public partial class Grid : Node2D
 					case 1: row += "R"; break;
 					case 2: row += "B"; break;
 					case 3: row += "X"; break;
+					case 4: row += "S"; break;
 					default: row += "?"; break;
 				}
 				if (x < GridWidth - 1) row += " ";
@@ -210,6 +227,9 @@ public partial class Grid : Node2D
 
 
 	/* ------------ Проверки по сетке и словарю ------------ */
+	// Проверка наличия любого объекта в позиции
+	public bool HasAnyObjectAt(Vector2I position) => _gridObjects.ContainsKey(position); 
+	
 	// Проверка ячейки на пустоту
 	public bool IsCellEmpty(Vector2I position)
 	{
