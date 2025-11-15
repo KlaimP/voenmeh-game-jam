@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="VOENMEH GameJam"
-run/main_scene="uid://deb3tl8suw5of"
+run/main_scene="uid://byymuryf3dloc"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=576
 
 [dotnet]
 

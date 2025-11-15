@@ -1,289 +1,208 @@
 using Godot;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
+/* Робот */
 public partial class Robot : GridObject
 {
-	[Export] public float MoveDuration { get; set; } = 0.3f;
-	[Export] public float RotationDuration { get; set; } = 0.2f;
+    [Export] public float MoveDuration { get; set; } = 0.3f;
+    [Export] public float RotationDuration { get; set; } = 0.2f;
 
-	private Sprite2D _sprite;
-	
-	private enum Direction { Up, Right, Down, Left }
-	private Direction _currentDirection = Direction.Up;
-	
-	private bool _isRotating = false;
-	private bool _isMoving = false;
+    private Sprite2D _sprite;
+    private bool _isRotating = false;
+    private bool _isMoving = false;
 
-	public override void _Ready()
-	{
-		ObjectType = "ROBOT";
-		IsSolid = true;
-		
-		_sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
-		base._Ready();
-		
-		SyncRotationToDirection();
-		GD.Print("Робот готов к ручному управлению");
-	}
+    // Инициализация параметров робота
+    public override void _Ready()
+    {
+        ObjectType = "ROBOT";
+        IsSolid = true;
+        CanBePushed = false;
+        
+        _sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
+        base._Ready();
+        
+        GD.Print("=== РОБОТ ГОТОВ ===");
+        _grid.PrintStateMatrix();
+    }
 
-	public override void _Process(double delta)
-	{
-		if (!_isMoving && !_isRotating)
-		{
-			HandleInput();
-		}
-	}
+    public override void _Process(double delta)
+    {
+        if (!_isMoving && !_isRotating)
+            HandleInput();
+    }
 
-	private void HandleInput()
-	{
-		// Движение вперед
-		if (Input.IsActionJustPressed("ui_up"))
-		{
-			_ = MoveForward();
-		}
-		
-		// Поворот налево
-		if (Input.IsActionJustPressed("ui_left"))
-		{
-			_ = TurnLeft();
-		}
-		
-		// Поворот направо
-		if (Input.IsActionJustPressed("ui_right"))
-		{
-			_ = TurnRight();
-		}
-		
-		// Движение назад
-		if (Input.IsActionJustPressed("ui_down"))
-		{
-			_ = MoveBackward();
-		}
-		
-		// Быстрое движение (для теста)
-		if (Input.IsActionJustPressed("ui_page_up"))
-		{
-			_ = MoveForwardFast();
-		}
-	}
+    private void HandleInput()
+    {
+        if (Input.IsActionJustPressed("ui_up")) _ = MoveForward();
+        if (Input.IsActionJustPressed("ui_left")) _ = TurnLeft();
+        if (Input.IsActionJustPressed("ui_right")) _ = TurnRight();
+        if (Input.IsActionJustPressed("ui_page_up")) _grid.PrintStateMatrix();
+    }
 
-	public async Task MoveForward()
-	{
-		if (_isMoving) return;
-		_isMoving = true;
-		
-		Vector2I direction = GetForwardDirection();
-		Vector2I newPosition = GridPosition + direction;
-		
-		if (CanMoveToPosition(newPosition))
-		{
-			// Проверяем, есть ли ящик в целевой позиции
-			var objectsAtTarget = _grid.GetObjectsAt(newPosition);
-			BoxObject boxToPush = null;
-			
-			foreach (var obj in objectsAtTarget)
-			{
-				if (obj is BoxObject box)
-				{
-					boxToPush = box;
-					break;
-				}
-			}
-			
-			if (boxToPush != null)
-			{
-				// Толкаем ящик
-				Vector2I boxTargetPosition = newPosition + direction;
-				if (boxToPush.CanMoveToPosition(boxTargetPosition))
-				{
-					// Двигаем ящик и робота одновременно
-					var boxTask = boxToPush.MoveToGridPosition(boxTargetPosition, MoveDuration);
-					var robotTask = MoveToGridPosition(newPosition, MoveDuration);
-					
-					await Task.WhenAll(boxTask, robotTask);
-					GD.Print("Робот толкнул ящик!");
-				}
-				else
-				{
-					GD.Print("Не могу толкнуть ящик - путь заблокирован");
-				}
-			}
-			else
-			{
-				// Обычное движение
-				await MoveToGridPosition(newPosition, MoveDuration);
-			}
-		}
-		else
-		{
-			GD.Print("Движение вперед невозможно!");
-		}
-		
-		_isMoving = false;
-	}
+    // ------------ КОМАНДЫ РОБОТА ------------ */
+    // Движение вперёд
+    public async Task MoveForward()
+    {
+        if (_isMoving) return;
+        _isMoving = true;
+        
+        Vector2I direction = GetForwardDirection();
+        Vector2I newPosition = GridPosition + direction;
+        
+        GD.Print($"РОБОТ: попытка движения из {GridPosition} в {newPosition}");
 
-	public async Task MoveForwardFast()
-	{
-		if (_isMoving) return;
-		_isMoving = true;
-		
-		Vector2I direction = GetForwardDirection();
-		Vector2I newPosition = GridPosition + direction;
-		
-		if (CanMoveToPosition(newPosition))
-		{
-			// Быстрое движение без анимации толкания ящиков
-			await MoveToGridPosition(newPosition, MoveDuration * 0.5f);
-		}
-		
-		_isMoving = false;
-	}
+        if (_grid.IsCellEmpty(newPosition))
+        {
+            // Свободная клетка - просто двигаемся
+            await MoveToGridPosition(newPosition, MoveDuration);
+        }
+        else if (CanPushObject(newPosition, direction))
+        {
+            // Можно толкнуть объект
+            await PushSingleObject(newPosition, direction);
+        }
+        else
+        {
+            GD.Print("РОБОТ: движение невозможно!");
+        }
+        
+        _isMoving = false;
+    }
+    
+    // Поворот налево
+    public async Task TurnLeft()
+    {
+        if (_isRotating) return;
+        _isRotating = true;
+        
+        float targetRotation = Rotation - Mathf.Pi / 2f;
+        
+        _moveTween = CreateTween();
+        _moveTween.SetEase(Tween.EaseType.Out);
+        _moveTween.SetTrans(Tween.TransitionType.Cubic);
+        _moveTween.TweenProperty(this, "rotation", targetRotation, RotationDuration);
+        
+        await ToSignal(_moveTween, "finished");
+        
+        _isRotating = false;
+        GD.Print($"РОБОТ: повернул налево. Угол: {Mathf.RadToDeg(Rotation)}°");
+    }
 
-	public async Task MoveBackward()
-	{
-		if (_isMoving) return;
-		_isMoving = true;
-		
-		Vector2I direction = GetForwardDirection();
-		Vector2I newPosition = GridPosition - direction;
-		
-		if (CanMoveToPosition(newPosition))
-		{
-			await MoveToGridPosition(newPosition, MoveDuration);
-		}
-		else
-		{
-			GD.Print("Движение назад невозможно!");
-		}
-		
-		_isMoving = false;
-	}
+    // Поворот направо
+    public async Task TurnRight()
+    {
+        if (_isRotating) return;
+        _isRotating = true;
+        
+        float targetRotation = Rotation + Mathf.Pi / 2f;
+        
+        _moveTween = CreateTween();
+        _moveTween.SetEase(Tween.EaseType.Out);
+        _moveTween.SetTrans(Tween.TransitionType.Cubic);
+        _moveTween.TweenProperty(this, "rotation", targetRotation, RotationDuration);
+        
+        await ToSignal(_moveTween, "finished");
+        
+        _isRotating = false;
+        GD.Print($"РОБОТ: повернул направо. Угол: {Mathf.RadToDeg(Rotation)}°");
+    }
 
-	public async Task TurnLeft()
-	{
-		if (_isRotating) return;
-		_isRotating = true;
-		
-		// Сначала меняем направление
-		_currentDirection = _currentDirection switch
-		{
-			Direction.Up => Direction.Left,
-			Direction.Left => Direction.Down,
-			Direction.Down => Direction.Right,
-			Direction.Right => Direction.Up,
-			_ => Direction.Up
-		};
-		
-		// Затем анимируем поворот к точному углу (в радианах)
-		float targetRotation = DirectionToRotation(_currentDirection);
-		
-		// Нормализуем текущий rotation чтобы избежать больших поворотов
-		float currentNormalized = NormalizeRotation(Rotation);
-		
-		// Выбираем кратчайший путь для анимации
-		float shortestPathRotation = GetShortestPathRotation(currentNormalized, targetRotation);
-		
-		_moveTween = CreateTween();
-		_moveTween.SetEase(Tween.EaseType.Out);
-		_moveTween.SetTrans(Tween.TransitionType.Cubic);
-		_moveTween.TweenProperty(this, "rotation", shortestPathRotation, RotationDuration);
-		
-		await ToSignal(_moveTween, "finished");
-		
-		// Гарантируем точное значение после анимации
-		Rotation = targetRotation;
-		_isRotating = false;
-	}
+    /* // Движение назад (опционально, если надо)
+    public async Task MoveBackward()
+    {
+        if (_isMoving) return;
+        _isMoving = true;
+        
+        Vector2I direction = GetForwardDirection();
+        Vector2I newPosition = GridPosition - direction;
+        
+        GD.Print($"РОБОТ: попытка движения назад в {newPosition}");
+        
+        if (_grid.IsCellEmpty(newPosition))
+        {
+            await MoveToGridPosition(newPosition, MoveDuration);
+        }
+        else
+        {
+            GD.Print("РОБОТ: движение назад невозможно!");
+        }
+        
+        _isMoving = false;
+    }*/
 
-	public async Task TurnRight()
-	{
-		if (_isRotating) return;
-		_isRotating = true;
-		
-		// Сначала меняем направление
-		_currentDirection = _currentDirection switch
-		{
-			Direction.Up => Direction.Right,
-			Direction.Right => Direction.Down,
-			Direction.Down => Direction.Left,
-			Direction.Left => Direction.Up,
-			_ => Direction.Up
-		};
-		
-		// Затем анимируем поворот к точному углу (в радианах)
-		float targetRotation = DirectionToRotation(_currentDirection);
-		
-		// Нормализуем текущий rotation чтобы избежать больших поворотов
-		float currentNormalized = NormalizeRotation(Rotation);
-		
-		// Выбираем кратчайший путь для анимации
-		float shortestPathRotation = GetShortestPathRotation(currentNormalized, targetRotation);
-		
-		_moveTween = CreateTween();
-		_moveTween.SetEase(Tween.EaseType.Out);
-		_moveTween.SetTrans(Tween.TransitionType.Cubic);
-		_moveTween.TweenProperty(this, "rotation", shortestPathRotation, RotationDuration);
-		
-		await ToSignal(_moveTween, "finished");
-		
-		// Гарантируем точное значение после анимации
-		Rotation = targetRotation;
-		_isRotating = false;
-	}
+    // Получение направления движения
+    private Vector2I GetForwardDirection()
+    {
+        float degrees = Mathf.RadToDeg(Rotation);
+        degrees = (degrees % 360 + 360) % 360; // Нормализуем в [0, 360)
+        
+        if (degrees >= 315 || degrees < 45) return new Vector2I(0, -1);  // Вверх
+        if (degrees >= 45 && degrees < 135) return new Vector2I(1, 0);   // Вправо
+        if (degrees >= 135 && degrees < 225) return new Vector2I(0, 1);  // Вниз
+        return new Vector2I(-1, 0);                                      // Влево
+    }
 
-	private Vector2I GetForwardDirection()
-	{
-		return _currentDirection switch
-		{
-			Direction.Up => new Vector2I(0, -1),
-			Direction.Right => new Vector2I(1, 0),
-			Direction.Down => new Vector2I(0, 1),
-			Direction.Left => new Vector2I(-1, 0),
-			_ => new Vector2I(0, -1)
-		};
-	}
+    // Толкание одного объекта
+    private async Task PushSingleObject(Vector2I objectPosition, Vector2I direction)
+    {
+        GD.Print($"РОБОТ: начинаю толкать объект в {objectPosition}");
+        
+        // Получаем объект в целевой позиции
+        GridObject objectToPush = _grid.GetObjectAt(objectPosition);
+        
+        if (objectToPush == null)
+        {
+            GD.PrintErr("РОБОТ: не найден объект для толкания!");
+            return;
+        }
+        
+        if (!objectToPush.CanBePushed)
+        {
+            GD.PrintErr($"РОБОТ: объект {objectToPush.ObjectType} нельзя толкать!");
+            return;
+        }
+        
+        // Вычисляем новую позицию для объекта
+        Vector2I newObjectPos = objectPosition + direction;
+        
+        // Проверяем, можно ли толкнуть объект
+        if (!_grid.IsInGridBounds(newObjectPos))
+        {
+            GD.PrintErr("РОБОТ: объект нельзя толкнуть - выход за границы сетки!");
+            return;
+        }
+        
+        if (_grid.HasSolidObjectAt(newObjectPos))
+        {
+            GD.PrintErr("РОБОТ: объект нельзя толкнуть - целевая позиция занята!");
+            return;
+        }
+        
+        GD.Print($"РОБОТ: толкаю {objectToPush.ObjectType} из {objectPosition} в {newObjectPos}");
+        
+        // Двигаем объект
+        await objectToPush.MoveToGridPosition(newObjectPos, MoveDuration);
+        
+        // Двигаем робота на место объекта
+        await MoveToGridPosition(objectPosition, MoveDuration);
+        
+        GD.Print($"РОБОТ: успешно толкнул {objectToPush.ObjectType}");
+    }
 
-	private float DirectionToRotation(Direction direction)
-	{
-		return direction switch
-		{
-			Direction.Up => 0f,
-			Direction.Right => Mathf.Pi / 2f,
-			Direction.Down => Mathf.Pi,
-			Direction.Left => Mathf.Pi * 3f / 2f,
-			_ => 0f
-		};
-	}
-
-	// Нормализует rotation в диапазон [0, 2π)
-	private float NormalizeRotation(float rotation)
-	{
-		float twoPi = Mathf.Pi * 2f;
-		rotation = rotation % twoPi;
-		if (rotation < 0) rotation += twoPi;
-		return rotation;
-	}
-
-	// Находит кратчайший путь для анимации между двумя углами
-	private float GetShortestPathRotation(float from, float to)
-	{
-		float difference = to - from;
-		float twoPi = Mathf.Pi * 2f;
-		
-		if (difference > Mathf.Pi)
-		{
-			return to - twoPi;
-		}
-		else if (difference < -Mathf.Pi)
-		{
-			return to + twoPi;
-		}
-		
-		return to;
-	}
-
-	private void SyncRotationToDirection()
-	{
-		Rotation = DirectionToRotation(_currentDirection);
-	}
+    // Проверка возможности толкания объекта
+    private bool CanPushObject(Vector2I objectPosition, Vector2I direction)
+    {
+        if (!_grid.IsInGridBounds(objectPosition)) return false;
+        
+        // Получаем объект в целевой позиции
+        GridObject obj = _grid.GetObjectAt(objectPosition);
+        
+        // Проверяем, есть ли толкаемый объект
+        if (obj == null || !obj.CanBePushed) return false;
+        
+        // Проверяем, свободна ли следующая позиция
+        Vector2I nextPos = objectPosition + direction;
+        return _grid.IsInGridBounds(nextPos) && _grid.IsCellEmpty(nextPos);
+    }
 }

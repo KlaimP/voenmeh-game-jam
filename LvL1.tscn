@@ -15,6 +15,8 @@ ObstaclePrefab = ExtResource("4_tw4xh")
 
 [node name="Grid" type="Node2D" parent="."]
 script = ExtResource("2_ub1qs")
+GridWidth = 16
+GridHeight = 9
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
