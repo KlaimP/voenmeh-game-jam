@@ -45,8 +45,9 @@ public partial class BlockEditorUi : GraphEdit
 
 		this.AddChild(StartBlock);
 
-		SelectCommandButton.AddItem("ForwardMove");
-		SelectCommandButton.AddItem("Rotate");
+		SelectCommandButton.AddItem("ForwardMove()");
+		SelectCommandButton.AddItem("RotateRight()");
+		SelectCommandButton.AddItem("RotateLeft()");
 		AddButton.ButtonDown += OnCommandSelected;
 	}
 
@@ -64,8 +65,9 @@ public partial class BlockEditorUi : GraphEdit
 
 		BlockScriptClass command = commandName switch
 		{
-			"ForwardMove" => new ForwardMove(),
-			"Rotate" => new Rotate(),
+			"ForwardMove()" => new ForwardMove(),
+			"RotateRight()" => new RotateСlockwise(),
+			"RotateLeft()" => new RotateCounterСlockwise(),
 			_ => null
 		};
 

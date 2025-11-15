@@ -13,7 +13,7 @@ LevelGrid = NodePath("Grid")
 RobotPrefab = ExtResource("2_aswjh")
 BoxPrefab = ExtResource("3_6dcgm")
 ObstaclePrefab = ExtResource("4_tw4xh")
-blockEditorUi = NodePath("Control/FoldableContainer/GraphEdit")
+blockEditorUi = NodePath("Control/SplitContainer/GraphEdit")
 
 [node name="Grid" type="Node2D" parent="."]
 position = Vector2(1, -1)
@@ -28,17 +28,21 @@ GridHeight = 9
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1153.0
-offset_bottom = 647.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
-[node name="FoldableContainer" type="FoldableContainer" parent="Control"]
+[node name="SplitContainer" type="SplitContainer" parent="Control"]
 layout_mode = 0
-offset_left = 505.0
-offset_top = 1.0
-offset_right = 1025.0
-offset_bottom = 374.665
+offset_right = 1920.0
+offset_bottom = 1080.0
+split_offset = 1280
+touch_dragger_enabled = true
 
-[node name="GraphEdit" parent="Control/FoldableContainer" instance=ExtResource("6_tw4xh")]
-custom_minimum_size = Vector2(512, 544)
+[node name="Control" type="Control" parent="Control/SplitContainer"]
 layout_mode = 2
-scroll_offset = Vector2(-512, -128)
+
+[node name="GraphEdit" parent="Control/SplitContainer" instance=ExtResource("6_tw4xh")]
+custom_minimum_size = Vector2(0, 544)
+layout_mode = 2
+scroll_offset = Vector2(-40, -506.71)
+minimap_enabled = false

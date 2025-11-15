@@ -1,11 +1,42 @@
-[gd_scene load_steps=2 format=3 uid="uid://blxojs67eotb"]
+[gd_scene load_steps=4 format=3 uid="uid://blxojs67eotb"]
 
 [ext_resource type="Script" uid="uid://x55bkp3xl2us" path="res://Assets/VisualScripting/Nodes/BlockNodeUI.cs" id="1_uepl2"]
 
+[sub_resource type="FontFile" id="FontFile_tamrr"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/64/0/ascent = 0.0
+cache/0/64/0/descent = 0.0
+cache/0/64/0/underline_position = 0.0
+cache/0/64/0/underline_thickness = 0.0
+cache/0/64/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/18/0/ascent = 0.0
+cache/0/18/0/descent = 0.0
+cache/0/18/0/underline_position = 0.0
+cache/0/18/0/underline_thickness = 0.0
+cache/0/18/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+
+[sub_resource type="Theme" id="Theme_tamrr"]
+default_font = SubResource("FontFile_tamrr")
+default_font_size = 64
+
 [node name="GraphNode" type="GraphNode"]
 clip_contents = true
-offset_right = 212.0
-offset_bottom = 121.0
+offset_right = 557.0
+offset_bottom = 206.0
+theme = SubResource("Theme_tamrr")
+title = "Привет"
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -20,4 +51,5 @@ script = ExtResource("1_uepl2")
 [node name="Description" type="Label" parent="."]
 custom_minimum_size = Vector2(1, 1)
 layout_mode = 2
+theme_override_font_sizes/font_size = 64
 autowrap_mode = 3
