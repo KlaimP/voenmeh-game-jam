@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://cxlm14hxn3ns7"]
+
+[ext_resource type="Script" uid="uid://b2h1mv70eljq8" path="res://Assets/Scripts/Managers/MusicManager.cs" id="1_pm1ar"]
+[ext_resource type="AudioStream" uid="uid://cnoycla4me5tr" path="res://Assets/Music/Joshua McLean - Mountain Trials.mp3" id="2_fa2m2"]
+
+[node name="MusicManager" type="Node"]
+script = ExtResource("1_pm1ar")
+BackgroundMusic = ExtResource("2_fa2m2")

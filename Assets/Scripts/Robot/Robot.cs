@@ -16,6 +16,11 @@ public partial class Robot : GridObject
 	[Export] public float RotationDuration { get; set; } = 0.2f;
 
 
+	// Звуки
+	[Export] public AudioStream BoxTrapSound { get; set; } // Звук ящика на ловушке
+	[Export] public AudioStream DamageSound { get; set; }  // ЗВУК ПОЛУЧЕНИЯ УРОНА
+
+
 	private Sprite2D _sprite;
 	private bool _isRotating = false;
 	private bool _isMoving = false;
@@ -174,6 +179,12 @@ public partial class Robot : GridObject
 	{
 		GD.Print($"💥 РОБОТ ПОЛУЧИЛ УРОН: {damage}");
 		
+		// ВОСПРОИЗВЕДЕНИЕ ЗВУКА УРОНА - ДОБАВЬТЕ ЭТОТ БЛОК
+		if (DamageSound != null)
+		{
+			SFXManager.Instance.PlaySound(DamageSound, -25.0f);
+		}
+
 		// Визуальный эффект получения урона
 		PlayDamageEffect();
 		
@@ -412,25 +423,52 @@ public partial class Robot : GridObject
 	}
 
 	// Уничтожение объекта при толкании на ловушку
-	private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)
-	{
-		GD.Print($"УНИЧТОЖЕНИЕ: объект {objectToDestroy.ObjectType} уничтожен ловушкой в {trapPosition}");
+	// private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)
+	// {
+	// 	GD.Print($"УНИЧТОЖЕНИЕ: объект {objectToDestroy.ObjectType} уничтожен ловушкой в {trapPosition}");
 		
-		// Запоминаем позицию перед уничтожением для выхода из зоны
-		Vector2I destroyPosition = objectToDestroy.GridPosition;
+	// 	// Запоминаем позицию перед уничтожением для выхода из зоны
+	// 	Vector2I destroyPosition = objectToDestroy.GridPosition;
 		
-		// Визуальные эффекты уничтожения - ВЫЗЫВАЕМ МЕТОД ОБЪЕКТА
-		await objectToDestroy.OnDestroyed();
+	// 	// Визуальные эффекты уничтожения - ВЫЗЫВАЕМ МЕТОД ОБЪЕКТА
+	// 	await objectToDestroy.OnDestroyed();
 		
-		// Если это ящик - вызываем выход из зоны
-		if (objectToDestroy is BoxObject box) CheckBoxExitOnDestroy(box, destroyPosition); 
+	// 	// Если это ящик - вызываем выход из зоны
+	// 	if (objectToDestroy is BoxObject box) CheckBoxExitOnDestroy(box, destroyPosition); 
 		
-		// Удаляем объект из сетки
-		_grid.RemoveObjectFromGrid(objectToDestroy.GridPosition);
+	// 	// Удаляем объект из сетки
+	// 	_grid.RemoveObjectFromGrid(objectToDestroy.GridPosition);
 		
-		// Уничтожаем объект
-		objectToDestroy.QueueFree();
-	}
+	// 	// Уничтожаем объект
+	// 	objectToDestroy.QueueFree();
+	// }
+
+	// Модифицируем метод DestroyObjectOnTrap
+    private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)
+    {
+        GD.Print($"УНИЧТОЖЕНИЕ: объект {objectToDestroy.ObjectType} уничтожен ловушкой в {trapPosition}");
+        
+        // ВОСПРОИЗВОДИМ ЗВУК ЛОВУШКИ
+        if (BoxTrapSound != null)
+        {
+            SFXManager.Instance.PlaySound(BoxTrapSound, -20.0f); // -20.0f - регулируйте громкость
+        }
+        
+        // Запоминаем позицию перед уничтожением для выхода из зоны
+        Vector2I destroyPosition = objectToDestroy.GridPosition;
+        
+        // Визуальные эффекты уничтожения
+        await objectToDestroy.OnDestroyed();
+        
+        // Если это ящик - вызываем выход из зоны
+        if (objectToDestroy is BoxObject box) CheckBoxExitOnDestroy(box, destroyPosition); 
+        
+        // Удаляем объект из сетки
+        _grid.RemoveObjectFromGrid(objectToDestroy.GridPosition);
+        
+        // Уничтожаем объект
+        objectToDestroy.QueueFree();
+    }
 
 	// Проверка выхода из зоны при УНИЧТОЖЕНИИ ящика
 	private void CheckBoxExitOnDestroy(BoxObject box, Vector2I position)

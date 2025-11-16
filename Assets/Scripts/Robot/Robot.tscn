@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://8e1m25hqjyrw"]
+[gd_scene load_steps=11 format=3 uid="uid://8e1m25hqjyrw"]
 
 [ext_resource type="Script" uid="uid://botoyd6amdg38" path="res://Assets/Scripts/Robot/Robot.cs" id="1_lhh6t"]
 [ext_resource type="Texture2D" uid="uid://c0eiwq0obl58s" path="res://Assets/Textures/Robot/Robot.jpg" id="2_8mo4m"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://be8qouiepbjxo" path="res://Assets/Textures/Robot/RobotDown.png" id="4_ow2ri"]
 [ext_resource type="Texture2D" uid="uid://bss7vo3dgsc48" path="res://Assets/Textures/Robot/RobotLeft.png" id="5_s7p1y"]
 [ext_resource type="PackedScene" uid="uid://dt0p4qdkr1h0d" path="res://Assets/Scripts/Robot/hero_robot.tscn" id="6_d07hm"]
+[ext_resource type="AudioStream" uid="uid://cskysn1h5xwbg" path="res://Assets/Sounds/razor_buzz.wav" id="6_ow2ri"]
+[ext_resource type="AudioStream" uid="uid://d0g0lvu0ubd1f" path="res://Assets/Sounds/hurt.wav" id="7_s7p1y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mo4m"]
 size = Vector2(64, 64)
@@ -17,6 +19,8 @@ _spriteUp = ExtResource("2_ewh53")
 _spriteRight = ExtResource("3_d07hm")
 _spriteDown = ExtResource("4_ow2ri")
 _spriteLeft = ExtResource("5_s7p1y")
+BoxTrapSound = ExtResource("6_ow2ri")
+DamageSound = ExtResource("7_s7p1y")
 
 [node name="Hero Robot" parent="." instance=ExtResource("6_d07hm")]
 position = Vector2(0, -41.41)

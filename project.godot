@@ -18,7 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalSignals="*res://GlobalSignals.cs"
-MusicManager="*res://Assets/Scripts/MainMenu/MusicManager.tscn"
+MusicManager="*res://Assets/Scripts/Managers/MusicManager.tscn"
+SFXManager="*res://Assets/Scripts/Managers/SFXManager.tscn"
 
 [display]
 
