@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://byymuryf3dloc"]
+[gd_scene load_steps=18 format=3 uid="uid://byymuryf3dloc"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
@@ -11,7 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://o8hv4vt3u7cs" path="res://Assets/Scripts/Objects/BoxTargetZone/BoxTargetZone.tscn" id="7_3d3ca"]
 [ext_resource type="Script" uid="uid://cr74tmbabicf6" path="res://Assets/Scripts/Levels/RestartButton.cs" id="8_2x7io"]
 [ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="8_q1wgt"]
-[ext_resource type="Texture2D" uid="uid://ck1rpw1euh5o3" path="res://Assets/Textures/Objects/Tile.png" id="10_i7uyu"]
+[ext_resource type="Texture2D" uid="uid://bfmqcws35ms6g" path="res://Assets/Textures/Objects/White_Tile.png" id="10_ky4c8"]
+[ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="11_wsyd5"]
 [ext_resource type="Script" uid="uid://bx58dfetxapmi" path="res://Assets/Scripts/Levels/LevelCompleteButton.cs" id="12_q1wgt"]
 [ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="14_xd5ua"]
 
@@ -48,7 +49,8 @@ script = ExtResource("2_ub1qs")
 GridWidth = 16
 GridHeight = 9
 CellSize = 128
-CellTexture = ExtResource("10_i7uyu")
+CellTexture = ExtResource("10_ky4c8")
+CellTexture2 = ExtResource("11_wsyd5")
 UseCellSprites = true
 
 [node name="Objects" type="Node2D" parent="."]

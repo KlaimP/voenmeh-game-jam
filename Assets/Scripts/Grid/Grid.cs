@@ -16,6 +16,7 @@ public partial class Grid : Node2D
 
 	// Поля для спрайтов ячеек
 	[Export] public Texture2D CellTexture { get; set; }
+	[Export] public Texture2D CellTexture2 { get; set; }
 	[Export] public bool UseCellSprites { get; set; } = false;
 	[Export] public Color CellModulate { get; set; } = new Color(1, 1, 1, 1);
 	private List<Sprite2D> _cellSprites = new List<Sprite2D>();
@@ -60,14 +61,23 @@ public partial class Grid : Node2D
 			sprite.QueueFree();
 		}
 		_cellSprites.Clear();
-		
+
 		// Создаем новые спрайты для каждой ячейки
+		bool isWhite = true;
 		for (int x = 0; x < GridWidth; x++)
 		{
 			for (int y = 0; y < GridHeight; y++)
 			{
 				var cellSprite = new Sprite2D();
-				cellSprite.Texture = CellTexture;
+				if (isWhite)
+				{
+					cellSprite.Texture = CellTexture;
+					isWhite = false;
+				}else
+				{
+					cellSprite.Texture = CellTexture2;
+					isWhite = true;
+				}
 				cellSprite.Centered = false;
 				cellSprite.Position = new Vector2(x * CellSize, y * CellSize);
 				cellSprite.Modulate = CellModulate;

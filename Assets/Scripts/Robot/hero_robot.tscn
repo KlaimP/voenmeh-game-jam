@@ -236,6 +236,7 @@ libraries = {
 autoplay = "Stay"
 
 [node name="Front" type="Node2D" parent="."]
+position = Vector2(0, -20)
 
 [node name="Head" type="Sprite2D" parent="Front"]
 texture = ExtResource("1_hwgex")
@@ -261,7 +262,7 @@ position = Vector2(-50, -35)
 texture = ExtResource("6_muktt")
 
 [node name="RightEar" type="Sprite2D" parent="Front"]
-position = Vector2(50, -35)
+position = Vector2(50, -36.560406)
 texture = ExtResource("7_ul0re")
 
 [node name="FlyModule" type="Sprite2D" parent="Front"]
