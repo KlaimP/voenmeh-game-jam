@@ -5,12 +5,25 @@ using System.Collections.Generic;
 /* Робот */
 public partial class Robot : GridObject
 {
+	// Спрайты робота
+	[Export] private Texture2D _spriteUp;
+	[Export] private Texture2D _spriteRight;
+	[Export] private Texture2D _spriteDown;
+	[Export] private Texture2D _spriteLeft;
 	[Export] public float MoveDuration { get; set; } = 0.3f;
 	[Export] public float RotationDuration { get; set; } = 0.2f;
 
 	private Sprite2D _sprite;
 	private bool _isRotating = false;
 	private bool _isMoving = false;
+	public enum RobotDirection
+	{
+		Up,
+		Right, 
+		Down,
+		Left
+	}
+	private RobotDirection _currentDirection = RobotDirection.Up;
 
 	// Инициализация параметров робота
 	public override void _Ready()
@@ -21,6 +34,9 @@ public partial class Robot : GridObject
 		
 		_sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
 		base._Ready();
+		
+		// Устанавливаем начальный спрайт
+   		 SetDirection(RobotDirection.Up);
 		
 		GD.Print("=== РОБОТ ГОТОВ ===");
 		_grid.PrintStateMatrix();
@@ -121,17 +137,21 @@ public partial class Robot : GridObject
 		if (_isRotating) return;
 		_isRotating = true;
 		
-		float targetRotation = Rotation - Mathf.Pi / 2f;
+		// Определяем новое направление
+		RobotDirection newDirection = _currentDirection switch
+		{
+			RobotDirection.Up => RobotDirection.Left,
+			RobotDirection.Right => RobotDirection.Up,
+			RobotDirection.Down => RobotDirection.Right,
+			RobotDirection.Left => RobotDirection.Down,
+			_ => RobotDirection.Up
+		};
 		
-		_moveTween = CreateTween();
-		_moveTween.SetEase(Tween.EaseType.Out);
-		_moveTween.SetTrans(Tween.TransitionType.Cubic);
-		_moveTween.TweenProperty(this, "rotation", targetRotation, RotationDuration);
-		
-		await ToSignal(_moveTween, "finished");
+		// Анимация смены спрайта
+		await AnimateSpriteChange(newDirection);
 		
 		_isRotating = false;
-		GD.Print($"РОБОТ: повернул налево. Угол: {Mathf.RadToDeg(Rotation)}°");
+		GD.Print($"РОБОТ: повернул налево. Направление: {newDirection}");
 	}
 
 	// Поворот направо
@@ -140,31 +160,91 @@ public partial class Robot : GridObject
 		if (_isRotating) return;
 		_isRotating = true;
 		
-		float targetRotation = Rotation + Mathf.Pi / 2f;
+		// Определяем новое направление
+		RobotDirection newDirection = _currentDirection switch
+		{
+			RobotDirection.Up => RobotDirection.Right,
+			RobotDirection.Right => RobotDirection.Down,
+			RobotDirection.Down => RobotDirection.Left,
+			RobotDirection.Left => RobotDirection.Up,
+			_ => RobotDirection.Up
+		};
 		
-		_moveTween = CreateTween();
-		_moveTween.SetEase(Tween.EaseType.Out);
-		_moveTween.SetTrans(Tween.TransitionType.Cubic);
-		_moveTween.TweenProperty(this, "rotation", targetRotation, RotationDuration);
-		
-		await ToSignal(_moveTween, "finished");
+		// Анимация смены спрайта
+		await AnimateSpriteChange(newDirection);
 		
 		_isRotating = false;
-		GD.Print($"РОБОТ: повернул направо. Угол: {Mathf.RadToDeg(Rotation)}°");
+		GD.Print($"РОБОТ: повернул направо. Направление: {newDirection}");
+	}
+
+	private async Task AnimateSpriteChange(RobotDirection newDirection)
+	{
+		// Анимация уменьшения
+		var tweenOut = CreateTween();
+		tweenOut.TweenProperty(_sprite, "scale", new Vector2(0.8f, 0.8f), RotationDuration / 2);
+		await ToSignal(tweenOut, "finished");
+		
+		// Меняем спрайт
+		SetDirection(newDirection);
+		
+		// Анимация возврата к нормальному размеру
+		var tweenIn = CreateTween();
+		tweenIn.TweenProperty(_sprite, "scale", Vector2.One, RotationDuration / 2);
+		await ToSignal(tweenIn, "finished");
+	}
+
+	// Метод обновления спрайта робота
+	private void UpdateRobotSprite()
+	{
+		if (_sprite == null) return;
+		
+		// Определяем направление по углу
+		float degrees = Mathf.RadToDeg(NormalizeAngle(Rotation));
+		
+		if (degrees >= 315 || degrees < 45) 
+			SetDirection(RobotDirection.Up);
+		else if (degrees >= 45 && degrees < 135) 
+			SetDirection(RobotDirection.Right);
+		else if (degrees >= 135 && degrees < 225) 
+			SetDirection(RobotDirection.Down);
+		else 
+			SetDirection(RobotDirection.Left);
+	}
+
+	private void SetDirection(RobotDirection direction)
+	{
+		_currentDirection = direction;
+		
+		switch (direction)
+		{
+			case RobotDirection.Up:
+				_sprite.Texture = _spriteUp;
+				break;
+			case RobotDirection.Right:
+				_sprite.Texture = _spriteRight;
+				break;
+			case RobotDirection.Down:
+				_sprite.Texture = _spriteDown;
+				break;
+			case RobotDirection.Left:
+				_sprite.Texture = _spriteLeft;
+				break;
+		}
 	}
 
 	// Получение направления движения (с нормализацией)
 	private Vector2I GetForwardDirection()
 	{
-		// Нормализуем угол только при получении направления
-		float normalizedRotation = NormalizeAngle(Rotation);
-		float degrees = Mathf.RadToDeg(normalizedRotation);
-		
-		if (degrees >= 315 || degrees < 45) return new Vector2I(0, -1);  // Вверх
-		if (degrees >= 45 && degrees < 135) return new Vector2I(1, 0);   // Вправо
-		if (degrees >= 135 && degrees < 225) return new Vector2I(0, 1);  // Вниз
-		return new Vector2I(-1, 0);                                      // Влево
+		switch (_currentDirection)
+		{
+			case RobotDirection.Up: return new Vector2I(0, -1);
+			case RobotDirection.Right: return new Vector2I(1, 0);
+			case RobotDirection.Down: return new Vector2I(0, 1);
+			case RobotDirection.Left: return new Vector2I(-1, 0);
+			default: return new Vector2I(0, -1);
+		}
 	}
+	public RobotDirection GetCurrentDirection() => _currentDirection; 
 
 	// Нормализация угла в диапазон [0, 2π)
 	private float NormalizeAngle(float angle)
