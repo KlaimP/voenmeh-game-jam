@@ -201,6 +201,9 @@ public partial class Grid : Node2D
 			else if (obj is BoxObject)      StateMatrix[position.X, position.Y] = 2;
 			else if (obj is ObstacleObject) StateMatrix[position.X, position.Y] = 3;
 			else if (obj is SawTrap)        StateMatrix[position.X, position.Y] = 4;
+			else if (obj is ThornsTrap)     StateMatrix[position.X, position.Y] = 5;
+			else if (obj is BoxTargetZone)  StateMatrix[position.X, position.Y] = 6;
+			else if (obj is FinishZone)     StateMatrix[position.X, position.Y] = 7;
 		}
 	}
 
@@ -214,7 +217,7 @@ public partial class Grid : Node2D
 		string header = "   ";
 		for (int x = 0; x < GridWidth; x++)
 		{
-			header += $"{x} ";
+			header += $" {x} ";
 		}
 		GD.Print(header);
 		
@@ -225,12 +228,15 @@ public partial class Grid : Node2D
 			{
 				switch (StateMatrix[x, y])
 				{
-					case 0: row += "."; break;
-					case 1: row += "R"; break;
-					case 2: row += "B"; break;
-					case 3: row += "X"; break;
-					case 4: row += "S"; break;
-					default: row += "?"; break;
+					case 0: row += " . "; break;
+					case 1: row += " R "; break;
+					case 2: row += " B "; break;
+					case 3: row += " X "; break;
+					case 4: row += " S "; break;
+					case 5: row += " T "; break;
+					case 6: row += " BZ "; break;
+					case 7: row += " FZ "; break;
+					default: row += " ? "; break;
 				}
 				if (x < GridWidth - 1) row += " ";
 			}
