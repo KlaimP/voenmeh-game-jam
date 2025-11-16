@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://f3vskfh8ckfe"
-path="res://.godot/imported/sci_fi_cancel.wav-b8dc590cafb2ed76d230dea45691eccd.sample"
+path="res://.godot/imported/sci_fi_cancel.wav-c0b8216fe8855f11e4bfd4b52760cb02.sample"
 
 [deps]
 
-source_file="res://Assets/Scripts/MainMenu/Sound/sci_fi_cancel.wav"
-dest_files=["res://.godot/imported/sci_fi_cancel.wav-b8dc590cafb2ed76d230dea45691eccd.sample"]
+source_file="res://Assets/Sounds/sci_fi_cancel.wav"
+dest_files=["res://.godot/imported/sci_fi_cancel.wav-c0b8216fe8855f11e4bfd4b52760cb02.sample"]
 
 [params]
 

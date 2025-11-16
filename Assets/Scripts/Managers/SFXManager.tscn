@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dfc4q2xggjjg5"]
+
+[ext_resource type="Script" uid="uid://ctbul8lmdjhwp" path="res://Assets/Scripts/Managers/SFXManager.cs" id="1_oinyt"]
+
+[node name="SFXManager" type="Node"]
+script = ExtResource("1_oinyt")

@@ -1,14 +1,14 @@
 [gd_scene load_steps=13 format=3 uid="uid://dt0p4qdkr1h0d"]
 
-[ext_resource type="Texture2D" uid="uid://bf8ll7lcngk15" path="res://Assets/Textures/Robot/Head.png" id="1_hwgex"]
-[ext_resource type="Texture2D" uid="uid://bs2c7gx1hq6og" path="res://Assets/Textures/Robot/Face.png" id="2_0e23l"]
+[ext_resource type="Texture2D" uid="uid://nh103qtirlip" path="res://Assets/Textures/Robot/Front_Head.png" id="1_hwgex"]
+[ext_resource type="Texture2D" uid="uid://cufw4ktfi16bw" path="res://Assets/Textures/Robot/Front_Face.png" id="2_0e23l"]
 [ext_resource type="Texture2D" uid="uid://iy8pctuwt8ci" path="res://Assets/Textures/Robot/Front_Body.png" id="3_5v5o2"]
-[ext_resource type="Texture2D" uid="uid://by4u4r8vffvvs" path="res://Assets/Textures/Robot/Left Arm.png" id="4_405up"]
-[ext_resource type="Texture2D" uid="uid://b0gvctt8k3hhq" path="res://Assets/Textures/Robot/Right Arm.png" id="5_d0kt3"]
-[ext_resource type="Texture2D" uid="uid://c7h6i3co5m16u" path="res://Assets/Textures/Robot/Left Ear.png" id="6_muktt"]
-[ext_resource type="Texture2D" uid="uid://ceg3sct536xgw" path="res://Assets/Textures/Robot/Right Ear.png" id="7_ul0re"]
-[ext_resource type="Texture2D" uid="uid://2minmn27pxnw" path="res://Assets/Textures/Robot/Fly Module.png" id="8_wvw2a"]
-[ext_resource type="Texture2D" uid="uid://bd7lnqn5w4ag2" path="res://Assets/Textures/Robot/Levitation.png" id="9_3hyho"]
+[ext_resource type="Texture2D" uid="uid://c8cbtfbaxvoqd" path="res://Assets/Textures/Robot/Front_Left_Arm.png" id="4_5v5o2"]
+[ext_resource type="Texture2D" uid="uid://q1my2oh20yqh" path="res://Assets/Textures/Robot/Front_Right_Arm.png" id="5_405up"]
+[ext_resource type="Texture2D" uid="uid://y1bxjod4ln4a" path="res://Assets/Textures/Robot/Front_Left_Ear.png" id="6_d0kt3"]
+[ext_resource type="Texture2D" uid="uid://b1qsonfdtem4e" path="res://Assets/Textures/Robot/Front_Right_Ear.png" id="7_muktt"]
+[ext_resource type="Texture2D" uid="uid://yofx2tm1fsmi" path="res://Assets/Textures/Robot/Front_Fly_Module.png" id="8_ul0re"]
+[ext_resource type="Texture2D" uid="uid://bcltexyetmjym" path="res://Assets/Textures/Robot/Front_Levitation.png" id="9_wvw2a"]
 
 [sub_resource type="Animation" id="Animation_0e23l"]
 length = 0.001
@@ -236,7 +236,6 @@ libraries = {
 autoplay = "Stay"
 
 [node name="Front" type="Node2D" parent="."]
-position = Vector2(0, -20)
 
 [node name="Head" type="Sprite2D" parent="Front"]
 texture = ExtResource("1_hwgex")
@@ -251,24 +250,24 @@ texture = ExtResource("3_5v5o2")
 
 [node name="LeftArm" type="Sprite2D" parent="Front"]
 position = Vector2(-62, 74)
-texture = ExtResource("4_405up")
+texture = ExtResource("4_5v5o2")
 
 [node name="RightArm" type="Sprite2D" parent="Front"]
 position = Vector2(62, 74)
-texture = ExtResource("5_d0kt3")
+texture = ExtResource("5_405up")
 
 [node name="LeftEar" type="Sprite2D" parent="Front"]
 position = Vector2(-50, -35)
-texture = ExtResource("6_muktt")
+texture = ExtResource("6_d0kt3")
 
 [node name="RightEar" type="Sprite2D" parent="Front"]
-position = Vector2(50, -36.560406)
-texture = ExtResource("7_ul0re")
+position = Vector2(50, -35)
+texture = ExtResource("7_muktt")
 
 [node name="FlyModule" type="Sprite2D" parent="Front"]
 position = Vector2(0, 135)
-texture = ExtResource("8_wvw2a")
+texture = ExtResource("8_ul0re")
 
 [node name="Levitation" type="Sprite2D" parent="Front"]
 position = Vector2(0, 156)
-texture = ExtResource("9_3hyho")
+texture = ExtResource("9_wvw2a")
