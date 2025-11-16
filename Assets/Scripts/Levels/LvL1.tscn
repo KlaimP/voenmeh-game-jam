@@ -51,6 +51,7 @@ GridWidth = 16
 GridHeight = 9
 CellSize = 128
 CellTexture = ExtResource("10_i7uyu")
+UseCellSprites = true
 
 [node name="Objects" type="Node2D" parent="."]
 
