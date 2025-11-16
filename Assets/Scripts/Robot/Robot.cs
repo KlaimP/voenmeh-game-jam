@@ -140,11 +140,21 @@ public partial class Robot : GridObject
 				GD.Print($"✓ Шаг {step} выполнен");
 			}
 			// Клетка с ловушкой - двигаемся и активируем ловушку
+			// else if (targetObject is TrapObject)
+			// {
+			// 	await MoveToGridPosition(newPosition, MoveDuration);
+			// 	GD.Print($"✓ Шаг {step} выполнен (на ловушку)");
+			// 	targetObject.OnRobotEnter(this);
+			// }
+			// Клетка с ловушкой - умираем сразу
 			else if (targetObject is TrapObject)
 			{
 				await MoveToGridPosition(newPosition, MoveDuration);
-				GD.Print($"✓ Шаг {step} выполнен (на ловушку)");
-				targetObject.OnRobotEnter(this);
+				GD.Print($"❌ Робот наступил на ловушку!");
+				
+				// ВЫЗЫВАЕМ СМЕРТЬ ВМЕСТО TakeDamage
+				Die();
+				return; // Немедленно прерываем движение
 			}
 			// Клетка с зоной (финиш или целевая) - просто двигаемся
 			else if (targetObject is FinishZone || targetObject is BoxTargetZone)
@@ -200,6 +210,48 @@ public partial class Robot : GridObject
 		var tween = CreateTween();
 		tween.TweenProperty(this, "modulate", new Color(1, 0.3f, 0.3f, 1), 0.1f);
 		tween.TweenProperty(this, "modulate", new Color(1, 1, 1, 1), 0.1f);
+	}
+
+	// Метод смерти робота
+	public async void Die()
+	{
+		GD.Print("💀 РОБОТ УМЕР!");
+		
+		// Воспроизведение звука смерти (используем DamageSound)
+		if (DamageSound != null)
+		{
+			SFXManager.Instance.PlaySound(DamageSound, -25.0f);
+		}
+		
+		// Анимация смерти
+		await PlayDeathEffect();
+		
+		// Отключаем управление
+		SetProcess(false);
+		
+		// Перезагружаем уровень через некоторое время
+		await ToSignal(GetTree().CreateTimer(1.5), "timeout");
+		ReloadLevel();
+	}
+
+	// Анимация смерти
+	private async Task PlayDeathEffect()
+	{
+		var tween = CreateTween();
+		
+		// Эффект "взрыва" - быстро увеличиваем и затем исчезаем
+		tween.TweenProperty(this, "scale", new Vector2(1.3f, 1.3f), 0.2f);
+		tween.TweenProperty(this, "modulate", new Color(1, 0.3f, 0.3f, 0.8f), 0.2f);
+		tween.TweenProperty(this, "scale", new Vector2(0.1f, 0.1f), 0.3f);
+		tween.TweenProperty(this, "modulate", new Color(1, 0, 0, 0), 0.3f);
+		
+		await ToSignal(tween, "finished");
+	}
+
+	// Перезагрузка уровня
+	private void ReloadLevel()
+	{
+		GetTree().ReloadCurrentScene();
 	}
 
 	// Поворот налево
@@ -421,27 +473,6 @@ public partial class Robot : GridObject
 			targetObj is BoxTargetZone || // содержит целевую зону
 			targetObj is FinishZone;      // содержит финишную зону
 	}
-
-	// Уничтожение объекта при толкании на ловушку
-	// private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)
-	// {
-	// 	GD.Print($"УНИЧТОЖЕНИЕ: объект {objectToDestroy.ObjectType} уничтожен ловушкой в {trapPosition}");
-		
-	// 	// Запоминаем позицию перед уничтожением для выхода из зоны
-	// 	Vector2I destroyPosition = objectToDestroy.GridPosition;
-		
-	// 	// Визуальные эффекты уничтожения - ВЫЗЫВАЕМ МЕТОД ОБЪЕКТА
-	// 	await objectToDestroy.OnDestroyed();
-		
-	// 	// Если это ящик - вызываем выход из зоны
-	// 	if (objectToDestroy is BoxObject box) CheckBoxExitOnDestroy(box, destroyPosition); 
-		
-	// 	// Удаляем объект из сетки
-	// 	_grid.RemoveObjectFromGrid(objectToDestroy.GridPosition);
-		
-	// 	// Уничтожаем объект
-	// 	objectToDestroy.QueueFree();
-	// }
 
 	// Модифицируем метод DestroyObjectOnTrap
     private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)

@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bss7vo3dgsc48" path="res://Assets/Textures/Robot/RobotLeft.png" id="5_s7p1y"]
 [ext_resource type="PackedScene" uid="uid://dt0p4qdkr1h0d" path="res://Assets/Scripts/Robot/hero_robot.tscn" id="6_d07hm"]
 [ext_resource type="AudioStream" uid="uid://cskysn1h5xwbg" path="res://Assets/Sounds/razor_buzz.wav" id="6_ow2ri"]
-[ext_resource type="AudioStream" uid="uid://d0g0lvu0ubd1f" path="res://Assets/Sounds/hurt.wav" id="7_s7p1y"]
+[ext_resource type="AudioStream" uid="uid://de4foui2nygit" path="res://Assets/Sounds/explosion_small.wav" id="7_s7p1y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mo4m"]
 size = Vector2(64, 64)
