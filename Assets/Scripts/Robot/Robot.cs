@@ -19,7 +19,7 @@ public partial class Robot : GridObject
 	private Sprite2D _sprite;
 	private bool _isRotating = false;
 	private bool _isMoving = false;
-	// Направление взгляда робота
+	// Возможные направления взгляда робота
 	public enum RobotDirection
 	{
 		Up,    // Вверх
@@ -27,10 +27,8 @@ public partial class Robot : GridObject
 		Down,  // Вниз
 		Left   // Влево
 	}
+	// Текущее направление
 	private RobotDirection _currentDirection = RobotDirection.Up;
-	// Поле предыдущей позиции
-	private Vector2I _lastPosition;
-	private FinishZone _currentFinishZone;
 
 
 
@@ -46,8 +44,6 @@ public partial class Robot : GridObject
 
 		// Устанавливаем начальный спрайт
    		SetDirection(RobotDirection.Up);
-		// Запоминаем позицию робота
-		_lastPosition = GridPosition;
 
 		GD.Print("=== РОБОТ ГОТОВ ===");
 		_grid.PrintStateMatrix();
@@ -71,7 +67,7 @@ public partial class Robot : GridObject
 	}
 
 	// ------------ КОМАНДЫ РОБОТА ------------ */
-	// Упрощенная проверка зон после движения
+	// Проверка финишной зоны (вызов метода зоны)
 	private void CheckCurrentZone()
 	{
 		foreach (var finishZone in FinishZone.AllFinishZones)
@@ -95,29 +91,17 @@ public partial class Robot : GridObject
 		}
 	}
 
-	// Переопредели MoveToGridPosition для отслеживания зон
+	// Переопределение MoveToGridPosition для отслеживания зон (РОБОТ)
 	public override async Task MoveToGridPosition(Vector2I newPosition, float duration = 0.3f)
 	{
-		if (_grid == null) return;
-		if (!CanMoveToPosition(newPosition)) return;
-
-		Vector2I oldPosition = GridPosition;
-		Vector2 targetWorldPos = _grid.GridToWorld(newPosition);
-
-		_moveTween = CreateTween();
-		_moveTween.SetEase(Tween.EaseType.Out);
-		_moveTween.SetTrans(Tween.TransitionType.Cubic);
-		_moveTween.TweenProperty(this, "global_position", targetWorldPos, duration);
+		// Вызов базовой реализации
+		await base.MoveToGridPosition(newPosition, duration);
 		
-		await ToSignal(_moveTween, "finished");
-		
-		GridPosition = newPosition;
-		_grid.UpdateObjectPosition(this, oldPosition, newPosition);
-		
-		// Простая проверка зоны в новой позиции
+		// Проверка финишной зоны
 		CheckCurrentZone();
 	}
 	
+	// Движение вперёд
 	public async Task MoveForward(int steps = 1)
 	{
 		// Проверка движения
@@ -291,7 +275,7 @@ public partial class Robot : GridObject
 		}
 	}
 
-	// Получение направления движения (с нормализацией)
+	// Получение направления движения
 	private Vector2I GetForwardDirection()
 	{
 		switch (_currentDirection)
@@ -303,6 +287,7 @@ public partial class Robot : GridObject
 			default: return new Vector2I(0, -1);
 		}
 	}
+	// Получение текущего направления (элемент перечисления)
 	public RobotDirection GetCurrentDirection() => _currentDirection; 
 
 	// Нормализация угла в диапазон [0, 2π)
@@ -313,32 +298,35 @@ public partial class Robot : GridObject
 		return angle;
 	}
 
-	// Толкание одного объекта
-	// Обнови метод толкания чтобы можно было толкать на зоны
+	// Толкание ОДНОГО объекта
 	private async Task PushSingleObject(Vector2I objectPosition, Vector2I direction)
 	{
 		GD.Print($"РОБОТ: начинаю толкать объект в {objectPosition}");
 		
+		// Определение объекта толкания и его возможности толкать
 		GridObject objectToPush = _grid.GetObjectAt(objectPosition);
-		
 		if (objectToPush == null || !objectToPush.CanBePushed) return;
 		
+		// Определение новой позиции (куда будет перемещён объект) и есть ли возможность
 		Vector2I newObjectPos = objectPosition + direction;
-		
 		if (!_grid.IsInGridBounds(newObjectPos)) return;
 		
+		// Объект за толкаемым объектом
 		GridObject targetObject = _grid.GetObjectAt(newObjectPos);
 		
-		// Запоминаем старую позицию ящика
+		// Запоминаем старую позицию толкаемого объекта
 		Vector2I oldBoxPosition = objectToPush.GridPosition;
 		
+		// Проверки
 		if (targetObject != null)
 		{
+			// Ловушка за объектом
 			if (targetObject is TrapObject)
 			{
 				GD.Print($"РОБОТ: объект {objectToPush.ObjectType} толкается на ловушку!");
 				await DestroyObjectOnTrap(objectToPush, newObjectPos);
 			}
+			// Зоны за объектом
 			else if (targetObject is BoxTargetZone || targetObject is FinishZone)
 			{
 				// Разрешаем толкать на обе зоны
@@ -348,10 +336,7 @@ public partial class Robot : GridObject
 				await objectToPush.MoveToGridPosition(newObjectPos, MoveDuration);
 				
 				// Проверяем зоны только для BoxTargetZone (финишные зоны только для робота)
-				if (objectToPush is BoxObject box)
-				{
-					CheckBoxZone(box, newObjectPos, oldBoxPosition);
-				}
+				if (objectToPush is BoxObject box) CheckBoxZone(box, newObjectPos, oldBoxPosition); 
 			}
 			else
 			{
@@ -359,23 +344,21 @@ public partial class Robot : GridObject
 				return;
 			}
 		}
+		// За толкающим объектом нет ничего
 		else
 		{
 			GD.Print($"РОБОТ: толкаю {objectToPush.ObjectType} из {objectPosition} в {newObjectPos}");
 			await objectToPush.MoveToGridPosition(newObjectPos, MoveDuration);
 			
 			// Проверяем зоны после движения
-			if (objectToPush is BoxObject box)
-			{
-				CheckBoxZone(box, newObjectPos, oldBoxPosition);
-			}
+			if (objectToPush is BoxObject box) CheckBoxZone(box, newObjectPos, oldBoxPosition);
 		}
 		
+		// Перемещаем робота на позицию прошлого объекта
 		await MoveToGridPosition(objectPosition, MoveDuration);
 		GD.Print($"РОБОТ: успешно завершил действие");
 	}
 
-	// Упрощенная проверка зоны для ящика
 	// Проверка целевых зон для ящиков
 	private void CheckBoxZone(BoxObject box, Vector2I newPosition, Vector2I oldPosition)
 	{
@@ -399,27 +382,30 @@ public partial class Robot : GridObject
 		}
 	}
 
-	// Обнови CanPushObject чтобы разрешить толкание на зоны
+	// Проверка возможности толкания объекта
 	private bool CanPushObject(Vector2I objectPosition, Vector2I direction)
 	{
+		// Координаты в пределах сетки
 		if (!_grid.IsInGridBounds(objectPosition)) return false;
 		
+		// Получение объекта для толкания
 		GridObject obj = _grid.GetObjectAt(objectPosition);
 		if (obj == null || !obj.CanBePushed) return false;
 		
+		// Проверка позиции, куда будет вытолкнут объект
 		Vector2I nextPos = objectPosition + direction;
 		if (!_grid.IsInGridBounds(nextPos)) return false;
 		
+		// Объект за объектом толкания
 		GridObject targetObj = _grid.GetObjectAt(nextPos);
 		
-		// Можно толкать если клетка пустая ИЛИ содержит ловушку ИЛИ содержит целевую зону ИЛИ содержит финишную зону
-		return targetObj == null || 
-			targetObj is TrapObject || 
-			targetObj is BoxTargetZone || 
-			targetObj is FinishZone; // Разрешаем толкать на финишные зоны
+		// Можно толкать если 
+		return targetObj == null ||       // клетка пустая ИЛИ
+			targetObj is TrapObject ||    // содержит ловушку ИЛИ
+			targetObj is BoxTargetZone || // содержит целевую зону
+			targetObj is FinishZone;      // содержит финишную зону
 	}
 
-	// Уничтожение объекта при толкании на ловушку
 	// Уничтожение объекта при толкании на ловушку
 	private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)
 	{
@@ -428,14 +414,11 @@ public partial class Robot : GridObject
 		// Запоминаем позицию перед уничтожением для выхода из зоны
 		Vector2I destroyPosition = objectToDestroy.GridPosition;
 		
-		// Визуальные эффекты уничтожения
-		await PlayDestructionEffects(objectToDestroy);
+		// Визуальные эффекты уничтожения - ВЫЗЫВАЕМ МЕТОД ОБЪЕКТА
+		await objectToDestroy.OnDestroyed();
 		
 		// Если это ящик - вызываем выход из зоны
-		if (objectToDestroy is BoxObject box)
-		{
-			CheckBoxExitOnDestroy(box, destroyPosition);
-		}
+		if (objectToDestroy is BoxObject box) CheckBoxExitOnDestroy(box, destroyPosition); 
 		
 		// Удаляем объект из сетки
 		_grid.RemoveObjectFromGrid(objectToDestroy.GridPosition);
@@ -444,7 +427,7 @@ public partial class Robot : GridObject
 		objectToDestroy.QueueFree();
 	}
 
-	// Проверка выхода из зоны при уничтожении ящика
+	// Проверка выхода из зоны при УНИЧТОЖЕНИИ ящика
 	private void CheckBoxExitOnDestroy(BoxObject box, Vector2I position)
 	{
 		foreach (var targetZone in BoxTargetZone.AllBoxTargetZones)
@@ -457,15 +440,5 @@ public partial class Robot : GridObject
 		}
 	}
 
-	// Визуальные эффекты уничтожения
-	private async Task PlayDestructionEffects(GridObject obj)
-	{
-		// Анимация исчезновения
-		var tween = CreateTween();
-		tween.TweenProperty(obj, "scale", Vector2.Zero, 0.2f);
-		tween.TweenProperty(obj, "modulate", new Color(1, 0, 0, 0.5f), 0.2f);
-		
-		await ToSignal(tween, "finished");
-	}
 
 }

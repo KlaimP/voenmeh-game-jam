@@ -15,7 +15,7 @@ public partial class ThornsTrap : TrapObject
         base._Ready();
     }
 
-    // Фиксирование дамага
+    // Переопределение функции удара робота
     protected override void ActivateTrap(Robot robot)
     {
         GD.Print($"🦴 Шипы активированы! Робот получает урон: {Damage}");

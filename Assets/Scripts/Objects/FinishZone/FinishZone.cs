@@ -1,17 +1,22 @@
 using Godot;
 using System.Collections.Generic;
 
+/* Объект - Финишная зона робота
+   Наследование: GridObject
+*/
 public partial class FinishZone : GridObject
 {
+    // Все финишные зоны (для расширения программы)
     public static List<FinishZone> AllFinishZones = new();
-    
+    // Флаг присутствия в зоне робота
     public bool HasRobot { get; private set; } = false;
     
+    // Инициализация
     public override void _Ready()
     {
         ObjectType = "FINISH_ZONE";
-        IsSolid = false;
-        CanBePushed = false;
+        IsSolid = false;     // Нетвёрдая
+        CanBePushed = false; // Нельзя двигать
         base._Ready();
         
         // Добавляем в статический список
@@ -19,6 +24,7 @@ public partial class FinishZone : GridObject
         GD.Print($"Финишная зона добавлена в {GridPosition}. Всего зон: {AllFinishZones.Count}");
     }
     
+    // Удаление из дерева
     public override void _ExitTree()
     {
         // Удаляем из списка при уничтожении
@@ -26,6 +32,9 @@ public partial class FinishZone : GridObject
         base._ExitTree();
     }
     
+
+
+    // Фиксация входа робота в зону
     public void OnRobotEnter(Robot robot)
     {
         if (!HasRobot)
@@ -36,6 +45,7 @@ public partial class FinishZone : GridObject
         }
     }
 
+    // Фиксация выхода робота из зоны
     public void OnRobotExit()
     {
         if (HasRobot)
@@ -46,12 +56,14 @@ public partial class FinishZone : GridObject
         }
     }
     
+    // Анимация эффекта входа
     private void PlayActivationEffect()
     {
         var tween = CreateTween();
         tween.TweenProperty(this, "modulate", new Color(0, 1, 1, 1), 0.2f);
     }
     
+    // Анимация эффекта выхода
     private void PlayDeactivationEffect()
     {
         var tween = CreateTween();

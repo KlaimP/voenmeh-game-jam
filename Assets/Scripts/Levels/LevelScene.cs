@@ -189,6 +189,7 @@ public partial class LevelScene : Node2D
         if (LevelGrid.AddObjectToGrid(zone, position))
         {
             GD.Print($"Целевая зона для ящиков {zoneNumber} создана в позиции {position}");
+            zone.UpdateWorldPositionImmediately();
         }
         else
         {
@@ -208,6 +209,7 @@ public partial class LevelScene : Node2D
         if (LevelGrid.AddObjectToGrid(zone, position))
         {
             GD.Print($"Финишная зона создана в позиции {position}");
+            zone.UpdateWorldPositionImmediately();
         }
         else
         {
@@ -222,7 +224,6 @@ public partial class LevelScene : Node2D
         {
             var box = BoxPrefab.Instantiate<BoxObject>();
             _objectsContainer.AddChild(box);
-            
             CallDeferred(nameof(DeferredAddBox), box, positions[i], i + 1);
         }
     }
@@ -314,6 +315,24 @@ public partial class LevelScene : Node2D
 
 
     /* ПРОВЕРКА УРОВНЯ */
+    // Функция для вызова из кнопки или по завершении команд (ОСНОВНАЯ)
+    public void OnLevelCompletionCheck()
+    {
+        if (CheckLevelCompletion())
+        {
+            GD.Print("🎉 УРОВЕНЬ ПРОЙДЕН! 🎉");
+            // Здесь можно добавить:
+            // - Показать сообщение о победе
+            // - Воспроизвести звук
+            // - Загрузить следующий уровень
+            // - Показать кнопку продолжения
+        }
+        else
+        {
+            GD.Print("💪 Продолжайте выполнение команд...");
+        }
+    }
+    
     // Функция проверки завершения уровня
     public bool CheckLevelCompletion()
     {
@@ -371,21 +390,5 @@ public partial class LevelScene : Node2D
         return false;
     }
 
-    // Функция для вызова из кнопки или по завершении команд
-    public void OnLevelCompletionCheck()
-    {
-        if (CheckLevelCompletion())
-        {
-            GD.Print("🎉 УРОВЕНЬ ПРОЙДЕН! 🎉");
-            // Здесь можно добавить:
-            // - Показать сообщение о победе
-            // - Воспроизвести звук
-            // - Загрузить следующий уровень
-            // - Показать кнопку продолжения
-        }
-        else
-        {
-            GD.Print("💪 Продолжайте выполнение команд...");
-        }
-    }
+    
 }

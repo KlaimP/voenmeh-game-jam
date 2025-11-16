@@ -15,7 +15,7 @@ public partial class SawTrap : TrapObject
         base._Ready();
     }
 
-    // Фиксирование дамага
+    // Переопределение функции удара робота
     protected override void ActivateTrap(Robot robot)
     {
         GD.Print($"🔪 Пила активирована! Робот получает урон: {Damage}");
