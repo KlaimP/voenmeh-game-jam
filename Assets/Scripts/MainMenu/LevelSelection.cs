@@ -1,4 +1,6 @@
 using Godot;
+using System;
+using System.Threading.Tasks;
 
 public partial class LevelSelection : Control
 {
@@ -20,8 +22,22 @@ public partial class LevelSelection : Control
 	[Export]
 	public Button BackButton { get; set; }
 
+	// Добавляем звуковые ресурсы
+	[Export]
+	public AudioStream HoverSound { get; set; }
+	
+	[Export]
+	public AudioStream ClickSound { get; set; }
+	
+	// AudioStreamPlayer для воспроизведения
+	private AudioStreamPlayer audioPlayer;
+
 	public override void _Ready()
 	{
+		// Создаем аудиоплеер
+		audioPlayer = new AudioStreamPlayer();
+		AddChild(audioPlayer);
+		
 		// Подключаем сигналы кнопок уровней
 		Level1Button.Pressed += () => OnLevelButtonPressed(1);
 		Level2Button.Pressed += () => OnLevelButtonPressed(2);
@@ -30,14 +46,53 @@ public partial class LevelSelection : Control
 		Level5Button.Pressed += () => OnLevelButtonPressed(5);
 		
 		BackButton.Pressed += OnBackButtonPressed;
+		
+		// Подключаем сигналы наведения для всех кнопок
+		ConnectHoverSignals();
+
+		// Убеждаемся, что музыка играет
+    MusicManager.Instance.PlayMusic();
 	}
 
-	private void OnLevelButtonPressed(int levelNumber)
+	private void ConnectHoverSignals()
 	{
+		Level1Button.MouseEntered += () => OnButtonHover();
+		Level2Button.MouseEntered += () => OnButtonHover();
+		Level3Button.MouseEntered += () => OnButtonHover();
+		Level4Button.MouseEntered += () => OnButtonHover();
+		Level5Button.MouseEntered += () => OnButtonHover();
+		BackButton.MouseEntered += () => OnButtonHover();
+	}
+
+	private void OnButtonHover()
+	{
+		if (HoverSound != null)
+		{
+			audioPlayer.Stream = HoverSound;
+			audioPlayer.Play();
+		}
+	}
+
+	private void PlayClickSound()
+	{
+		if (ClickSound != null)
+		{
+			audioPlayer.Stream = ClickSound;
+			audioPlayer.Play();
+		}
+	}
+
+	private async void OnLevelButtonPressed(int levelNumber)
+	{
+		// Воспроизводим звук клика
+		PlayClickSound();
+		
 		GD.Print($"Загружается уровень {levelNumber}");
 		
+		// Небольшая задержка для воспроизведения звука перед сменой сцены
+		await ToSignal(GetTree().CreateTimer(0.1), "timeout");
+		
 		// Здесь загружаем соответствующий уровень
-		// Замените пути на ваши реальные сцены уровней
 		switch (levelNumber)
 		{
 			case 1:
@@ -58,9 +113,15 @@ public partial class LevelSelection : Control
 		}
 	}
 
-	private void OnBackButtonPressed()
+	private async void OnBackButtonPressed()
 	{
+		// Воспроизводим звук клика
+		PlayClickSound();
+		
+		// Небольшая задержка для воспроизведения звука перед сменой сцены
+		await ToSignal(GetTree().CreateTimer(0.1), "timeout");
+
 		// Возвращаемся в главное меню
-		GetTree().ChangeSceneToFile("res://MainMenu/MainMenu.tscn");
+		GetTree().ChangeSceneToFile("res://Assets/Scripts/MainMenu/MainMenu.tscn");
 	}
 }

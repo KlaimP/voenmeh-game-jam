@@ -93,4 +93,22 @@ public partial class GridObject : Node2D
 
 	// Виртуальный метод для обработки наступления робота (для нетвёрдых объектов)
     public virtual void OnRobotEnter(Robot robot) { }
+
+	// Виртуальный метод для анимации разрушения
+    public virtual async Task PlayDestructionEffects()
+    {
+        // Базовая анимация - исчезновение с уменьшением и покраснением
+        var tween = CreateTween();
+        tween.TweenProperty(this, "scale", Vector2.Zero, 0.2f);
+        tween.TweenProperty(this, "modulate", new Color(1, 0, 0, 0.5f), 0.2f);
+        
+        await ToSignal(tween, "finished");
+    }
+
+    // Виртуальный метод для обработки разрушения
+    public virtual async Task OnDestroyed()
+    {
+        GD.Print($"{ObjectType} уничтожается в позиции {GridPosition}");
+        await PlayDestructionEffects();
+    }
 }

@@ -14,55 +14,149 @@ public partial class Grid : Node2D
 	[Export] public Color BackgroundColor = new Color(0.1f, 0.1f, 0.1f);
 	[Export] public bool ShowCellNumbers { get; set; } = true;
 
+	// Поля для спрайтов ячеек
+    [Export] public Texture2D CellTexture { get; set; }
+    [Export] public bool UseCellSprites { get; set; } = false;
+    [Export] public Color CellModulate { get; set; } = new Color(1, 1, 1, 1);
+    private List<Sprite2D> _cellSprites = new List<Sprite2D>();
+
 	// Словарь всех имеющихся объектов на сетке
 	private Dictionary<Vector2I, GridObject> _gridObjects = new();
 	// Состояние матрицы
 	public int[,] StateMatrix { get; private set; }
 
+
+
+
+
 	// Инициализация сетки
 	public override void _Ready()
 	{
+		// Не инициализируем здесь, будем вызывать вручную из LevelScene
+		GD.Print($"Grid загружен: {GridWidth}x{GridHeight}, CellSize: {CellSize}");
+	}
+
+	// Публичный метод для инициализации сетки (вызывается из LevelScene)
+	public void InitializeGrid()
+	{
 		InitializeStateMatrix();
+		
+		// Создаем спрайты для каждой ячейки если нужно
+		if (UseCellSprites && CellTexture != null)
+		{
+			CreateCellSprites();
+		}
+		
 		QueueRedraw();
 		GD.Print($"Grid инициализирован: {GridWidth}x{GridHeight}, CellSize: {CellSize}");
 	}
 
+	// Создание спрайтов для всех ячеек
+    private void CreateCellSprites()
+    {
+        // Очищаем старые спрайты
+        foreach (var sprite in _cellSprites)
+        {
+            sprite.QueueFree();
+        }
+        _cellSprites.Clear();
+        
+        // Создаем новые спрайты для каждой ячейки
+        for (int x = 0; x < GridWidth; x++)
+        {
+            for (int y = 0; y < GridHeight; y++)
+            {
+                var cellSprite = new Sprite2D();
+                cellSprite.Texture = CellTexture;
+                cellSprite.Centered = false;
+                cellSprite.Position = new Vector2(x * CellSize, y * CellSize);
+                cellSprite.Modulate = CellModulate;
+                
+                // Масштабируем текстуру под размер ячейки
+                if (CellTexture != null)
+                {
+                    cellSprite.Scale = new Vector2(
+                        (float)CellSize / CellTexture.GetWidth(),
+                        (float)CellSize / CellTexture.GetHeight()
+                    );
+                }
+                
+                AddChild(cellSprite);
+                _cellSprites.Add(cellSprite);
+            }
+        }
+    }
+
 	// Отрисока сетки (с координатами)
 	public override void _Draw()
-	{
-		// Рисуем фон
-		DrawRect(new Rect2(0, 0, GridWidth * CellSize, GridHeight * CellSize), BackgroundColor);
-		
-		// Рисуем вертикальные линии
-		for (int x = 0; x <= GridWidth; x++)
-		{
-			Vector2 start = new Vector2(x * CellSize, 0);
-			Vector2 end = new Vector2(x * CellSize, GridHeight * CellSize);
-			DrawLine(start, end, GridColor, 2);
-		}
-		
-		// Рисуем горизонтальные линии
-		for (int y = 0; y <= GridHeight; y++)
-		{
-			Vector2 start = new Vector2(0, y * CellSize);
-			Vector2 end = new Vector2(GridWidth * CellSize, y * CellSize);
-			DrawLine(start, end, GridColor, 2);
-		}
-		
-		// Рисуем координаты ячеек
-		if (ShowCellNumbers)
-		{
-			for (int x = 0; x < GridWidth; x++)
-			{
-				for (int y = 0; y < GridHeight; y++)
-				{
-					string coordText = $"{x},{y}";
-					Vector2 position = new Vector2(x * CellSize + 5, y * CellSize + 15);
-					DrawString(ThemeDB.FallbackFont, position, coordText, HorizontalAlignment.Left, -1, 12);
-				}
-			}
-		}
-	}
+    {
+        // Рисуем фон только если нет спрайтов ячеек
+        if (!UseCellSprites || CellTexture == null)
+        {
+            DrawRect(new Rect2(0, 0, GridWidth * CellSize, GridHeight * CellSize), BackgroundColor);
+        }
+        
+        // Рисуем вертикальные линии
+        for (int x = 0; x <= GridWidth; x++)
+        {
+            Vector2 start = new Vector2(x * CellSize, 0);
+            Vector2 end = new Vector2(x * CellSize, GridHeight * CellSize);
+            DrawLine(start, end, GridColor, 2);
+        }
+        
+        // Рисуем горизонтальные линии
+        for (int y = 0; y <= GridHeight; y++)
+        {
+            Vector2 start = new Vector2(0, y * CellSize);
+            Vector2 end = new Vector2(GridWidth * CellSize, y * CellSize);
+            DrawLine(start, end, GridColor, 2);
+        }
+        
+        // Рисуем координаты ячеек
+        if (ShowCellNumbers)
+        {
+            for (int x = 0; x < GridWidth; x++)
+            {
+                for (int y = 0; y < GridHeight; y++)
+                {
+                    string coordText = $"{x},{y}";
+                    Vector2 position = new Vector2(x * CellSize + 5, y * CellSize + 15);
+                    DrawString(ThemeDB.FallbackFont, position, coordText, HorizontalAlignment.Left, -1, 12);
+                }
+            }
+        }
+    }
+
+	// Методы для управления спрайтами ячеек
+    public void SetCellTexture(Texture2D texture)
+    {
+        CellTexture = texture;
+        UseCellSprites = texture != null;
+        
+        if (UseCellSprites)
+        {
+            CreateCellSprites();
+        }
+        else
+        {
+            // Удаляем спрайты если отключаем
+            foreach (var sprite in _cellSprites)
+            {
+                sprite.QueueFree();
+            }
+            _cellSprites.Clear();
+        }
+        
+        QueueRedraw();
+    }
+	public void SetCellModulate(Color modulate)
+    {
+        CellModulate = modulate;
+        foreach (var sprite in _cellSprites)
+        {
+            sprite.Modulate = modulate;
+        }
+    }
 
 
 
@@ -144,24 +238,21 @@ public partial class Grid : Node2D
 
 	// Полная очистка словаря (и удаление объектов)
 	public void ClearGrid()
-	{
-		GD.Print($"Очистка сетки: {_gridObjects.Count} объектов");
-		
-		// Сначала уничтожаем все объекты
-		foreach (var kvp in _gridObjects)
-		{
-			GridObject obj = kvp.Value;
-			if (IsInstanceValid(obj)) obj.QueueFree();
-		}
-		
-		// Потом очищаем словарь
-		_gridObjects.Clear();
-		
-		// Очищаем матрицу состояния
-		InitializeStateMatrix();
-		
-		GD.Print("Сетка очищена");
-	}
+    {
+        GD.Print($"Очистка сетки: {_gridObjects.Count} объектов");
+        
+        // Уничтожаем все объекты
+        foreach (var kvp in _gridObjects)
+        {
+            GridObject obj = kvp.Value;
+            if (IsInstanceValid(obj)) obj.QueueFree();
+        }
+        
+        _gridObjects.Clear();
+        InitializeStateMatrix();
+        
+        GD.Print("Сетка очищена");
+    }
 
 
 

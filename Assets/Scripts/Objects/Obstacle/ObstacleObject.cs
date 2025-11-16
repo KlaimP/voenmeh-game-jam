@@ -9,7 +9,7 @@ public partial class ObstacleObject : GridObject
 	public override void _Ready()
 	{
 		ObjectType = "OBSTACLE";
-		IsSolid = true;      // Твёрдый
+		IsSolid = true;      // Твёрдая
 		CanBePushed = false; // Нельзя двигать
 		base._Ready();
 	}
