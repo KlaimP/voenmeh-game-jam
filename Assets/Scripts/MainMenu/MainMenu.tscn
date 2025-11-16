@@ -1,28 +1,573 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1id05gr2t0ym"]
+[gd_scene load_steps=5 format=3 uid="uid://c1id05gr2t0ym"]
 
 [ext_resource type="Script" uid="uid://dwnv1sigkq8o3" path="res://Assets/Scripts/MainMenu/MainMenu.cs" id="1_otibh"]
-[ext_resource type="AudioStream" uid="uid://cja6r2k2aoc2u" path="res://Assets/Sounds/select_1.wav" id="2_4welw"]
-[ext_resource type="AudioStream" uid="uid://dg5oobdus6gpe" path="res://Assets/Sounds/cancel.wav" id="3_twgmf"]
+[ext_resource type="PackedScene" uid="uid://dt0p4qdkr1h0d" path="res://Assets/Scripts/Robot/hero_robot.tscn" id="3_4welw"]
+[ext_resource type="Texture2D" uid="uid://bfdb3ce87kavh" path="res://Assets/Textures/Objects/Crate.png" id="4_epn6w"]
+[ext_resource type="Texture2D" uid="uid://d0hjj734gisn" path="res://Assets/Textures/Objects/rock.png" id="4_twgmf"]
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayButton", "ExitButton")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_otibh")
-HoverSound = ExtResource("2_4welw")
-ClickSound = ExtResource("3_twgmf")
+PlayButton = NodePath("VBoxContainer/PlayButton")
+ExitButton = NodePath("VBoxContainer/ExitButton")
 
-[node name="PlayButton" type="Button" parent="."]
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
 layout_mode = 0
-offset_left = 760.0
-offset_top = 450.0
-offset_right = 1160.0
-offset_bottom = 510.0
+offset_right = 182.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect2" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 182.0
+offset_right = 364.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect3" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 364.0
+offset_right = 546.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect4" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 546.0
+offset_right = 728.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect5" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 728.0
+offset_right = 910.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect6" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 910.0
+offset_right = 1092.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect7" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1092.0
+offset_right = 1274.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect8" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1274.0
+offset_right = 1456.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect9" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1456.0
+offset_right = 1638.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect10" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1638.0
+offset_right = 1820.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect11" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1820.0
+offset_right = 2002.0
+offset_bottom = 182.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect12" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_top = 182.0
+offset_right = 182.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect13" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 182.0
+offset_top = 182.0
+offset_right = 364.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect14" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 364.0
+offset_top = 182.0
+offset_right = 546.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect15" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 546.0
+offset_top = 182.0
+offset_right = 728.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect16" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 728.0
+offset_top = 182.0
+offset_right = 910.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect17" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 910.0
+offset_top = 182.0
+offset_right = 1092.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect18" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1092.0
+offset_top = 182.0
+offset_right = 1274.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect19" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1274.0
+offset_top = 182.0
+offset_right = 1456.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect20" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1456.0
+offset_top = 182.0
+offset_right = 1638.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect21" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1638.0
+offset_top = 182.0
+offset_right = 1820.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect22" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1820.0
+offset_top = 182.0
+offset_right = 2002.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect23" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_top = 364.0
+offset_right = 182.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect24" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 182.0
+offset_top = 364.0
+offset_right = 364.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect25" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 364.0
+offset_top = 364.0
+offset_right = 546.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect26" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 546.0
+offset_top = 364.0
+offset_right = 728.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect27" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 728.0
+offset_top = 364.0
+offset_right = 910.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect28" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 910.0
+offset_top = 364.0
+offset_right = 1092.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect29" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1092.0
+offset_top = 364.0
+offset_right = 1274.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect30" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1274.0
+offset_top = 364.0
+offset_right = 1456.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect31" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1456.0
+offset_top = 364.0
+offset_right = 1638.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect32" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1638.0
+offset_top = 364.0
+offset_right = 1820.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect33" type="TextureRect" parent="Control"]
+layout_mode = 0
+offset_left = 1820.0
+offset_top = 364.0
+offset_right = 2002.0
+offset_bottom = 546.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect12" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -1820.0
+offset_top = 182.0
+offset_right = -1638.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect13" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -1638.0
+offset_top = 182.0
+offset_right = -1456.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect14" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -1456.0
+offset_top = 182.0
+offset_right = -1274.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect15" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -1274.0
+offset_top = 182.0
+offset_right = -1092.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect16" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -1092.0
+offset_top = 182.0
+offset_right = -910.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect17" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -910.0
+offset_top = 182.0
+offset_right = -728.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect18" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -728.0
+offset_top = 182.0
+offset_right = -546.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect19" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -546.0
+offset_top = 182.0
+offset_right = -364.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect20" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -364.0
+offset_top = 182.0
+offset_right = -182.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect21" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_left = -182.0
+offset_top = 182.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect22" type="TextureRect" parent="Control/TextureRect33"]
+layout_mode = 0
+offset_top = 182.0
+offset_right = 182.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect12" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -1820.0
+offset_top = 182.0
+offset_right = -1638.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect13" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -1638.0
+offset_top = 182.0
+offset_right = -1456.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect14" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -1456.0
+offset_top = 182.0
+offset_right = -1274.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect15" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -1274.0
+offset_top = 182.0
+offset_right = -1092.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect16" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -1092.0
+offset_top = 182.0
+offset_right = -910.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect17" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -910.0
+offset_top = 182.0
+offset_right = -728.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect18" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -728.0
+offset_top = 182.0
+offset_right = -546.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect19" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -546.0
+offset_top = 182.0
+offset_right = -364.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect20" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -364.0
+offset_top = 182.0
+offset_right = -182.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect21" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_left = -182.0
+offset_top = 182.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect22" type="TextureRect" parent="Control/TextureRect33/TextureRect22"]
+layout_mode = 0
+offset_top = 182.0
+offset_right = 182.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect12" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -1819.0
+offset_top = 182.0
+offset_right = -1637.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect13" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -1637.0
+offset_top = 182.0
+offset_right = -1455.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect14" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -1455.0
+offset_top = 182.0
+offset_right = -1273.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect15" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -1273.0
+offset_top = 182.0
+offset_right = -1091.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect16" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -1091.0
+offset_top = 182.0
+offset_right = -909.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect17" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -909.0
+offset_top = 182.0
+offset_right = -727.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect18" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -727.0
+offset_top = 182.0
+offset_right = -545.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect19" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -545.0
+offset_top = 182.0
+offset_right = -363.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect20" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -363.0
+offset_top = 182.0
+offset_right = -181.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect21" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = -181.0
+offset_top = 182.0
+offset_right = 1.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="TextureRect22" type="TextureRect" parent="Control/TextureRect33/TextureRect22/TextureRect22"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 182.0
+offset_right = 183.0
+offset_bottom = 364.0
+texture = ExtResource("4_twgmf")
+
+[node name="Hero Robot" parent="." instance=ExtResource("3_4welw")]
+position = Vector2(967, 240)
+scale = Vector2(3, 3)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 390.0
+offset_right = 532.0
+offset_bottom = 554.0
+rotation = -0.15973464
+scale = Vector2(2, 2)
+texture = ExtResource("4_epn6w")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 792.0
+offset_top = 691.0
+offset_right = 1142.0
+offset_bottom = 903.0
+
+[node name="PlayButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
 text = "Играть"
 
-[node name="ExitButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 760.0
-offset_top = 520.0
-offset_right = 1160.0
-offset_bottom = 580.0
+[node name="LevelsButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Уровни"
+
+[node name="SettingsButton3" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Настройки"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(350, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
 text = "Выход"
