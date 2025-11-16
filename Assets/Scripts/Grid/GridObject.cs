@@ -15,8 +15,10 @@ public partial class GridObject : Node2D
 	// Может ли быть сдвинут
 	[Export] public bool CanBePushed { get; protected set; } = false;
 
-	protected Grid _grid; // Сетка 
-	protected Tween _moveTween; // Анимация движения
+	// Сетка 
+	protected Grid _grid; 
+	// Анимация движения
+	protected Tween _moveTween; 
 
 	// Инициализация объекта
 	public override void _Ready()
@@ -39,7 +41,7 @@ public partial class GridObject : Node2D
 		GD.Print($"{ObjectType} готов к размещению в {GridPosition}");
 	}
 
-	// Немедленное обновление позиции без анимации
+	// Немедленное обновление позиции (без анимации)
 	public void UpdateWorldPositionImmediately()
 	{
 		if (_grid != null)
@@ -52,6 +54,7 @@ public partial class GridObject : Node2D
 	// Движение объекта с анимацией
 	public virtual async Task MoveToGridPosition(Vector2I newPosition, float duration = 0.3f)
 	{
+		// Проверка сетки и возможности движения
 		if (_grid == null) return;
 		if (!CanMoveToPosition(newPosition)) return;
 
@@ -78,6 +81,7 @@ public partial class GridObject : Node2D
 	// Проверка возможности движения в указанную позицию
 	public virtual bool CanMoveToPosition(Vector2I targetPosition)
 	{
+		// Проверка сетки и позиции
 		if (_grid == null) return false;
 		if (!_grid.IsInGridBounds(targetPosition)) return false;
 		
@@ -87,6 +91,6 @@ public partial class GridObject : Node2D
 		return true;
 	}
 
-	// Виртуальный метод для обработки наступления робота
+	// Виртуальный метод для обработки наступления робота (для нетвёрдых объектов)
     public virtual void OnRobotEnter(Robot robot) { }
 }
