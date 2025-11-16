@@ -15,6 +15,8 @@ public partial class LevelScene : Node2D
 	[Export] public PackedScene SawTrapPrefab { get; set; }
 	// Ловушка - Шипы (Префаб)
 	[Export] public PackedScene ThornsTrapPrefab { get; set; }
+	// Ловушка - Лазер (Префаб)
+	[Export] public PackedScene LaserTrapPrefab { get; set; }
 	// Зона ящиков (должны быть)
 	[Export] public PackedScene BoxTargetZonePrefab { get; set; }
 	// Зона финиша робота
@@ -62,6 +64,13 @@ public partial class LevelScene : Node2D
 		(new Vector2I(9, 1), RotationAngle.Down),
 		(new Vector2I(10, 1), RotationAngle.Left)
 	];
+	// Конфигурация лазеров: начальная позиция, направление, длина
+	private (Vector2I startPos, RotationAngle direction, int length)[] _laserConfigs = [ 
+		(new Vector2I(0, 4), RotationAngle.Right, 3), // Горизонтальный лазер длиной 3 (Вправо ->)
+		(new Vector2I(2, 5), RotationAngle.Left, 3), // Горизонтальный лазер длиной 3 (Влево <-)
+		(new Vector2I(0, 6), RotationAngle.Down, 3), // Вертикальный лазер длиной 3 (Вниз v)
+		(new Vector2I(1, 8), RotationAngle.Up, 3), // Вертикальный лазер длиной 3 (Вверх ^)
+	];
 	// Позиции зон ящиков
 	private Vector2I[] _boxTargetZonePositions = [ 
 		new Vector2I(8, 2),
@@ -93,7 +102,8 @@ public partial class LevelScene : Node2D
 			BoxPrefab == null || 
 			ObstaclePrefab == null || 
 			SawTrapPrefab == null ||
-			ThornsTrapPrefab == null)
+			ThornsTrapPrefab == null ||
+			LaserTrapPrefab == null)
 		{
 			GD.PrintErr("ОШИБКА: Не все префабы назначены в инспекторе!");
 			return;
@@ -130,6 +140,7 @@ public partial class LevelScene : Node2D
 		GD.Print("Создание ловушек...");
 		CreateSawTraps(_sawTrapPositions);
 		CreateThornsTraps(_thornsTrapPositions);
+		CreateLaserTraps(_laserConfigs);
 
 		GD.Print("Создание робота...");
 		CreateRobot(_robotPosition);
@@ -327,6 +338,83 @@ public partial class LevelScene : Node2D
 		}
 	}
 
+	private void CreateLaserTraps((Vector2I startPos, RotationAngle direction, int length)[] configs)
+	{
+		for (int i = 0; i < configs.Length; i++)
+		{
+			var config = configs[i];
+			GD.Print($"Создание лазера {i + 1}: позиция={config.startPos}, направление={config.direction}, длина={config.length}");
+			
+			for (int j = 0; j < config.length; j++)
+			{
+				Vector2I laserPos = config.startPos + GetDirectionVector(config.direction) * j;
+				
+				var laserTrap = LaserTrapPrefab.Instantiate<LaserTrap>();
+				_objectsContainer.AddChild(laserTrap);
+				
+				// Устанавливаем свойства
+				if (j == 0)
+				{
+					laserTrap.SegmentType = LaserTrap.LaserSegmentType.Start;
+					laserTrap.Rotation = Mathf.DegToRad((float)config.direction);
+				}
+				else if (j == config.length - 1)
+				{
+					laserTrap.SegmentType = LaserTrap.LaserSegmentType.End;
+					// Противоположное направление для конечного фрагмента
+					laserTrap.Rotation = Mathf.DegToRad((float)GetOppositeDirection(config.direction));
+				}
+				else
+				{
+					laserTrap.SegmentType = LaserTrap.LaserSegmentType.Beam;
+					laserTrap.Rotation = Mathf.DegToRad((float)config.direction);
+				}
+
+				// ВЫЗЫВАЕМ ОБНОВЛЕНИЕ ТЕКСТУРЫ
+				laserTrap.UpdateLaserTexture();
+
+				CallDeferred(nameof(DeferredAddLaserTrap), laserTrap, laserPos, i + 1, j + 1);
+			}
+		}
+	}
+
+	// Получение противоположного направления
+	private RotationAngle GetOppositeDirection(RotationAngle direction)
+	{
+		return direction switch
+		{
+			RotationAngle.Up => RotationAngle.Down,
+			RotationAngle.Right => RotationAngle.Left,
+			RotationAngle.Down => RotationAngle.Up,
+			RotationAngle.Left => RotationAngle.Right,
+			_ => RotationAngle.Up
+		};
+	}
+
+	private void DeferredAddLaserTrap(LaserTrap laserTrap, Vector2I position, int laserNumber, int segmentNumber)
+	{
+		if (LevelGrid.AddObjectToGrid(laserTrap, position))
+		{
+			GD.Print($"✓ Лазер {laserNumber} сегмент {segmentNumber} создан в позиции {position}");
+		}
+		else
+		{
+			GD.PrintErr($"✗ Не удалось создать лазер {laserNumber} сегмент {segmentNumber} в {position}");
+			laserTrap.QueueFree();
+		}
+	}
+
+	private Vector2I GetDirectionVector(RotationAngle direction)
+	{
+		return direction switch
+		{
+			RotationAngle.Up => new Vector2I(0, -1),
+			RotationAngle.Right => new Vector2I(1, 0),
+			RotationAngle.Down => new Vector2I(0, 1),
+			RotationAngle.Left => new Vector2I(-1, 0),
+			_ => new Vector2I(1, 0)
+		};
+	}
 
 	/* ПРОВЕРКА УРОВНЯ */
 	// Функция для вызова из кнопки или по завершении команд (ОСНОВНАЯ)

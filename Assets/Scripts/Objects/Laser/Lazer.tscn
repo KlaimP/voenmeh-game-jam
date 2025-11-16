@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://uosleixv1f4e"]
+
+[ext_resource type="Script" uid="uid://hcmow214ampx" path="res://Assets/Scripts/Objects/Laser/LaserTrap.cs" id="1_w73ia"]
+[ext_resource type="Texture2D" uid="uid://mmj6lmijich5" path="res://Assets/Textures/Objects/LazerSE.png" id="2_w73ia"]
+[ext_resource type="Texture2D" uid="uid://b1gj0g3iogd2d" path="res://Assets/Textures/Objects/LazerBean.png" id="3_t5iso"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_speaj"]
+size = Vector2(64, 64)
+
+[node name="Lazer" type="Node2D"]
+scale = Vector2(2, 2)
+script = ExtResource("1_w73ia")
+EndpointTexture = ExtResource("2_w73ia")
+BeamTexture = ExtResource("3_t5iso")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(4, 4)
+shape = SubResource("RectangleShape2D_speaj")
