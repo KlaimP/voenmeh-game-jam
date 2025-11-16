@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://byymuryf3dloc"]
+[gd_scene load_steps=18 format=3 uid="uid://byymuryf3dloc"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bq11ndxv2qh4t" path="res://Assets/Scripts/Objects/Thorns/Thorns.tscn" id="6_3dph1"]
 [ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
 [ext_resource type="PackedScene" uid="uid://o8hv4vt3u7cs" path="res://Assets/Scripts/Objects/BoxTargetZone/BoxTargetZone.tscn" id="7_3d3ca"]
+[ext_resource type="PackedScene" uid="uid://uosleixv1f4e" path="res://Assets/Scripts/Objects/Laser/Lazer.tscn" id="7_ky4c8"]
 [ext_resource type="Script" uid="uid://cr74tmbabicf6" path="res://Assets/Scripts/Levels/RestartButton.cs" id="8_2x7io"]
 [ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="8_q1wgt"]
 [ext_resource type="Texture2D" uid="uid://ck1rpw1euh5o3" path="res://Assets/Textures/Objects/Tile.png" id="10_i7uyu"]
@@ -29,6 +30,7 @@ BoxPrefab = ExtResource("3_6dcgm")
 ObstaclePrefab = ExtResource("4_tw4xh")
 SawTrapPrefab = ExtResource("5_kqtap")
 ThornsTrapPrefab = ExtResource("6_3dph1")
+LaserTrapPrefab = ExtResource("7_ky4c8")
 BoxTargetZonePrefab = ExtResource("7_3d3ca")
 FinishZonePrefab = ExtResource("8_q1wgt")
 blockEditorUi = NodePath("Canvas/Control/SplitContainer/GraphEdit")
@@ -49,7 +51,6 @@ GridWidth = 16
 GridHeight = 9
 CellSize = 128
 CellTexture = ExtResource("10_i7uyu")
-UseCellSprites = true
 
 [node name="Objects" type="Node2D" parent="."]
 
