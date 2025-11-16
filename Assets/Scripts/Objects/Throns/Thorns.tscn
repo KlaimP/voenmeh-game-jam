@@ -1,18 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq11ndxv2qh4t"]
+[gd_scene load_steps=4 format=3 uid="uid://bq11ndxv2qh4t"]
 
-[ext_resource type="Script" uid="uid://bifdpb7hd5urn" path="res://Assets/Scripts/Objects/Box/BoxObject.cs" id="1_nhc5w"]
 [ext_resource type="Texture2D" uid="uid://m1ikqp0c5woy" path="res://Assets/Textures/Objects/thorns.png" id="2_81udl"]
-[ext_resource type="Script" uid="uid://cn0r383gtsslt" path="res://Assets/Scripts/Objects/Throns/ThronsObjects.cs" id="3_uwc3r"]
+[ext_resource type="Script" uid="uid://cn0r383gtsslt" path="res://Assets/Scripts/Objects/Throns/ThornsTrap.cs" id="3_uwc3r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_speaj"]
 size = Vector2(64, 64)
 
-[node name="Box" type="Node2D"]
-script = ExtResource("1_nhc5w")
+[node name="Throns" type="Node2D"]
+script = ExtResource("3_uwc3r")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_81udl")
-script = ExtResource("3_uwc3r")
 
 [node name="Area2D" type="Area2D" parent="."]
 
