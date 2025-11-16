@@ -59,7 +59,7 @@ text = "Уровень 5"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 0
-offset_top = 980.0
+offset_top = 1005.0
 offset_right = 150.0
 offset_bottom = 1080.0
 text = "Назад"

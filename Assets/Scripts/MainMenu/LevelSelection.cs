@@ -69,6 +69,7 @@ public partial class LevelSelection : Control
 		if (HoverSound != null)
 		{
 			audioPlayer.Stream = HoverSound;
+			audioPlayer.VolumeDb = -20.0f;
 			audioPlayer.Play();
 		}
 	}
@@ -78,6 +79,7 @@ public partial class LevelSelection : Control
 		if (ClickSound != null)
 		{
 			audioPlayer.Stream = ClickSound;
+			audioPlayer.VolumeDb = -20.0f;
 			audioPlayer.Play();
 		}
 	}

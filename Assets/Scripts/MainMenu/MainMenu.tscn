@@ -17,7 +17,7 @@ offset_left = 760.0
 offset_top = 450.0
 offset_right = 1160.0
 offset_bottom = 510.0
-text = "Выбор уровня"
+text = "Играть"
 
 [node name="ExitButton" type="Button" parent="."]
 layout_mode = 0

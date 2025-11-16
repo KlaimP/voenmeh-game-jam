@@ -32,7 +32,7 @@ public partial class MusicManager : Node
                 // В Godot 4 зацикливание настраивается через AudioStreamPlayer
                 musicPlayer.Stream = BackgroundMusic;
                 musicPlayer.Autoplay = true;
-                musicPlayer.VolumeDb = -10.0f;
+                musicPlayer.VolumeDb = -35.0f;
                 
                 // Подключаем сигнал для зацикливания
                 musicPlayer.Finished += OnMusicFinished;
