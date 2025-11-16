@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://byymuryf3dloc"]
+[gd_scene load_steps=20 format=3 uid="uid://byymuryf3dloc"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://cr74tmbabicf6" path="res://Assets/Scripts/Levels/RestartButton.cs" id="8_2x7io"]
 [ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="8_q1wgt"]
 [ext_resource type="Texture2D" uid="uid://bfmqcws35ms6g" path="res://Assets/Textures/Objects/White_Tile.png" id="10_ky4c8"]
+[ext_resource type="AudioStream" uid="uid://bbqttcnl4x1ni" path="res://Assets/Music/Eric Skiff - Underclocked (underunderclocked mix).mp3" id="10_tlq8a"]
 [ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="11_wsyd5"]
 [ext_resource type="Script" uid="uid://bx58dfetxapmi" path="res://Assets/Scripts/Levels/LevelCompleteButton.cs" id="12_q1wgt"]
 [ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="14_xd5ua"]
@@ -36,6 +37,7 @@ BoxTargetZonePrefab = ExtResource("7_3d3ca")
 FinishZonePrefab = ExtResource("8_q1wgt")
 blockEditorUi = NodePath("Canvas/Control/SplitContainer/GraphEdit")
 BackgroundImage = NodePath("BlackBackground")
+LevelMusic = ExtResource("10_tlq8a")
 
 [node name="BlackBackground" type="TextureRect" parent="."]
 visible = false

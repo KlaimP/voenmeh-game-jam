@@ -27,8 +27,11 @@ public partial class MainMenu : Control
 		playButton.MouseEntered += () => OnButtonHover();
 		exitButton.MouseEntered += () => OnButtonHover();
 		
-		// Запускаем музыку при загрузке главного меню
-		MusicManager.Instance.PlayMusic();
+		// ВОСПРОИЗВОДИМ МУЗЫКУ ГЛАВНОГО МЕНЮ
+		if (MusicManager.Instance != null)
+		{
+			MusicManager.Instance.PlayDefaultMusic();
+		}
 	}
 
 	private void OnButtonHover()

@@ -8,7 +8,9 @@ public partial class MusicManager : Node
     
     public static MusicManager Instance { get; private set; }
     
-    // Громкость музыки (можно регулировать)
+    // Текущая играющая музыка
+    public AudioStream CurrentMusic { get; private set; }
+    
     public float MusicVolume
     {
         get => musicPlayer.VolumeDb;
@@ -23,24 +25,22 @@ public partial class MusicManager : Node
             musicPlayer = new AudioStreamPlayer();
             AddChild(musicPlayer);
             
-            // Устанавливаем режим обработки для работы между сценами
             ProcessMode = ProcessModeEnum.Always;
+            
+            // Подписываемся на окончание музыки для зацикливания
+            musicPlayer.Finished += OnMusicFinished;
             
             // Загружаем музыку если она назначена в инспекторе
             if (BackgroundMusic != null)
             {
-                // В Godot 4 зацикливание настраивается через AudioStreamPlayer
+                CurrentMusic = BackgroundMusic;
                 musicPlayer.Stream = BackgroundMusic;
                 musicPlayer.Autoplay = true;
                 musicPlayer.VolumeDb = -35.0f;
-                
-                // Подключаем сигнал для зацикливания
-                musicPlayer.Finished += OnMusicFinished;
             }
         }
         else
         {
-            // Если уже есть экземпляр, удаляем дубликат
             QueueFree();
         }
     }
@@ -56,6 +56,7 @@ public partial class MusicManager : Node
     {
         if (!musicPlayer.Playing && BackgroundMusic != null)
         {
+            CurrentMusic = BackgroundMusic;
             musicPlayer.Stream = BackgroundMusic;
             musicPlayer.Play();
         }
@@ -66,15 +67,21 @@ public partial class MusicManager : Node
         musicPlayer.Stop();
     }
     
+    // Метод для смены музыки
     public void SetMusic(AudioStream newMusic)
     {
-        bool wasPlaying = musicPlayer.Playing;
+        // Если это та же музыка, ничего не делаем
+        if (newMusic == CurrentMusic && musicPlayer.Playing)
+            return;
         
+        CurrentMusic = newMusic;
         musicPlayer.Stream = newMusic;
-        
-        if (wasPlaying)
-        {
-            musicPlayer.Play();
-        }
+        musicPlayer.Play();
+    }
+    
+    // Метод для возврата к музыке по умолчанию (главного меню)
+    public void PlayDefaultMusic()
+    {
+        SetMusic(BackgroundMusic);
     }
 }

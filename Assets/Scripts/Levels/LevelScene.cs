@@ -26,6 +26,9 @@ public partial class LevelScene : Node2D
 	
 	[Export] public TextureRect BackgroundImage { get; set; }
 
+	// Музыка уровня
+	[Export] public AudioStream LevelMusic { get; set; }
+
 	// Контейнер для объектов
 	private Node2D _objectsContainer;
 	
@@ -89,6 +92,12 @@ public partial class LevelScene : Node2D
 
 		globalSignals = GetNode("/root/GlobalSignals") as GlobalSignals;
 		globalSignals.EndGame += EndGame;
+
+		// УСТАНАВЛИВАЕМ МУЗЫКУ УРОВНЯ - ДОБАВЬТЕ ЭТОТ БЛОК
+		if (LevelMusic != null && MusicManager.Instance != null)
+		{
+			MusicManager.Instance.SetMusic(LevelMusic);
+		}
 
 		GD.Print("=== ЗАПУСК УРОВНЯ ===");
 		// Проверка сетки

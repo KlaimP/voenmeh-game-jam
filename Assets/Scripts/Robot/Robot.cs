@@ -251,7 +251,15 @@ public partial class Robot : GridObject
 	// Перезагрузка уровня
 	private void ReloadLevel()
 	{
-		GetTree().ReloadCurrentScene();
+		var levelScene = GetTree().CurrentScene as LevelScene;
+        if (levelScene != null)
+        {
+            levelScene.RestartLevel();
+        }
+        else
+        {
+            GD.PrintErr("LevelScene не найден!");
+        }
 	}
 
 	// Поворот налево
