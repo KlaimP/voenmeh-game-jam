@@ -10,44 +10,51 @@ public partial class Robot : GridObject
 	[Export] private Texture2D _spriteRight;
 	[Export] private Texture2D _spriteDown;
 	[Export] private Texture2D _spriteLeft;
+	// Скорость движения
 	[Export] public float MoveDuration { get; set; } = 0.3f;
+	// Скорость поворота
 	[Export] public float RotationDuration { get; set; } = 0.2f;
+
 
 	private Sprite2D _sprite;
 	private bool _isRotating = false;
 	private bool _isMoving = false;
+	// Направление взгляда робота
 	public enum RobotDirection
 	{
-		Up,
-		Right, 
-		Down,
-		Left
+		Up,    // Вверх
+		Right, // Вправо
+		Down,  // Вниз
+		Left   // Влево
 	}
 	private RobotDirection _currentDirection = RobotDirection.Up;
 
-	// Инициализация параметров робота
+
+
+	// Инициализация робота
 	public override void _Ready()
 	{
 		ObjectType = "ROBOT";
-		IsSolid = true;
-		CanBePushed = false;
-		
+		IsSolid = true;      // Твёрдый
+		CanBePushed = false; // Нельзя сдвинуть
+		// Спрайт робота
 		_sprite = GetNodeOrNull<Sprite2D>("Sprite2D");
 		base._Ready();
-		
 		// Устанавливаем начальный спрайт
-   		 SetDirection(RobotDirection.Up);
-		
+   		SetDirection(RobotDirection.Up);
 		GD.Print("=== РОБОТ ГОТОВ ===");
 		_grid.PrintStateMatrix();
 	}
 
+	// Покадровое обновление
 	public override void _Process(double delta)
 	{
-		if (!_isMoving && !_isRotating)
-			HandleInput();
+		if (!_isMoving && !_isRotating) HandleInput();
 	}
 
+
+
+	// Управление роботом (Debug)
 	private void HandleInput()
 	{
 		if (Input.IsActionJustPressed("ui_up")) _ = MoveForward();
@@ -60,13 +67,17 @@ public partial class Robot : GridObject
 	// Движение вперёд на указанное количество шагов
 	public async Task MoveForward(int steps = 1)
 	{
+		// Проверка движения
 		if (_isMoving) return;
+		// Движение ON
 		_isMoving = true;
 		
 		GD.Print($"РОБОТ: начинаю движение на {steps} шагов");
 		
+		// Шаги через цикл
 		for (int step = 1; step <= steps; step++)
 		{
+			// Получение направления движания
 			Vector2I direction = GetForwardDirection();
 			Vector2I newPosition = GridPosition + direction;
 			
@@ -75,25 +86,26 @@ public partial class Robot : GridObject
 			// Сначала проверяем что в целевой клетке
 			GridObject targetObject = _grid.GetObjectAt(newPosition);
 			
+			// Свободная клетка - просто двигаемся
 			if (targetObject == null)
 			{
-				// Свободная клетка - просто двигаемся
 				await MoveToGridPosition(newPosition, MoveDuration);
 				GD.Print($"✓ Шаг {step} выполнен");
 			}
+			// Клетка с ловушкой - двигаемся и активируем ловушку
 			else if (targetObject is TrapObject)
 			{
-				// Клетка с ловушкой - двигаемся и активируем ловушку
 				await MoveToGridPosition(newPosition, MoveDuration);
 				GD.Print($"✓ Шаг {step} выполнен (на ловушку)");
 				targetObject.OnRobotEnter(this);
 			}
+			// Можно толкнуть объект
 			else if (CanPushObject(newPosition, direction))
 			{
-				// Можно толкнуть объект
 				await PushSingleObject(newPosition, direction);
 				GD.Print($"✓ Шаг {step} выполнен (с толканием объекта)");
 			}
+			// Шаг невозможен
 			else
 			{
 				GD.Print($"❌ Шаг {step} невозможен! Движение прервано.");
@@ -101,11 +113,11 @@ public partial class Robot : GridObject
 			}
 			
 			// Небольшая пауза между шагами для лучшей анимации
-			if (step < steps)
-				await Task.Delay(50);
+			if (step < steps) await Task.Delay(50);
 		}
 		
 		GD.Print($"РОБОТ: движение завершено (выполнено шагов: {steps})");
+		// Движение OFF
 		_isMoving = false;
 	}
 
@@ -123,7 +135,7 @@ public partial class Robot : GridObject
         // - Воспроизведение звука
         // - Анимация мигания
     }
-
+	// Анимация получения урона
     private void PlayDamageEffect()
     {
         var tween = CreateTween();
@@ -176,7 +188,7 @@ public partial class Robot : GridObject
 		_isRotating = false;
 		GD.Print($"РОБОТ: повернул направо. Направление: {newDirection}");
 	}
-
+	// Анимация поворота
 	private async Task AnimateSpriteChange(RobotDirection newDirection)
 	{
 		// Анимация уменьшения
@@ -201,34 +213,22 @@ public partial class Robot : GridObject
 		// Определяем направление по углу
 		float degrees = Mathf.RadToDeg(NormalizeAngle(Rotation));
 		
-		if (degrees >= 315 || degrees < 45) 
-			SetDirection(RobotDirection.Up);
-		else if (degrees >= 45 && degrees < 135) 
-			SetDirection(RobotDirection.Right);
-		else if (degrees >= 135 && degrees < 225) 
-			SetDirection(RobotDirection.Down);
-		else 
-			SetDirection(RobotDirection.Left);
+		if (degrees >= 315 || degrees < 45) SetDirection(RobotDirection.Up);
+		else if (degrees >= 45 && degrees < 135) SetDirection(RobotDirection.Right);
+		else if (degrees >= 135 && degrees < 225) SetDirection(RobotDirection.Down);
+		else SetDirection(RobotDirection.Left);
 	}
-
+	// Установка направлений
 	private void SetDirection(RobotDirection direction)
 	{
 		_currentDirection = direction;
 		
 		switch (direction)
 		{
-			case RobotDirection.Up:
-				_sprite.Texture = _spriteUp;
-				break;
-			case RobotDirection.Right:
-				_sprite.Texture = _spriteRight;
-				break;
-			case RobotDirection.Down:
-				_sprite.Texture = _spriteDown;
-				break;
-			case RobotDirection.Left:
-				_sprite.Texture = _spriteLeft;
-				break;
+			case RobotDirection.Up: _sprite.Texture = _spriteUp; break;
+			case RobotDirection.Right: _sprite.Texture = _spriteRight; break;
+			case RobotDirection.Down: _sprite.Texture = _spriteDown; break;
+			case RobotDirection.Left: _sprite.Texture = _spriteLeft; break;
 		}
 	}
 
@@ -250,8 +250,7 @@ public partial class Robot : GridObject
 	private float NormalizeAngle(float angle)
 	{
 		angle = angle % (2 * Mathf.Pi);
-		if (angle < 0)
-			angle += 2 * Mathf.Pi;
+		if (angle < 0) angle += 2 * Mathf.Pi;
 		return angle;
 	}
 
@@ -262,13 +261,13 @@ public partial class Robot : GridObject
 		
 		// Получаем объект в целевой позиции
 		GridObject objectToPush = _grid.GetObjectAt(objectPosition);
-		
+		// Проверка объекта
 		if (objectToPush == null)
 		{
 			GD.PrintErr("РОБОТ: не найден объект для толкания!");
 			return;
 		}
-		
+		// Можно ли толкнуть объект
 		if (!objectToPush.CanBePushed)
 		{
 			GD.PrintErr($"РОБОТ: объект {objectToPush.ObjectType} нельзя толкать!");
@@ -278,7 +277,7 @@ public partial class Robot : GridObject
 		// Вычисляем новую позицию для объекта
 		Vector2I newObjectPos = objectPosition + direction;
 		
-		// Проверяем, можно ли толкнуть объект
+		// Проверяем, можно ли толкнуть объект в координаты
 		if (!_grid.IsInGridBounds(newObjectPos))
 		{
 			GD.PrintErr("РОБОТ: объект нельзя толкнуть - выход за границы сетки!");

@@ -22,29 +22,35 @@ public partial class LevelScene : Node2D
     private Node2D _objectsContainer;
     
     // Массивы позиций для всех объектов уровня
+    // Позиция робота
     private Vector2I _robotPosition = new Vector2I(2, 2);
+    // Позиции ящиков
     private Vector2I[] _boxPositions = [ 
         new Vector2I(4, 3), 
         new Vector2I(5, 4), 
         new Vector2I(3, 5) 
     ];
+    // Позиции стенок
     private Vector2I[] _obstaclePositions = [ 
         new Vector2I(1, 1), 
         new Vector2I(6, 2), 
         new Vector2I(3, 6) 
 	];
+    // Позиции пил
     private Vector2I[] _sawTrapPositions = [ 
         new Vector2I(2, 3), 
         new Vector2I(6, 6), 
         new Vector2I(4, 6) 
     ];
-    public enum RotationAngle // Нахождение шипов относительно ячейки
+    // Нахождение шипов относительно ячейки
+    public enum RotationAngle 
     {
-        Up = 0,      // 0°
-        Right = 90,  // 90°
-        Down = 180,  // 180°
-        Left = 270   // 270°
+        Up = 0,      // 0° - Сверху
+        Right = 90,  // 90° - Справа
+        Down = 180,  // 180° - Снизу
+        Left = 270   // 270° - Слева
     }
+    // Позици шипов и направлений
     private (Vector2I position, RotationAngle rotation)[] _thornsTrapPositions = [ 
         (new Vector2I(9, 6), RotationAngle.Up),
         (new Vector2I(10, 6), RotationAngle.Right),
@@ -58,19 +64,23 @@ public partial class LevelScene : Node2D
 	public override void _Ready()
 	{
 		GD.Print("=== ЗАПУСК УРОВНЯ ===");
-		
+		// Проверка сетки
 		if (LevelGrid == null)
 		{
 			GD.PrintErr("ОШИБКА: LevelGrid не назначен в инспекторе!");
 			return;
 		}
-
-		if (RobotPrefab == null || BoxPrefab == null || ObstaclePrefab == null || SawTrapPrefab == null)
+        // Проверка префабов
+		if (RobotPrefab == null || 
+            BoxPrefab == null || 
+            ObstaclePrefab == null || 
+            SawTrapPrefab == null ||
+            ThornsTrapPrefab == null)
 		{
 			GD.PrintErr("ОШИБКА: Не все префабы назначены в инспекторе!");
 			return;
 		}
-
+        // Получение контейнера объектов и инициализация уровня
 		_objectsContainer = GetNode<Node2D>("Objects");
 		InitializeLevel();
 		

@@ -25,10 +25,9 @@ public partial class Grid : Node2D
 		InitializeStateMatrix();
 		QueueRedraw();
 		GD.Print($"Grid инициализирован: {GridWidth}x{GridHeight}, CellSize: {CellSize}");
-		PrintStateMatrix("После инициализации Grid");
 	}
 
-	// Отрисока сетки
+	// Отрисока сетки (с координатами)
 	public override void _Draw()
 	{
 		// Рисуем фон
@@ -65,8 +64,10 @@ public partial class Grid : Node2D
 		}
 	}
 
+
+
 	/* ------------ Функции для объектов сетки ------------ */
-	// Добавление объектов на сетку и их регистрация в словаре
+	// Добавление объектов на сетку и регистрация их в словаре
 	public bool AddObjectToGrid(GridObject gridObject, Vector2I position)
 	{
 		// Проверка позиции в диапазоне сетке
@@ -88,7 +89,7 @@ public partial class Grid : Node2D
 		gridObject.GridPosition = position;
 		// Регистрируем объект в словаре
 		_gridObjects[position] = gridObject;
-		// Обновляем матрицу состояния
+		// Обновляем матрицу состояний
 		UpdateStateMatrix();
 		
 		// Немедленно обновляем визуальную позицию объекта
@@ -116,7 +117,7 @@ public partial class Grid : Node2D
 			_gridObjects[newPosition] = obj;
 			GD.Print($"Добавлен в {newPosition}");
 		}
-		
+		// Обновляем матрицу состояний
 		UpdateStateMatrix();
 	}
  
@@ -196,10 +197,10 @@ public partial class Grid : Node2D
 			var position = kvp.Key;
 			var obj = kvp.Value;
 			
-			if      (obj is Robot) StateMatrix[position.X, position.Y] = 1;
-			else if (obj is BoxObject) StateMatrix[position.X, position.Y] = 2;
+			if      (obj is Robot)          StateMatrix[position.X, position.Y] = 1;
+			else if (obj is BoxObject)      StateMatrix[position.X, position.Y] = 2;
 			else if (obj is ObstacleObject) StateMatrix[position.X, position.Y] = 3;
-			else if (obj is SawTrap) StateMatrix[position.X, position.Y] = 4;
+			else if (obj is SawTrap)        StateMatrix[position.X, position.Y] = 4;
 		}
 	}
 
@@ -245,16 +246,15 @@ public partial class Grid : Node2D
 
 
 
-
 	/* ------------ Проверки по сетке и словарю ------------ */
 	// Проверка наличия любого объекта в позиции
 	public bool HasAnyObjectAt(Vector2I position) => _gridObjects.ContainsKey(position); 
 	// Проверка ячейки на пустоту
-	public bool IsCellEmpty(Vector2I position)
+	/*public bool IsCellEmpty(Vector2I position)
 	{
 		if (!IsInGridBounds(position)) return false;
 		return !_gridObjects.ContainsKey(position) || !_gridObjects[position].IsSolid;
-	}
+	}*/
 	// Проверка существования объекта по позиции
 	public bool HasSolidObjectAt(Vector2I position) => _gridObjects.ContainsKey(position) && _gridObjects[position].IsSolid;
 	// Получение сеточных координат из глобальных
