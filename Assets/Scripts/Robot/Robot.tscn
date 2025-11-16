@@ -13,12 +13,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mo4m"]
 size = Vector2(64, 64)
 
-[node name="Robot" type="Node2D"]
+[node name="Robot" type="Node2D" node_paths=PackedStringArray("_HeroRobot")]
 script = ExtResource("1_lhh6t")
 _spriteUp = ExtResource("2_ewh53")
 _spriteRight = ExtResource("3_d07hm")
 _spriteDown = ExtResource("4_ow2ri")
 _spriteLeft = ExtResource("5_s7p1y")
+_HeroRobot = NodePath("Hero Robot")
 BoxTrapSound = ExtResource("6_ow2ri")
 DamageSound = ExtResource("7_s7p1y")
 

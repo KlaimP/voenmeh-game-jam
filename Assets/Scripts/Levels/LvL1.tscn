@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://byymuryf3dloc"]
+[gd_scene load_steps=19 format=3 uid="uid://byymuryf3dloc"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
@@ -99,7 +99,7 @@ offset_bottom = 732.0
 text = "Check lvl"
 script = ExtResource("12_q1wgt")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Split")]
 position = Vector2(960, 540)
 limit_enabled = false
 limit_left = 0
@@ -107,3 +107,4 @@ limit_top = 0
 limit_right = 1920
 limit_bottom = 1080
 script = ExtResource("14_xd5ua")
+Split = NodePath("../Canvas/Control/SplitContainer")
