@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dw3v4vfu58bk2"]
+
+[ext_resource type="Script" uid="uid://cnv4jv1eflkdq" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.cs" id="1_esvtx"]
+[ext_resource type="Texture2D" uid="uid://smhuc610ai1k" path="res://Assets/Textures/Objects/finish.png" id="2_esvtx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_speaj"]
+size = Vector2(64, 64)
+
+[node name="FinishZone" type="Node2D"]
+script = ExtResource("1_esvtx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_esvtx")
+script = ExtResource("1_esvtx")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_speaj")

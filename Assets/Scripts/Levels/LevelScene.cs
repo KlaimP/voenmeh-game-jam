@@ -15,6 +15,10 @@ public partial class LevelScene : Node2D
 	[Export] public PackedScene SawTrapPrefab { get; set; }
     // Ловушка - Шипы (Префаб)
     [Export] public PackedScene ThornsTrapPrefab { get; set; }
+    // Зона ящиков (должны быть)
+    [Export] public PackedScene BoxTargetZonePrefab { get; set; }
+    // Зона финиша робота
+    [Export] public PackedScene FinishZonePrefab { get; set; }
 	// IDE Робота
 	[Export] public BlockEditorUi blockEditorUi { get; set; }
 
@@ -26,21 +30,20 @@ public partial class LevelScene : Node2D
     private Vector2I _robotPosition = new Vector2I(2, 2);
     // Позиции ящиков
     private Vector2I[] _boxPositions = [ 
-        new Vector2I(4, 3), 
-        new Vector2I(5, 4), 
-        new Vector2I(3, 5) 
+        new Vector2I(8, 3), 
+        new Vector2I(9, 3), 
     ];
     // Позиции стенок
     private Vector2I[] _obstaclePositions = [ 
         new Vector2I(1, 1), 
-        new Vector2I(6, 2), 
-        new Vector2I(3, 6) 
+        new Vector2I(2, 1), 
+        new Vector2I(3, 1) 
 	];
     // Позиции пил
     private Vector2I[] _sawTrapPositions = [ 
-        new Vector2I(2, 3), 
-        new Vector2I(6, 6), 
-        new Vector2I(4, 6) 
+        new Vector2I(4, 1), 
+        new Vector2I(5, 1), 
+        new Vector2I(6, 1) 
     ];
     // Нахождение шипов относительно ячейки
     public enum RotationAngle 
@@ -50,13 +53,20 @@ public partial class LevelScene : Node2D
         Down = 180,  // 180° - Снизу
         Left = 270   // 270° - Слева
     }
-    // Позици шипов и направлений
+    // Позиции шипов и направлений
     private (Vector2I position, RotationAngle rotation)[] _thornsTrapPositions = [ 
-        (new Vector2I(9, 6), RotationAngle.Up),
-        (new Vector2I(10, 6), RotationAngle.Right),
-        (new Vector2I(11, 6), RotationAngle.Down),
-        (new Vector2I(12, 6), RotationAngle.Left)
+        (new Vector2I(7, 1), RotationAngle.Up),
+        (new Vector2I(8, 1), RotationAngle.Right),
+        (new Vector2I(9, 1), RotationAngle.Down),
+        (new Vector2I(10, 1), RotationAngle.Left)
     ];
+    // Позиции зон ящиков
+    private Vector2I[] _boxTargetZonePositions = [ 
+        new Vector2I(8, 2),
+        new Vector2I(9, 2)
+    ];
+    // Позиция зоны завершения уровня
+    private Vector2I _finishZonePosition = new Vector2I(7, 2);
 
 
 
@@ -98,6 +108,10 @@ public partial class LevelScene : Node2D
         ClearLevel(); // Очищаем перед созданием
         
         GD.Print("=== НАЧАЛО ИНИЦИАЛИЗАЦИИ УРОВНЯ ===");
+
+        GD.Print("Создание зон...");
+        CreateBoxTargetZones(_boxTargetZonePositions);
+        CreateFinishZone(_finishZonePosition);
         
         GD.Print("Создание робота...");
         CreateRobot(_robotPosition);
@@ -114,6 +128,9 @@ public partial class LevelScene : Node2D
         
         LevelGrid.PrintStateMatrix("ФИНАЛЬНОЕ СОСТОЯНИЕ");
     }
+
+
+
 
 	// Очистка уровня для перезапуска
     private void ClearLevel()
@@ -154,8 +171,51 @@ public partial class LevelScene : Node2D
         }
     }
 
+
+
 	/* ------------ Функции добавления объектов сцены ------------ */
-	// Создание ящиков
+	// Создание целевых зон для ящиков
+    private void CreateBoxTargetZones(Vector2I[] positions)
+    {
+        for (int i = 0; i < positions.Length; i++)
+        {
+            var zone = BoxTargetZonePrefab.Instantiate<BoxTargetZone>();
+            _objectsContainer.AddChild(zone);
+            CallDeferred(nameof(DeferredAddBoxTargetZone), zone, positions[i], i + 1);
+        }
+    }
+    private void DeferredAddBoxTargetZone(BoxTargetZone zone, Vector2I position, int zoneNumber)
+    {
+        if (LevelGrid.AddObjectToGrid(zone, position))
+        {
+            GD.Print($"Целевая зона для ящиков {zoneNumber} создана в позиции {position}");
+        }
+        else
+        {
+            GD.PrintErr($"Не удалось создать целевую зону для ящиков {zoneNumber} в {position}");
+        }
+    }
+
+    // Создание финишной зоны
+    private void CreateFinishZone(Vector2I position)
+    {
+        var zone = FinishZonePrefab.Instantiate<FinishZone>();
+        _objectsContainer.AddChild(zone);
+        CallDeferred(nameof(DeferredAddFinishZone), zone, position);
+    }
+    private void DeferredAddFinishZone(FinishZone zone, Vector2I position)
+    {
+        if (LevelGrid.AddObjectToGrid(zone, position))
+        {
+            GD.Print($"Финишная зона создана в позиции {position}");
+        }
+        else
+        {
+            GD.PrintErr($"Не удалось создать финишную зону в {position}");
+        }
+    }
+    
+    // Создание ящиков
 	private void CreateBoxes(Vector2I[] positions)
     {
         for (int i = 0; i < positions.Length; i++)
@@ -252,4 +312,80 @@ public partial class LevelScene : Node2D
         }
     }
 
+
+    /* ПРОВЕРКА УРОВНЯ */
+    // Функция проверки завершения уровня
+    public bool CheckLevelCompletion()
+    {
+        bool allBoxesOnTarget = CheckAllBoxesOnTarget();
+        bool robotOnFinish = CheckRobotOnFinish();
+        
+        bool levelCompleted = allBoxesOnTarget && robotOnFinish;
+        
+        GD.Print("=== ПРОВЕРКА ЗАВЕРШЕНИЯ УРОВНЯ ===");
+        GD.Print($"Все ящики на целевых зонах: {allBoxesOnTarget}");
+        GD.Print($"Робот на финишной зоне: {robotOnFinish}");
+        GD.Print($"Уровень завершен: {levelCompleted}");
+        GD.Print("=================================");
+        
+        return levelCompleted;
+    }
+
+    // Проверка что все ящики на целевых зонах
+    private bool CheckAllBoxesOnTarget()
+    {
+        // Если целевых зон нет, то проверка пройдена
+        if (BoxTargetZone.AllBoxTargetZones.Count == 0) return true;
+            
+        // Проверяем каждую целевую зону
+        foreach (var targetZone in BoxTargetZone.AllBoxTargetZones)
+        {
+            if (!targetZone.HasBox)
+            {
+                GD.Print($"❌ Целевая зона в {targetZone.GridPosition} не занята ящиком");
+                return false;
+            }
+        }
+        
+        GD.Print($"✅ Все {BoxTargetZone.AllBoxTargetZones.Count} целевых зон заняты ящиками");
+        return true;
+    }
+
+    // Проверка что робот на финишной зоне
+    private bool CheckRobotOnFinish()
+    {
+        // Если финишных зон нет, то проверка пройдена
+        if (FinishZone.AllFinishZones.Count == 0) return true;
+            
+        // Проверяем каждую финишную зону
+        foreach (var finishZone in FinishZone.AllFinishZones)
+        {
+            if (finishZone.HasRobot)
+            {
+                GD.Print($"✅ Робот на финишной зоне в {finishZone.GridPosition}");
+                return true;
+            }
+        }
+        
+        GD.Print($"❌ Робот не на финишной зоне");
+        return false;
+    }
+
+    // Функция для вызова из кнопки или по завершении команд
+    public void OnLevelCompletionCheck()
+    {
+        if (CheckLevelCompletion())
+        {
+            GD.Print("🎉 УРОВЕНЬ ПРОЙДЕН! 🎉");
+            // Здесь можно добавить:
+            // - Показать сообщение о победе
+            // - Воспроизвести звук
+            // - Загрузить следующий уровень
+            // - Показать кнопку продолжения
+        }
+        else
+        {
+            GD.Print("💪 Продолжайте выполнение команд...");
+        }
+    }
 }
