@@ -31,18 +31,25 @@ public partial class Grid : Node2D
 
 	// Инициализация сетки
 	public override void _Ready()
-    {
-        InitializeStateMatrix();
-        
-        // Создаем спрайты для каждой ячейки если нужно
-        if (UseCellSprites && CellTexture != null)
-        {
-            CreateCellSprites();
-        }
-        
-        QueueRedraw();
-        GD.Print($"Grid инициализирован: {GridWidth}x{GridHeight}, CellSize: {CellSize}");
-    }
+	{
+		// Не инициализируем здесь, будем вызывать вручную из LevelScene
+		GD.Print($"Grid загружен: {GridWidth}x{GridHeight}, CellSize: {CellSize}");
+	}
+
+	// Публичный метод для инициализации сетки (вызывается из LevelScene)
+	public void InitializeGrid()
+	{
+		InitializeStateMatrix();
+		
+		// Создаем спрайты для каждой ячейки если нужно
+		if (UseCellSprites && CellTexture != null)
+		{
+			CreateCellSprites();
+		}
+		
+		QueueRedraw();
+		GD.Print($"Grid инициализирован: {GridWidth}x{GridHeight}, CellSize: {CellSize}");
+	}
 
 	// Создание спрайтов для всех ячеек
     private void CreateCellSprites()

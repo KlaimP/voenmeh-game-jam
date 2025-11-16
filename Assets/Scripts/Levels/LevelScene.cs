@@ -92,6 +92,9 @@ public partial class LevelScene : Node2D
 		}
         // Получение контейнера объектов и инициализация уровня
 		_objectsContainer = GetNode<Node2D>("Objects");
+
+        // Инициализация сетки
+        LevelGrid.InitializeGrid();
 		InitializeLevel();
 		
 		GD.Print("=== УПРАВЛЕНИЕ ===");
@@ -112,19 +115,19 @@ public partial class LevelScene : Node2D
         GD.Print("Создание зон...");
         CreateBoxTargetZones(_boxTargetZonePositions);
         CreateFinishZone(_finishZonePosition);
-        
-        GD.Print("Создание робота...");
-        CreateRobot(_robotPosition);
-        
-        GD.Print("Создание ящиков...");
-        CreateBoxes(_boxPositions);
-        
+
         GD.Print("Создание препятствий...");
         CreateObstacles(_obstaclePositions);
         
         GD.Print("Создание ловушек...");
         CreateSawTraps(_sawTrapPositions);
-        CreateThornsTraps(_thornsTrapPositions); 
+        CreateThornsTraps(_thornsTrapPositions);
+
+        GD.Print("Создание робота...");
+        CreateRobot(_robotPosition);
+        
+        GD.Print("Создание ящиков...");
+        CreateBoxes(_boxPositions);
         
         LevelGrid.PrintStateMatrix("ФИНАЛЬНОЕ СОСТОЯНИЕ");
     }
