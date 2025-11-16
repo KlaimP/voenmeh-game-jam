@@ -1,13 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://8e1m25hqjyrw"]
+[gd_scene load_steps=8 format=3 uid="uid://8e1m25hqjyrw"]
 
 [ext_resource type="Script" uid="uid://botoyd6amdg38" path="res://Assets/Scripts/Robot/Robot.cs" id="1_lhh6t"]
 [ext_resource type="Texture2D" uid="uid://c0eiwq0obl58s" path="res://Assets/Textures/Robot/Robot.jpg" id="2_8mo4m"]
+[ext_resource type="Texture2D" uid="uid://uktc6lxi8k7i" path="res://Assets/Textures/Robot/RobotUp.png" id="2_ewh53"]
+[ext_resource type="Texture2D" uid="uid://cct3iy05l3ub0" path="res://Assets/Textures/Robot/RobotRight.png" id="3_d07hm"]
+[ext_resource type="Texture2D" uid="uid://be8qouiepbjxo" path="res://Assets/Textures/Robot/RobotDown.png" id="4_ow2ri"]
+[ext_resource type="Texture2D" uid="uid://bss7vo3dgsc48" path="res://Assets/Textures/Robot/RobotLeft.png" id="5_s7p1y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mo4m"]
 size = Vector2(64, 64)
 
 [node name="Robot" type="Node2D"]
 script = ExtResource("1_lhh6t")
+_spriteUp = ExtResource("2_ewh53")
+_spriteRight = ExtResource("3_d07hm")
+_spriteDown = ExtResource("4_ow2ri")
+_spriteLeft = ExtResource("5_s7p1y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_8mo4m")
