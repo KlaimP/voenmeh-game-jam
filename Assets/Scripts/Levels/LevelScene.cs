@@ -66,8 +66,10 @@ public partial class LevelScene : Node2D
 	];
 	// Конфигурация лазеров: начальная позиция, направление, длина
 	private (Vector2I startPos, RotationAngle direction, int length)[] _laserConfigs = [ 
-		(new Vector2I(0, 4), RotationAngle.Right, 3), // Горизонтальный лазер длиной 3
-		(new Vector2I(0, 5), RotationAngle.Down, 3),  // Вертикальный лазер длиной 3
+		(new Vector2I(0, 4), RotationAngle.Right, 3), // Горизонтальный лазер длиной 3 (Вправо ->)
+		(new Vector2I(2, 5), RotationAngle.Left, 3), // Горизонтальный лазер длиной 3 (Влево <-)
+		(new Vector2I(0, 6), RotationAngle.Down, 3), // Вертикальный лазер длиной 3 (Вниз v)
+		(new Vector2I(1, 8), RotationAngle.Up, 3), // Вертикальный лазер длиной 3 (Вверх ^)
 	];
 	// Позиции зон ящиков
 	private Vector2I[] _boxTargetZonePositions = [ 
