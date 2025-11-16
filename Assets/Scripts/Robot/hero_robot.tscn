@@ -1,0 +1,114 @@
+[gd_scene load_steps=13 format=3 uid="uid://dt0p4qdkr1h0d"]
+
+[ext_resource type="Texture2D" uid="uid://bf8ll7lcngk15" path="res://Assets/Textures/Robot/Head.png" id="1_hwgex"]
+[ext_resource type="Texture2D" uid="uid://bs2c7gx1hq6og" path="res://Assets/Textures/Robot/Face.png" id="2_0e23l"]
+[ext_resource type="Texture2D" uid="uid://iy8pctuwt8ci" path="res://Assets/Scripts/Robot/Body.png" id="3_5v5o2"]
+[ext_resource type="Texture2D" uid="uid://by4u4r8vffvvs" path="res://Assets/Textures/Robot/Left Arm.png" id="4_405up"]
+[ext_resource type="Texture2D" uid="uid://b0gvctt8k3hhq" path="res://Assets/Textures/Robot/Right Arm.png" id="5_d0kt3"]
+[ext_resource type="Texture2D" uid="uid://c7h6i3co5m16u" path="res://Assets/Textures/Robot/Left Ear.png" id="6_muktt"]
+[ext_resource type="Texture2D" uid="uid://ceg3sct536xgw" path="res://Assets/Textures/Robot/Right Ear.png" id="7_ul0re"]
+[ext_resource type="Texture2D" uid="uid://2minmn27pxnw" path="res://Assets/Textures/Robot/Fly Module.png" id="8_wvw2a"]
+[ext_resource type="Texture2D" uid="uid://bd7lnqn5w4ag2" path="res://Assets/Textures/Robot/Levitation.png" id="9_3hyho"]
+
+[sub_resource type="Animation" id="Animation_hwgex"]
+resource_name = "Stay"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Face:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -2), Vector2(0, -5), Vector2(0, -5), Vector2(0, -2)]
+}
+
+[sub_resource type="Animation" id="Animation_0e23l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Face:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5v5o2"]
+_data = {
+&"RESET": SubResource("Animation_0e23l"),
+&"Stay": SubResource("Animation_hwgex")
+}
+
+[node name="Hero Robot" type="Node2D"]
+
+[node name="Head" type="Sprite2D" parent="."]
+texture = ExtResource("1_hwgex")
+
+[node name="Face" type="Sprite2D" parent="."]
+position = Vector2(0, -2)
+texture = ExtResource("2_0e23l")
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(0, 81)
+texture = ExtResource("3_5v5o2")
+
+[node name="LeftArm" type="Sprite2D" parent="."]
+position = Vector2(-62, 74)
+texture = ExtResource("4_405up")
+
+[node name="RightArm" type="Sprite2D" parent="."]
+position = Vector2(62, 74)
+texture = ExtResource("5_d0kt3")
+
+[node name="LeftEar" type="Sprite2D" parent="."]
+position = Vector2(-50, -35)
+texture = ExtResource("6_muktt")
+
+[node name="RightEar" type="Sprite2D" parent="."]
+position = Vector2(50, -35)
+texture = ExtResource("7_ul0re")
+
+[node name="FlyModule" type="Sprite2D" parent="."]
+position = Vector2(0, 135)
+texture = ExtResource("8_wvw2a")
+
+[node name="Levitation" type="Sprite2D" parent="."]
+position = Vector2(0, 156)
+texture = ExtResource("9_3hyho")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5v5o2")
+}
