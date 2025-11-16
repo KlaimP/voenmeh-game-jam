@@ -92,5 +92,5 @@ public partial class GridObject : Node2D
 	}
 
 	// Виртуальный метод для обработки наступления робота (для нетвёрдых объектов)
-    public virtual void OnRobotEnter(Robot robot) { }
+	public virtual void OnRobotEnter(Robot robot) { }
 }

@@ -180,27 +180,27 @@ public partial class Robot : GridObject
 		_isMoving = false;
 	}
 
-    // Функция получения урона
-    public void TakeDamage(int damage)
-    {
-        GD.Print($"💥 РОБОТ ПОЛУЧИЛ УРОН: {damage}");
-        
-        // Визуальный эффект получения урона
-        PlayDamageEffect();
-        
-        // Здесь можно добавить логику здоровья:
-        // - Уменьшение HP
-        // - Проверка на смерть
-        // - Воспроизведение звука
-        // - Анимация мигания
-    }
+	// Функция получения урона
+	public void TakeDamage(int damage)
+	{
+		GD.Print($"💥 РОБОТ ПОЛУЧИЛ УРОН: {damage}");
+		
+		// Визуальный эффект получения урона
+		PlayDamageEffect();
+		
+		// Здесь можно добавить логику здоровья:
+		// - Уменьшение HP
+		// - Проверка на смерть
+		// - Воспроизведение звука
+		// - Анимация мигания
+	}
 	// Анимация получения урона
-    private void PlayDamageEffect()
-    {
-        var tween = CreateTween();
-        tween.TweenProperty(this, "modulate", new Color(1, 0.3f, 0.3f, 1), 0.1f);
-        tween.TweenProperty(this, "modulate", new Color(1, 1, 1, 1), 0.1f);
-    }
+	private void PlayDamageEffect()
+	{
+		var tween = CreateTween();
+		tween.TweenProperty(this, "modulate", new Color(1, 0.3f, 0.3f, 1), 0.1f);
+		tween.TweenProperty(this, "modulate", new Color(1, 1, 1, 1), 0.1f);
+	}
 
 	// Поворот налево
 	public async Task TurnLeft()
