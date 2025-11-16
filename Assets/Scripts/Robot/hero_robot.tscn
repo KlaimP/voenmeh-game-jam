@@ -1,0 +1,273 @@
+[gd_scene load_steps=13 format=3 uid="uid://ca6xo8h05xd32"]
+
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Head.png" id="1_hwgex"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Face.png" id="2_0e23l"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Front_Body.png" id="3_5v5o2"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Left Arm.png" id="4_405up"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Right Arm.png" id="5_d0kt3"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Left Ear.png" id="6_muktt"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Right Ear.png" id="7_ul0re"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Fly Module.png" id="8_wvw2a"]
+[ext_resource type="Texture2D" path="res://Assets/Textures/Robot/Levitation.png" id="9_3hyho"]
+
+[sub_resource type="Animation" id="Animation_0e23l"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Front/Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Front/Face:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Front/LeftEar:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-50, -35)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Front/Body:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 81)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Front/LeftArm:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-62, 74)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Front/RightArm:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(62, 74)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Front/FlyModule:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 135)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Front/Levitation:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 156)]
+}
+
+[sub_resource type="Animation" id="Animation_hwgex"]
+resource_name = "Stay"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Front/Head:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3), Vector2(0, -3), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Front/Face:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -2), Vector2(0, -5), Vector2(0, -5), Vector2(0, -2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Front/LeftEar:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-50, -35), Vector2(-50, -40), Vector2(-50, -40), Vector2(-50, -35)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Front/RightEar:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(50, -35), Vector2(50, -40), Vector2(50, -40), Vector2(50, -35)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Front/Body:position")
+tracks/4/interp = 2
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 81), Vector2(0, 79), Vector2(0, 79), Vector2(0, 81)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Front/LeftArm:position")
+tracks/5/interp = 2
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-62, 74), Vector2(-62, 70), Vector2(-62, 70), Vector2(-62, 74)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Front/RightArm:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(62, 74), Vector2(62, 70), Vector2(62, 70), Vector2(62, 74)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Front/FlyModule:position")
+tracks/7/interp = 2
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 135), Vector2(0, 132), Vector2(0, 132), Vector2(0, 135)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Front/Levitation:position")
+tracks/8/interp = 2
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.1, 0.4, 0.6, 0.8666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 156), Vector2(0, 152), Vector2(0, 152), Vector2(0, 156)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5v5o2"]
+_data = {
+&"RESET": SubResource("Animation_0e23l"),
+&"Stay": SubResource("Animation_hwgex")
+}
+
+[node name="Hero Robot" type="Node2D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_5v5o2")
+}
+autoplay = "Stay"
+
+[node name="Front" type="Node2D" parent="."]
+
+[node name="Head" type="Sprite2D" parent="Front"]
+texture = ExtResource("1_hwgex")
+
+[node name="Face" type="Sprite2D" parent="Front"]
+position = Vector2(0, -2)
+texture = ExtResource("2_0e23l")
+
+[node name="Body" type="Sprite2D" parent="Front"]
+position = Vector2(0, 81)
+texture = ExtResource("3_5v5o2")
+
+[node name="LeftArm" type="Sprite2D" parent="Front"]
+position = Vector2(-62, 74)
+texture = ExtResource("4_405up")
+
+[node name="RightArm" type="Sprite2D" parent="Front"]
+position = Vector2(62, 74)
+texture = ExtResource("5_d0kt3")
+
+[node name="LeftEar" type="Sprite2D" parent="Front"]
+position = Vector2(-50, -35)
+texture = ExtResource("6_muktt")
+
+[node name="RightEar" type="Sprite2D" parent="Front"]
+position = Vector2(50, -35)
+texture = ExtResource("7_ul0re")
+
+[node name="FlyModule" type="Sprite2D" parent="Front"]
+position = Vector2(0, 135)
+texture = ExtResource("8_wvw2a")
+
+[node name="Levitation" type="Sprite2D" parent="Front"]
+position = Vector2(0, 156)
+texture = ExtResource("9_3hyho")
