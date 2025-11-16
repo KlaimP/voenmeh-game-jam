@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://byymuryf3dloc"]
+[gd_scene load_steps=10 format=3 uid="uid://byymuryf3dloc"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://3be76dk6kxpo" path="res://Assets/Scripts/Objects/Box/Box.tscn" id="3_6dcgm"]
 [ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Assets/Scripts/Objects/Obstacle/Obstacle.tscn" id="4_tw4xh"]
 [ext_resource type="PackedScene" uid="uid://dkwxqas7tbcdt" path="res://Assets/Scripts/Objects/Saw/Saw.tscn" id="5_kqtap"]
+[ext_resource type="PackedScene" uid="uid://bq11ndxv2qh4t" path="res://Assets/Scripts/Objects/Throns/Thorns.tscn" id="6_3dph1"]
 [ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
 [ext_resource type="Script" uid="uid://cr74tmbabicf6" path="res://Assets/Scripts/Levels/RestartButton.cs" id="8_2x7io"]
 
@@ -16,6 +17,7 @@ RobotPrefab = ExtResource("2_aswjh")
 BoxPrefab = ExtResource("3_6dcgm")
 ObstaclePrefab = ExtResource("4_tw4xh")
 SawTrapPrefab = ExtResource("5_kqtap")
+ThornsTrapPrefab = ExtResource("6_3dph1")
 blockEditorUi = NodePath("Control/SplitContainer/GraphEdit")
 
 [node name="Grid" type="Node2D" parent="."]

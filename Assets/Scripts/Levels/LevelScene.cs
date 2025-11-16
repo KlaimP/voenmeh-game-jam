@@ -13,6 +13,8 @@ public partial class LevelScene : Node2D
 	[Export] public PackedScene ObstaclePrefab { get; set; }
 	// Ловушка - Пила (Префаб)
 	[Export] public PackedScene SawTrapPrefab { get; set; }
+    // Ловушка - Шипы (Префаб)
+    [Export] public PackedScene ThornsTrapPrefab { get; set; }
 	// IDE Робота
 	[Export] public BlockEditorUi blockEditorUi { get; set; }
 
@@ -35,6 +37,19 @@ public partial class LevelScene : Node2D
         new Vector2I(2, 3), 
         new Vector2I(6, 6), 
         new Vector2I(4, 6) 
+    ];
+    public enum RotationAngle // Нахождение шипов относительно ячейки
+    {
+        Up = 0,      // 0°
+        Right = 90,  // 90°
+        Down = 180,  // 180°
+        Left = 270   // 270°
+    }
+    private (Vector2I position, RotationAngle rotation)[] _thornsTrapPositions = [ 
+        (new Vector2I(9, 6), RotationAngle.Up),
+        (new Vector2I(10, 6), RotationAngle.Right),
+        (new Vector2I(11, 6), RotationAngle.Down),
+        (new Vector2I(12, 6), RotationAngle.Left)
     ];
 
 
@@ -85,6 +100,7 @@ public partial class LevelScene : Node2D
         
         GD.Print("Создание ловушек...");
         CreateSawTraps(_sawTrapPositions);
+        CreateThornsTraps(_thornsTrapPositions); 
         
         LevelGrid.PrintStateMatrix("ФИНАЛЬНОЕ СОСТОЯНИЕ");
     }
@@ -200,4 +216,30 @@ public partial class LevelScene : Node2D
             GD.PrintErr($"Не удалось создать пилу-ловушку {trapNumber} в {position}");
         }
     }
+
+    // Создание ловушек-шипов
+    private void CreateThornsTraps((Vector2I position, RotationAngle rotation)[] positions)
+    {
+        for (int i = 0; i < positions.Length; i++)
+        {
+            var thornsTrap = ThornsTrapPrefab.Instantiate<ThornsTrap>();
+            _objectsContainer.AddChild(thornsTrap);
+            
+            thornsTrap.Rotation = Mathf.DegToRad((float)positions[i].rotation);
+            
+            CallDeferred(nameof(DeferredAddThornsTrap), thornsTrap, positions[i].position, i + 1);
+        }
+    }
+    private void DeferredAddThornsTrap(ThornsTrap thornsTrap, Vector2I position, int trapNumber)
+    {
+        if (LevelGrid.AddObjectToGrid(thornsTrap, position))
+        {
+            GD.Print($"Шипы-ловушка {trapNumber} создана в позиции {position} с поворотом {Mathf.RadToDeg(thornsTrap.Rotation)}°");
+        }
+        else
+        {
+            GD.PrintErr($"Не удалось создать шипы-ловушку {trapNumber} в {position}");
+        }
+    }
+
 }
