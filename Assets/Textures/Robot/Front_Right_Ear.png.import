@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iy8pctuwt8ci"
-path="res://.godot/imported/Body.png-391024fe07e730f13c820bd78bb2016c.ctex"
+uid="uid://b1qsonfdtem4e"
+path="res://.godot/imported/Front_Right_Ear.png-6d0415810c9e854989474c211cfc994f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Scripts/Robot/Body.png"
-dest_files=["res://.godot/imported/Body.png-391024fe07e730f13c820bd78bb2016c.ctex"]
+source_file="res://Assets/Textures/Robot/Front_Right_Ear.png"
+dest_files=["res://.godot/imported/Front_Right_Ear.png-6d0415810c9e854989474c211cfc994f.ctex"]
 
 [params]
 
