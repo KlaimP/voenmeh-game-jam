@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1id05gr2t0ym"]
+[gd_scene load_steps=4 format=3 uid="uid://c1id05gr2t0ym"]
 
 [ext_resource type="Script" uid="uid://dwnv1sigkq8o3" path="res://Assets/Scripts/MainMenu/MainMenu.cs" id="1_otibh"]
+[ext_resource type="AudioStream" uid="uid://cja6r2k2aoc2u" path="res://Assets/Scripts/MainMenu/Sound/select_1.wav" id="2_4welw"]
+[ext_resource type="AudioStream" uid="uid://dg5oobdus6gpe" path="res://Assets/Scripts/MainMenu/Sound/cancel.wav" id="3_twgmf"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_otibh")
+HoverSound = ExtResource("2_4welw")
+ClickSound = ExtResource("3_twgmf")
 
 [node name="PlayButton" type="Button" parent="."]
 layout_mode = 0

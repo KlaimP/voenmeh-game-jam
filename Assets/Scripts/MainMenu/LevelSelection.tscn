@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cpwbkqsm7uttd"]
+[gd_scene load_steps=4 format=3 uid="uid://cpwbkqsm7uttd"]
 
 [ext_resource type="Script" uid="uid://dhurng5qfsbiw" path="res://Assets/Scripts/MainMenu/LevelSelection.cs" id="1_rby1f"]
+[ext_resource type="AudioStream" uid="uid://cja6r2k2aoc2u" path="res://Assets/Scripts/MainMenu/Sound/select_1.wav" id="2_crxit"]
+[ext_resource type="AudioStream" uid="uid://dg5oobdus6gpe" path="res://Assets/Scripts/MainMenu/Sound/cancel.wav" id="3_s3xb4"]
 
 [node name="LevelSelection" type="Control" node_paths=PackedStringArray("Level1Button", "Level2Button", "Level3Button", "Level4Button", "Level5Button", "BackButton")]
 layout_mode = 3
@@ -12,6 +14,8 @@ Level3Button = NodePath("Level3Button")
 Level4Button = NodePath("Level4Button")
 Level5Button = NodePath("Level5Button")
 BackButton = NodePath("BackButton")
+HoverSound = ExtResource("2_crxit")
+ClickSound = ExtResource("3_s3xb4")
 
 [node name="Level1Button" type="Button" parent="."]
 layout_mode = 0
