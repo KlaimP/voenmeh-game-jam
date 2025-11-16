@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://byymuryf3dloc"]
+[gd_scene load_steps=17 format=3 uid="uid://byymuryf3dloc"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
@@ -11,10 +11,17 @@
 [ext_resource type="PackedScene" uid="uid://o8hv4vt3u7cs" path="res://Assets/Scripts/Objects/BoxTargetZone/BoxTargetZone.tscn" id="7_3d3ca"]
 [ext_resource type="Script" uid="uid://cr74tmbabicf6" path="res://Assets/Scripts/Levels/RestartButton.cs" id="8_2x7io"]
 [ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="8_q1wgt"]
-[ext_resource type="Texture2D" uid="uid://c0eiwq0obl58s" path="res://Assets/Textures/Robot/Robot.jpg" id="10_i7uyu"]
+[ext_resource type="Texture2D" uid="uid://ck1rpw1euh5o3" path="res://Assets/Textures/Objects/Tile.png" id="10_i7uyu"]
 [ext_resource type="Script" uid="uid://bx58dfetxapmi" path="res://Assets/Scripts/Levels/LevelCompleteButton.cs" id="12_q1wgt"]
+[ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="14_xd5ua"]
 
-[node name="Level1" type="Node2D" node_paths=PackedStringArray("LevelGrid", "blockEditorUi")]
+[sub_resource type="Gradient" id="Gradient_xd5ua"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ky4c8"]
+gradient = SubResource("Gradient_xd5ua")
+
+[node name="Level1" type="Node2D" node_paths=PackedStringArray("LevelGrid", "blockEditorUi", "BackgroundImage")]
 script = ExtResource("1_0twix")
 LevelGrid = NodePath("Grid")
 RobotPrefab = ExtResource("2_aswjh")
@@ -24,43 +31,53 @@ SawTrapPrefab = ExtResource("5_kqtap")
 ThornsTrapPrefab = ExtResource("6_3dph1")
 BoxTargetZonePrefab = ExtResource("7_3d3ca")
 FinishZonePrefab = ExtResource("8_q1wgt")
-blockEditorUi = NodePath("Control/SplitContainer/GraphEdit")
+blockEditorUi = NodePath("Canvas/Control/SplitContainer/GraphEdit")
+BackgroundImage = NodePath("BlackBackground")
+
+[node name="BlackBackground" type="TextureRect" parent="."]
+visible = false
+offset_left = -1604.0
+offset_top = -998.0
+offset_right = 3601.0
+offset_bottom = 2412.0
+texture = SubResource("GradientTexture1D_ky4c8")
 
 [node name="Grid" type="Node2D" parent="."]
 position = Vector2(1, -1)
 script = ExtResource("2_ub1qs")
 GridWidth = 16
 GridHeight = 9
+CellSize = 128
 CellTexture = ExtResource("10_i7uyu")
 UseCellSprites = true
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
 [node name="Objects" type="Node2D" parent="."]
 
-[node name="Control" type="Control" parent="."]
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Canvas"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="SplitContainer" type="SplitContainer" parent="Control"]
+[node name="SplitContainer" type="SplitContainer" parent="Canvas/Control"]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 split_offset = 1280
 touch_dragger_enabled = true
 
-[node name="Control" type="Control" parent="Control/SplitContainer"]
+[node name="Control" type="Control" parent="Canvas/Control/SplitContainer"]
 layout_mode = 2
 
-[node name="GraphEdit" parent="Control/SplitContainer" instance=ExtResource("6_tw4xh")]
+[node name="GraphEdit" parent="Canvas/Control/SplitContainer" instance=ExtResource("6_tw4xh")]
 custom_minimum_size = Vector2(0, 544)
 layout_mode = 2
 scroll_offset = Vector2(-419, -506.71)
 minimap_enabled = false
 
-[node name="Button" type="Button" parent="Control"]
+[node name="Button" type="Button" parent="Canvas/Control"]
 layout_mode = 0
 offset_left = 6.0
 offset_top = 699.0
@@ -69,7 +86,7 @@ offset_bottom = 730.0
 text = "Restart"
 script = ExtResource("8_2x7io")
 
-[node name="Button2" type="Button" parent="Control"]
+[node name="Button2" type="Button" parent="Canvas/Control"]
 layout_mode = 0
 offset_left = 225.0
 offset_top = 701.0
@@ -77,3 +94,12 @@ offset_right = 310.0
 offset_bottom = 732.0
 text = "Check lvl"
 script = ExtResource("12_q1wgt")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(960, 540)
+limit_enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+script = ExtResource("14_xd5ua")

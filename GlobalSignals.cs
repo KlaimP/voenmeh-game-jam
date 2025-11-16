@@ -5,4 +5,7 @@ public partial class GlobalSignals : Node
 {
 	[Signal]
 	public delegate void StartGameEventHandler();
+	
+	[Signal]
+	public delegate void EndGameEventHandler();
 }

@@ -15,6 +15,10 @@ namespace VoenmehGameJam.Scripts
 			{
 				next.Execute(robot);
 			}
+			else
+			{
+				robot.EndGame();
+			}
 		}
 	}
 }

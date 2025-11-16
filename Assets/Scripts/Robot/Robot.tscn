@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://8e1m25hqjyrw"]
+[gd_scene load_steps=9 format=3 uid="uid://8e1m25hqjyrw"]
 
 [ext_resource type="Script" uid="uid://botoyd6amdg38" path="res://Assets/Scripts/Robot/Robot.cs" id="1_lhh6t"]
 [ext_resource type="Texture2D" uid="uid://c0eiwq0obl58s" path="res://Assets/Textures/Robot/Robot.jpg" id="2_8mo4m"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cct3iy05l3ub0" path="res://Assets/Textures/Robot/RobotRight.png" id="3_d07hm"]
 [ext_resource type="Texture2D" uid="uid://be8qouiepbjxo" path="res://Assets/Textures/Robot/RobotDown.png" id="4_ow2ri"]
 [ext_resource type="Texture2D" uid="uid://bss7vo3dgsc48" path="res://Assets/Textures/Robot/RobotLeft.png" id="5_s7p1y"]
+[ext_resource type="PackedScene" uid="uid://dt0p4qdkr1h0d" path="res://Assets/Scripts/Robot/hero_robot.tscn" id="6_d07hm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8mo4m"]
 size = Vector2(64, 64)
@@ -17,10 +18,16 @@ _spriteRight = ExtResource("3_d07hm")
 _spriteDown = ExtResource("4_ow2ri")
 _spriteLeft = ExtResource("5_s7p1y")
 
+[node name="Hero Robot" parent="." instance=ExtResource("6_d07hm")]
+position = Vector2(0, -41.41)
+scale = Vector2(0.7, 0.7)
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("2_8mo4m")
 
 [node name="InteractionArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_8mo4m")

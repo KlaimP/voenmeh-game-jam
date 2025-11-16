@@ -144,15 +144,26 @@ public partial class BlockEditorUi : GraphEdit
 			GD.Print("Delete");
 			foreach(var x in this.GetChildren())
 			{
-				if(x is GraphNode)
+				if(x is GraphNode node)
 				{
-					GraphNode node = (GraphNode)x;
 					BlockNodeUI nodeUI = (BlockNodeUI)x;
 					if (node.Selected && nodeUI.Title != "Start")
 					{
+						foreach (var y in this.GetChildren())
+						{
+							if (y is BlockNodeUI nodeOther)
+							{ 
+								if(nodeOther.Block.next == nodeUI.Block)
+								{
+									nodeOther.Block.next = null;	
+
+								}
+							}
+						}
+						
 						GD.Print(nodeUI.Name);
-						this.RemoveChild(x);
 						nodeUI.Block.next = null;
+						this.RemoveChild(x);
 					}
 				}
 			}
