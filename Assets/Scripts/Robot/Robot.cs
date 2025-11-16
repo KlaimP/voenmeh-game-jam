@@ -10,6 +10,7 @@ public partial class Robot : GridObject
 	[Export] private Texture2D _spriteRight;
 	[Export] private Texture2D _spriteDown;
 	[Export] private Texture2D _spriteLeft;
+	[Export] private HeroRobot _HeroRobot;
 	// Скорость движения
 	[Export] public float MoveDuration { get; set; } = 0.3f;
 	// Скорость поворота
@@ -33,7 +34,7 @@ public partial class Robot : GridObject
 		Left   // Влево
 	}
 	// Текущее направление
-	private RobotDirection _currentDirection = RobotDirection.Up;
+	private RobotDirection _currentDirection = RobotDirection.Down;
 
 
 
@@ -48,7 +49,7 @@ public partial class Robot : GridObject
 		base._Ready();
 
 		// Устанавливаем начальный спрайт
-   		SetDirection(RobotDirection.Up);
+   		SetDirection(RobotDirection.Down);
 
 		GD.Print("=== РОБОТ ГОТОВ ===");
 		_grid.PrintStateMatrix();
@@ -252,14 +253,14 @@ public partial class Robot : GridObject
 	private void ReloadLevel()
 	{
 		var levelScene = GetTree().CurrentScene as LevelScene;
-        if (levelScene != null)
-        {
-            levelScene.RestartLevel();
-        }
-        else
-        {
-            GD.PrintErr("LevelScene не найден!");
-        }
+		if (levelScene != null)
+		{
+			levelScene.RestartLevel();
+		}
+		else
+		{
+			GD.PrintErr("LevelScene не найден!");
+		}
 	}
 
 	// Поворот налево
@@ -341,13 +342,20 @@ public partial class Robot : GridObject
 	private void SetDirection(RobotDirection direction)
 	{
 		_currentDirection = direction;
-		
+
+		//switch (direction)
+		//{
+		//	case RobotDirection.Up: _sprite.Texture = _spriteUp; break;
+		//	case RobotDirection.Right: _sprite.Texture = _spriteRight; break;
+		//	case RobotDirection.Down: _sprite.Texture = _spriteDown; break;
+		//	case RobotDirection.Left: _sprite.Texture = _spriteLeft; break;
+		//}
 		switch (direction)
 		{
-			case RobotDirection.Up: _sprite.Texture = _spriteUp; break;
-			case RobotDirection.Right: _sprite.Texture = _spriteRight; break;
-			case RobotDirection.Down: _sprite.Texture = _spriteDown; break;
-			case RobotDirection.Left: _sprite.Texture = _spriteLeft; break;
+			case RobotDirection.Up: _HeroRobot.SetUpDirection(); break;
+			case RobotDirection.Right: _HeroRobot.SetRightDirection(); break;
+			case RobotDirection.Down: _HeroRobot.SetDownDirection(); break;
+			case RobotDirection.Left: _HeroRobot.SetLeftDirection(); break;
 		}
 	}
 
@@ -483,31 +491,31 @@ public partial class Robot : GridObject
 	}
 
 	// Модифицируем метод DestroyObjectOnTrap
-    private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)
-    {
-        GD.Print($"УНИЧТОЖЕНИЕ: объект {objectToDestroy.ObjectType} уничтожен ловушкой в {trapPosition}");
-        
-        // ВОСПРОИЗВОДИМ ЗВУК ЛОВУШКИ
-        if (BoxTrapSound != null)
-        {
-            SFXManager.Instance.PlaySound(BoxTrapSound, -20.0f); // -20.0f - регулируйте громкость
-        }
-        
-        // Запоминаем позицию перед уничтожением для выхода из зоны
-        Vector2I destroyPosition = objectToDestroy.GridPosition;
-        
-        // Визуальные эффекты уничтожения
-        await objectToDestroy.OnDestroyed();
-        
-        // Если это ящик - вызываем выход из зоны
-        if (objectToDestroy is BoxObject box) CheckBoxExitOnDestroy(box, destroyPosition); 
-        
-        // Удаляем объект из сетки
-        _grid.RemoveObjectFromGrid(objectToDestroy.GridPosition);
-        
-        // Уничтожаем объект
-        objectToDestroy.QueueFree();
-    }
+	private async Task DestroyObjectOnTrap(GridObject objectToDestroy, Vector2I trapPosition)
+	{
+		GD.Print($"УНИЧТОЖЕНИЕ: объект {objectToDestroy.ObjectType} уничтожен ловушкой в {trapPosition}");
+		
+		// ВОСПРОИЗВОДИМ ЗВУК ЛОВУШКИ
+		if (BoxTrapSound != null)
+		{
+			SFXManager.Instance.PlaySound(BoxTrapSound, -20.0f); // -20.0f - регулируйте громкость
+		}
+		
+		// Запоминаем позицию перед уничтожением для выхода из зоны
+		Vector2I destroyPosition = objectToDestroy.GridPosition;
+		
+		// Визуальные эффекты уничтожения
+		await objectToDestroy.OnDestroyed();
+		
+		// Если это ящик - вызываем выход из зоны
+		if (objectToDestroy is BoxObject box) CheckBoxExitOnDestroy(box, destroyPosition); 
+		
+		// Удаляем объект из сетки
+		_grid.RemoveObjectFromGrid(objectToDestroy.GridPosition);
+		
+		// Уничтожаем объект
+		objectToDestroy.QueueFree();
+	}
 
 	// Проверка выхода из зоны при УНИЧТОЖЕНИИ ящика
 	private void CheckBoxExitOnDestroy(BoxObject box, Vector2I position)

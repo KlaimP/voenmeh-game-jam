@@ -3,9 +3,10 @@ using System;
 
 public partial class ZoomCamera2D : Camera2D
 {
-	[Export] public MouseButton PanButton = MouseButton.Right;
+	[Export] public MouseButton PanButton = MouseButton.Middle;
 	[Export] public bool PanWithSpace = true;
 	[Export] public float PanSpeed = 1.0f;
+	[Export] public SplitContainer Split;
 	private bool dragging = false;
 	private Vector2 dragMouseWorld;
 	private Vector2 dragCamStart;
@@ -15,23 +16,31 @@ public partial class ZoomCamera2D : Camera2D
 	{
 		targetPosition = GlobalPosition;
 	}
+	private bool IsMouseBeyondLimit()
+	{
+		float screenX = GetViewport().GetMousePosition().X;
+		return screenX > Split.SplitOffset;
+	}
 	public override void _PhysicsProcess(double delta)
 	{
-		if (Input.IsActionJustPressed("camera_zoom_in"))
+		if (!IsMouseBeyondLimit())
 		{
-			if (Zoom.X * 1.1f >= 2.0f)
+			if (Input.IsActionJustPressed("camera_zoom_in"))
 			{
-				return;
+				if (Zoom.X * 1.1f >= 2.0f)
+				{
+					return;
+				}
+				Zoom = new Vector2(Zoom.X * 1.1f, Zoom.Y * 1.1f);
 			}
-			Zoom = new Vector2(Zoom.X * 1.1f, Zoom.Y * 1.1f);
-		}
-		if (Input.IsActionJustPressed("camera_zoom_out"))
-		{
-			if (Zoom.X * 0.9f <= 0.5f)
+			if (Input.IsActionJustPressed("camera_zoom_out"))
 			{
-				return;
+				if (Zoom.X * 0.9f <= 0.5f)
+				{
+					return;
+				}
+				Zoom = new Vector2(Zoom.X * 0.9f, Zoom.Y * 0.9f);
 			}
-			Zoom = new Vector2(Zoom.X * 0.9f, Zoom.Y * 0.9f);
 		}
 	}
 
@@ -54,7 +63,7 @@ public partial class ZoomCamera2D : Camera2D
 
 	public override void _Process(double delta)
 	{
-		if (dragging)
+		if (dragging && !IsMouseBeyondLimit())
 		{
 			var cur = GetGlobalMousePosition();
 			var diff = (cur - dragMouseWorld) * PanSpeed;

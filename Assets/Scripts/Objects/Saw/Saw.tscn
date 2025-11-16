@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dkwxqas7tbcdt"]
 
-[ext_resource type="Texture2D" uid="uid://c1gy2k68uh6pm" path="res://Assets/Textures/Objects/Laser.png" id="2_2vpn5"]
+[ext_resource type="Texture2D" uid="uid://djhd717vf3yu4" path="res://Assets/Textures/Objects/SawBlade.png" id="2_2vpn5"]
 [ext_resource type="Script" uid="uid://hih4l6b42alg" path="res://Assets/Scripts/Objects/Saw/SawTrap.cs" id="2_niel8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_niel8"]

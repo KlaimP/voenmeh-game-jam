@@ -1,5 +1,6 @@
-[gd_scene load_steps=13 format=3 uid="uid://dt0p4qdkr1h0d"]
+[gd_scene load_steps=34 format=3 uid="uid://dt0p4qdkr1h0d"]
 
+[ext_resource type="Script" uid="uid://db7u0jj80srq5" path="res://Assets/Scripts/Robot/HeroRobot.cs" id="1_b6pdl"]
 [ext_resource type="Texture2D" uid="uid://nh103qtirlip" path="res://Assets/Textures/Robot/Front_Head.png" id="1_hwgex"]
 [ext_resource type="Texture2D" uid="uid://cufw4ktfi16bw" path="res://Assets/Textures/Robot/Front_Face.png" id="2_0e23l"]
 [ext_resource type="Texture2D" uid="uid://iy8pctuwt8ci" path="res://Assets/Textures/Robot/Front_Body.png" id="3_5v5o2"]
@@ -9,6 +10,26 @@
 [ext_resource type="Texture2D" uid="uid://b1qsonfdtem4e" path="res://Assets/Textures/Robot/Front_Right_Ear.png" id="7_muktt"]
 [ext_resource type="Texture2D" uid="uid://yofx2tm1fsmi" path="res://Assets/Textures/Robot/Front_Fly_Module.png" id="8_ul0re"]
 [ext_resource type="Texture2D" uid="uid://bcltexyetmjym" path="res://Assets/Textures/Robot/Front_Levitation.png" id="9_wvw2a"]
+[ext_resource type="Texture2D" uid="uid://dtqobbdrrjdp7" path="res://Assets/Textures/Robot/Back_Head.png" id="10_3hyho"]
+[ext_resource type="Texture2D" uid="uid://se6u5juer2n6" path="res://Assets/Textures/Robot/Back_Body.png" id="11_o6eko"]
+[ext_resource type="Texture2D" uid="uid://bq83sk5xsp2jv" path="res://Assets/Textures/Robot/Back_Left_Arm.png" id="12_yrnpp"]
+[ext_resource type="Texture2D" uid="uid://hof4kg1kb3oa" path="res://Assets/Textures/Robot/Back_Right_Arm.png" id="13_dsomb"]
+[ext_resource type="Texture2D" uid="uid://bhdjfvc277yj" path="res://Assets/Textures/Robot/Back_Left_Ear.png" id="14_pvadd"]
+[ext_resource type="Texture2D" uid="uid://dpgqrtiobgh5e" path="res://Assets/Textures/Robot/Back_Right_Ear.png" id="15_ah0nk"]
+[ext_resource type="Texture2D" uid="uid://dcro8setdop67" path="res://Assets/Textures/Robot/Back_Fly_Module.png" id="16_q66g6"]
+[ext_resource type="Texture2D" uid="uid://bpx0t28g20vsh" path="res://Assets/Textures/Robot/Back_Levitation.png" id="17_g1xns"]
+[ext_resource type="Texture2D" uid="uid://bma0qp476m7tt" path="res://Assets/Textures/Robot/Right_Head.png" id="18_q66g6"]
+[ext_resource type="Texture2D" uid="uid://dkk3fvncmvhx8" path="res://Assets/Textures/Robot/Right_Body.png" id="19_g1xns"]
+[ext_resource type="Texture2D" uid="uid://cymqn8vm0uljq" path="res://Assets/Textures/Robot/Right_Arm.png" id="20_h5y5t"]
+[ext_resource type="Texture2D" uid="uid://fd2x5obe40wh" path="res://Assets/Textures/Robot/Right_Ear.png" id="21_7qgbg"]
+[ext_resource type="Texture2D" uid="uid://consgsg1w27dd" path="res://Assets/Textures/Robot/Right_Fly_Module.png" id="22_pbrrc"]
+[ext_resource type="Texture2D" uid="uid://dhka7d23ovcjk" path="res://Assets/Textures/Robot/Right_Levitation.png" id="23_0s7k7"]
+[ext_resource type="Texture2D" uid="uid://df0ivbkou7cwa" path="res://Assets/Textures/Robot/Left_Head.png" id="24_8chy0"]
+[ext_resource type="Texture2D" uid="uid://dv01nnmrqagg8" path="res://Assets/Textures/Robot/Left_body.png" id="25_b6pdl"]
+[ext_resource type="Texture2D" uid="uid://f28wd0iuo6qg" path="res://Assets/Textures/Robot/Left_Arm.png" id="26_pyf6u"]
+[ext_resource type="Texture2D" uid="uid://bkxrtnwj5og7y" path="res://Assets/Textures/Robot/Left_Ear.png" id="27_g5mw8"]
+[ext_resource type="Texture2D" uid="uid://cypnx4xtcrk4s" path="res://Assets/Textures/Robot/Left_Fly_Module.png" id="28_ovw8y"]
+[ext_resource type="Texture2D" uid="uid://cqewvrqqnc71o" path="res://Assets/Textures/Robot/Left_Levitation.png" id="29_g5ojw"]
 
 [sub_resource type="Animation" id="Animation_0e23l"]
 length = 0.001
@@ -227,7 +248,12 @@ _data = {
 &"Stay": SubResource("Animation_hwgex")
 }
 
-[node name="Hero Robot" type="Node2D"]
+[node name="Hero Robot" type="Node2D" node_paths=PackedStringArray("UpNode", "DownNode", "RightNode", "LeftNode")]
+script = ExtResource("1_b6pdl")
+UpNode = NodePath("Back")
+DownNode = NodePath("Front")
+RightNode = NodePath("Right")
+LeftNode = NodePath("Left")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -236,6 +262,7 @@ libraries = {
 autoplay = "Stay"
 
 [node name="Front" type="Node2D" parent="."]
+position = Vector2(0, -20)
 
 [node name="Head" type="Sprite2D" parent="Front"]
 texture = ExtResource("1_hwgex")
@@ -271,3 +298,107 @@ texture = ExtResource("8_ul0re")
 [node name="Levitation" type="Sprite2D" parent="Front"]
 position = Vector2(0, 156)
 texture = ExtResource("9_wvw2a")
+
+[node name="Back" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, -20)
+
+[node name="Head" type="Sprite2D" parent="Back"]
+texture = ExtResource("10_3hyho")
+
+[node name="Face" type="Sprite2D" parent="Back"]
+visible = false
+position = Vector2(0, -2)
+texture = ExtResource("2_0e23l")
+
+[node name="Body" type="Sprite2D" parent="Back"]
+position = Vector2(0, 81)
+texture = ExtResource("11_o6eko")
+
+[node name="LeftArm" type="Sprite2D" parent="Back"]
+position = Vector2(-62, 74)
+texture = ExtResource("12_yrnpp")
+
+[node name="RightArm" type="Sprite2D" parent="Back"]
+position = Vector2(62, 74)
+texture = ExtResource("13_dsomb")
+
+[node name="LeftEar" type="Sprite2D" parent="Back"]
+position = Vector2(-50, -35)
+texture = ExtResource("14_pvadd")
+
+[node name="RightEar" type="Sprite2D" parent="Back"]
+position = Vector2(50, -35)
+texture = ExtResource("15_ah0nk")
+
+[node name="FlyModule" type="Sprite2D" parent="Back"]
+position = Vector2(0, 135)
+texture = ExtResource("16_q66g6")
+
+[node name="Levitation" type="Sprite2D" parent="Back"]
+position = Vector2(0, 156)
+texture = ExtResource("17_g1xns")
+
+[node name="Right" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, -20)
+
+[node name="Head" type="Sprite2D" parent="Right"]
+texture = ExtResource("18_q66g6")
+
+[node name="Face" type="Sprite2D" parent="Right"]
+visible = false
+position = Vector2(0, -2)
+texture = ExtResource("2_0e23l")
+
+[node name="Body" type="Sprite2D" parent="Right"]
+position = Vector2(0, 81)
+texture = ExtResource("19_g1xns")
+
+[node name="Arm" type="Sprite2D" parent="Right"]
+position = Vector2(0, 74)
+texture = ExtResource("20_h5y5t")
+
+[node name="Ear" type="Sprite2D" parent="Right"]
+position = Vector2(0, -35)
+texture = ExtResource("21_7qgbg")
+
+[node name="FlyModule" type="Sprite2D" parent="Right"]
+position = Vector2(0, 135)
+texture = ExtResource("22_pbrrc")
+
+[node name="Levitation" type="Sprite2D" parent="Right"]
+position = Vector2(0, 156)
+texture = ExtResource("23_0s7k7")
+
+[node name="Left" type="Node2D" parent="."]
+visible = false
+position = Vector2(0, -20)
+
+[node name="Head" type="Sprite2D" parent="Left"]
+texture = ExtResource("24_8chy0")
+
+[node name="Face" type="Sprite2D" parent="Left"]
+visible = false
+position = Vector2(0, -2)
+texture = ExtResource("2_0e23l")
+
+[node name="Body" type="Sprite2D" parent="Left"]
+position = Vector2(0, 81)
+texture = ExtResource("25_b6pdl")
+
+[node name="Arm" type="Sprite2D" parent="Left"]
+position = Vector2(0, 74)
+texture = ExtResource("26_pyf6u")
+
+[node name="Ear" type="Sprite2D" parent="Left"]
+position = Vector2(0, -35)
+texture = ExtResource("27_g5mw8")
+
+[node name="FlyModule" type="Sprite2D" parent="Left"]
+position = Vector2(0, 135)
+texture = ExtResource("28_ovw8y")
+
+[node name="Levitation" type="Sprite2D" parent="Left"]
+position = Vector2(0, 156)
+texture = ExtResource("29_g5ojw")
