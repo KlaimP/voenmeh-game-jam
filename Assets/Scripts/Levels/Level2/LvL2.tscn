@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://uosleixv1f4e" path="res://Assets/Scripts/Objects/Laser/Lazer.tscn" id="7_qlv3g"]
 [ext_resource type="PackedScene" uid="uid://o8hv4vt3u7cs" path="res://Assets/Scripts/Objects/BoxTargetZone/BoxTargetZone.tscn" id="8_tjk11"]
 [ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="9_1btug"]
-[ext_resource type="AudioStream" uid="uid://bbqttcnl4x1ni" path="res://Assets/Music/Eric Skiff - Underclocked (underunderclocked mix).mp3" id="10_fhsk3"]
+[ext_resource type="AudioStream" uid="uid://cnoycla4me5tr" path="res://Assets/Music/Joshua McLean - Mountain Trials.mp3" id="10_83j51"]
 
 [sub_resource type="Gradient" id="Gradient_xd5ua"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -68,6 +68,7 @@ public partial class LevelCompleteButton : Button
 
 [node name="Level2" type="Node2D" node_paths=PackedStringArray("LevelGrid", "blockEditorUi", "BackgroundImage")]
 script = ExtResource("1_83j51")
+numNextLvL = 3
 LevelGrid = NodePath("Grid")
 RobotPrefab = ExtResource("2_ti23s")
 BoxPrefab = ExtResource("3_ovl5i")
@@ -79,7 +80,7 @@ BoxTargetZonePrefab = ExtResource("8_tjk11")
 FinishZonePrefab = ExtResource("9_1btug")
 blockEditorUi = NodePath("Canvas/Control/SplitContainer/GraphEdit")
 BackgroundImage = NodePath("BlackBackground")
-LevelMusic = ExtResource("10_fhsk3")
+LevelMusic = ExtResource("10_83j51")
 
 [node name="BlackBackground" type="TextureRect" parent="."]
 visible = false
