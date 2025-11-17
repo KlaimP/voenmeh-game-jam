@@ -84,10 +84,10 @@ LevelMusic = ExtResource("10_mfes7")
 
 [node name="BlackBackground" type="TextureRect" parent="."]
 visible = false
-offset_left = -1604.0
-offset_top = -998.0
-offset_right = 3601.0
-offset_bottom = 2412.0
+offset_left = -6504.0
+offset_top = -4190.0
+offset_right = 11399.0
+offset_bottom = 5912.0
 texture = SubResource("GradientTexture1D_ky4c8")
 
 [node name="Grid" type="Node2D" parent="."]
@@ -127,6 +127,7 @@ scroll_offset = Vector2(-419, -506.71)
 minimap_enabled = false
 
 [node name="Button" type="Button" parent="Canvas/Control"]
+visible = false
 layout_mode = 0
 offset_left = 6.0
 offset_top = 699.0
@@ -136,6 +137,7 @@ text = "Restart"
 script = SubResource("CSharpScript_0rkbw")
 
 [node name="Button2" type="Button" parent="Canvas/Control"]
+visible = false
 layout_mode = 0
 offset_left = 225.0
 offset_top = 701.0

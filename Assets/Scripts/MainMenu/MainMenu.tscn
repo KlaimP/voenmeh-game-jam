@@ -531,12 +531,22 @@ texture = ExtResource("4_twgmf")
 position = Vector2(967, 240)
 scale = Vector2(3, 3)
 
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 1358.0
+offset_top = 364.00003
+offset_right = 1522.0
+offset_bottom = 528.00006
+rotation = 0.46650466
+scale = Vector2(2, 2)
+texture = ExtResource("4_epn6w")
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = 368.0
-offset_top = 390.0
-offset_right = 532.0
-offset_bottom = 554.0
+offset_left = 323.0
+offset_top = 311.0
+offset_right = 487.0
+offset_bottom = 475.0
 rotation = -0.15973464
 scale = Vector2(2, 2)
 texture = ExtResource("4_epn6w")

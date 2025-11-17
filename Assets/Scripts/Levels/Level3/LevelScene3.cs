@@ -36,23 +36,41 @@ public partial class LevelScene3 : LevelsSceneBase
 	
 	// Массивы позиций для всех объектов уровня
 	// Позиция робота
-	private Vector2I _robotPosition = new Vector2I(2, 2);
+	private Vector2I _robotPosition = new Vector2I(1, 1);
 	// Позиции ящиков
 	private Vector2I[] _boxPositions = [ 
-		new Vector2I(8, 3), 
-		new Vector2I(9, 3), 
+		new Vector2I(1, 3) 
 	];
 	// Позиции стенок
 	private Vector2I[] _obstaclePositions = [ 
-		new Vector2I(1, 1), 
-		new Vector2I(2, 1), 
-		new Vector2I(3, 1) 
+		new Vector2I(0, 0), 
+		new Vector2I(0, 1), 
+		new Vector2I(0, 2),
+		new Vector2I(0, 3),
+		new Vector2I(0, 4),
+		new Vector2I(0, 5),
+		new Vector2I(0, 6),
+		new Vector2I(1, 0),
+		new Vector2I(2, 0),
+		new Vector2I(3, 0),
+		new Vector2I(4, 0),
+		new Vector2I(5, 0),
+		new Vector2I(6, 0),
+		new Vector2I(6, 1),
+		new Vector2I(6, 2),
+		new Vector2I(6, 3),
+		new Vector2I(6, 4),
+		new Vector2I(6, 5),
+		new Vector2I(6, 6),
+		new Vector2I(5, 6),
+		new Vector2I(4, 6),
+		new Vector2I(3, 6),
+		new Vector2I(2, 6),
+		new Vector2I(1, 6),
+		new Vector2I(2, 5),
 	];
 	// Позиции пил
-	private Vector2I[] _sawTrapPositions = [ 
-		new Vector2I(4, 1), 
-		new Vector2I(5, 1), 
-		new Vector2I(6, 1) 
+	private Vector2I[] _sawTrapPositions = [
 	];
 	// Нахождение шипов относительно ячейки
 	public enum RotationAngle 
@@ -63,11 +81,7 @@ public partial class LevelScene3 : LevelsSceneBase
 		Left = 270   // 270° - Слева
 	}
 	// Позиции шипов и направлений
-	private (Vector2I position, RotationAngle rotation)[] _thornsTrapPositions = [ 
-		(new Vector2I(7, 1), RotationAngle.Up),
-		(new Vector2I(8, 1), RotationAngle.Right),
-		(new Vector2I(9, 1), RotationAngle.Down),
-		(new Vector2I(10, 1), RotationAngle.Left)
+	private (Vector2I position, RotationAngle rotation)[] _thornsTrapPositions = [
 	];
 	// Конфигурация лазеров: начальная позиция, направление, длина
 	private (Vector2I startPos, RotationAngle direction, int length)[] _laserConfigs = [ 
@@ -78,11 +92,10 @@ public partial class LevelScene3 : LevelsSceneBase
 	];
 	// Позиции зон ящиков
 	private Vector2I[] _boxTargetZonePositions = [ 
-		new Vector2I(8, 2),
-		new Vector2I(9, 2)
+		new Vector2I(1, 5),
 	];
 	// Позиция зоны завершения уровня
-	private Vector2I _finishZonePosition = new Vector2I(7, 2);
+	private Vector2I _finishZonePosition = new Vector2I(5, 5);
 
 	private GlobalSignals globalSignals;
 

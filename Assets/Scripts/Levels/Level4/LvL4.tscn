@@ -93,8 +93,8 @@ texture = SubResource("GradientTexture1D_ky4c8")
 [node name="Grid" type="Node2D" parent="."]
 position = Vector2(1, -1)
 script = ExtResource("11_hsvxc")
-GridWidth = 16
-GridHeight = 9
+GridWidth = 7
+GridHeight = 7
 CellSize = 128
 CellTexture = ExtResource("12_6mv88")
 CellTexture2 = ExtResource("13_y620p")
@@ -127,6 +127,7 @@ scroll_offset = Vector2(-419, -506.71)
 minimap_enabled = false
 
 [node name="Button" type="Button" parent="Canvas/Control"]
+visible = false
 layout_mode = 0
 offset_left = 6.0
 offset_top = 699.0
@@ -136,6 +137,7 @@ text = "Restart"
 script = SubResource("CSharpScript_0rkbw")
 
 [node name="Button2" type="Button" parent="Canvas/Control"]
+visible = false
 layout_mode = 0
 offset_left = 225.0
 offset_top = 701.0

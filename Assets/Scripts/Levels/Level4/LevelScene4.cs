@@ -31,28 +31,49 @@ public partial class LevelScene4 : LevelsSceneBase
 	// Музыка уровня
 	[Export] public AudioStream LevelMusic { get; set; }
 
-	// Контейнер для объектов
-	private Node2D _objectsContainer;
+	private Robot robot;
+
+    // Контейнер для объектов
+    private Node2D _objectsContainer;
 	
 	// Массивы позиций для всех объектов уровня
 	// Позиция робота
-	private Vector2I _robotPosition = new Vector2I(2, 2);
+	private Vector2I _robotPosition = new Vector2I(1, 1);
 	// Позиции ящиков
 	private Vector2I[] _boxPositions = [ 
-		new Vector2I(8, 3), 
-		new Vector2I(9, 3), 
 	];
 	// Позиции стенок
-	private Vector2I[] _obstaclePositions = [ 
-		new Vector2I(1, 1), 
-		new Vector2I(2, 1), 
-		new Vector2I(3, 1) 
-	];
+	private Vector2I[] _obstaclePositions = [
+        new Vector2I(0, 0),
+        new Vector2I(0, 1),
+        new Vector2I(0, 2),
+        new Vector2I(0, 3),
+        new Vector2I(0, 4),
+        new Vector2I(0, 5),
+        new Vector2I(0, 6),
+        new Vector2I(1, 0),
+        new Vector2I(2, 0),
+        new Vector2I(3, 0),
+        new Vector2I(4, 0),
+        new Vector2I(5, 0),
+        new Vector2I(6, 0),
+        new Vector2I(6, 1),
+        new Vector2I(6, 2),
+        new Vector2I(6, 3),
+        new Vector2I(6, 4),
+        new Vector2I(6, 5),
+        new Vector2I(6, 6),
+        new Vector2I(5, 6),
+        new Vector2I(4, 6),
+        new Vector2I(3, 6),
+        new Vector2I(2, 6),
+        new Vector2I(1, 6),
+        new Vector2I(4, 2),
+        new Vector2I(3, 4),
+		
+    ];
 	// Позиции пил
 	private Vector2I[] _sawTrapPositions = [ 
-		new Vector2I(4, 1), 
-		new Vector2I(5, 1), 
-		new Vector2I(6, 1) 
 	];
 	// Нахождение шипов относительно ячейки
 	public enum RotationAngle 
@@ -64,25 +85,20 @@ public partial class LevelScene4 : LevelsSceneBase
 	}
 	// Позиции шипов и направлений
 	private (Vector2I position, RotationAngle rotation)[] _thornsTrapPositions = [ 
-		(new Vector2I(7, 1), RotationAngle.Up),
-		(new Vector2I(8, 1), RotationAngle.Right),
-		(new Vector2I(9, 1), RotationAngle.Down),
-		(new Vector2I(10, 1), RotationAngle.Left)
 	];
 	// Конфигурация лазеров: начальная позиция, направление, длина
 	private (Vector2I startPos, RotationAngle direction, int length)[] _laserConfigs = [ 
-		/*(new Vector2I(0, 4), RotationAngle.Right, 3), // Горизонтальный лазер длиной 3 (Вправо ->)
-		(new Vector2I(2, 5), RotationAngle.Left, 3), // Горизонтальный лазер длиной 3 (Влево <-)
-		(new Vector2I(0, 6), RotationAngle.Down, 3), // Вертикальный лазер длиной 3 (Вниз v)
-		(new Vector2I(1, 8), RotationAngle.Up, 3), // Вертикальный лазер длиной 3 (Вверх ^)*/
+		(new Vector2I(1, 2), RotationAngle.Right, 3), // Горизонтальный лазер длиной 3 (Вправо ->)
+		(new Vector2I(4, 4), RotationAngle.Right, 2), // Горизонтальный лазер длиной 3 (Вправо ->)
+		//(new Vector2I(2, 5), RotationAngle.Left, 3), // Горизонтальный лазер длиной 3 (Влево <-)
+		//(new Vector2I(0, 6), RotationAngle.Down, 3), // Вертикальный лазер длиной 3 (Вниз v)
+		//(new Vector2I(1, 8), RotationAngle.Up, 3), // Вертикальный лазер длиной 3 (Вверх ^)
 	];
 	// Позиции зон ящиков
 	private Vector2I[] _boxTargetZonePositions = [ 
-		new Vector2I(8, 2),
-		new Vector2I(9, 2)
 	];
 	// Позиция зоны завершения уровня
-	private Vector2I _finishZonePosition = new Vector2I(7, 2);
+	private Vector2I _finishZonePosition = new Vector2I(5, 5);
 
 	private GlobalSignals globalSignals;
 
@@ -187,7 +203,7 @@ public partial class LevelScene4 : LevelsSceneBase
 	// Создание робота
 	private void CreateRobot(Vector2I position)
 	{
-		var robot = RobotPrefab.Instantiate<Robot>();
+		robot = RobotPrefab.Instantiate<Robot>();
 		_objectsContainer.AddChild(robot);
 
 		blockEditorUi.Robot = robot;
@@ -429,11 +445,12 @@ public partial class LevelScene4 : LevelsSceneBase
 
 	/* ПРОВЕРКА УРОВНЯ */
 	// Функция для вызова из кнопки или по завершении команд (ОСНОВНАЯ)
-	public void OnLevelCompletionCheck()
+	public async void OnLevelCompletionCheck()
 	{
 		if (CheckLevelCompletion())
 		{
 			GD.Print("🎉 УРОВЕНЬ ПРОЙДЕН! 🎉");
+
 
 			LoadNextLevel();
 
@@ -446,7 +463,8 @@ public partial class LevelScene4 : LevelsSceneBase
 		else
 		{
 			GD.Print("💪 Продолжайте выполнение команд...");
-			RestartLevel();
+            await robot.PlayDeathEffect();
+            RestartLevel();
 		}
 	}
 
