@@ -58,7 +58,7 @@ public partial class Robot : GridObject
 	// Покадровое обновление
 	public override void _Process(double delta)
 	{
-		if (!_isMoving && !_isRotating) HandleInput();
+		//if (!_isMoving && !_isRotating) HandleInput();
 	}
 
 	public void EndGame()
@@ -66,6 +66,7 @@ public partial class Robot : GridObject
 		GlobalSignals globals = GetNode("/root/GlobalSignals") as GlobalSignals;
 
 		globals.EmitSignal(GlobalSignals.SignalName.EndGame);
+
 	}
 
 	// Управление роботом (Debug)
@@ -236,7 +237,7 @@ public partial class Robot : GridObject
 	}
 
 	// Анимация смерти
-	private async Task PlayDeathEffect()
+	public async Task PlayDeathEffect()
 	{
 		var tween = CreateTween();
 		

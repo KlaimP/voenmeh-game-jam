@@ -35,24 +35,8 @@ public partial class LevelScene5 : LevelsSceneBase
 	private Node2D _objectsContainer;
 	
 	// Массивы позиций для всех объектов уровня
-	// Позиция робота
-	private Vector2I _robotPosition = new Vector2I(2, 2);
-	// Позиции ящиков
-	private Vector2I[] _boxPositions = [ 
-		new Vector2I(8, 3), 
-		new Vector2I(9, 3), 
-	];
-	// Позиции стенок
-	private Vector2I[] _obstaclePositions = [ 
-		new Vector2I(1, 1), 
-		new Vector2I(2, 1), 
-		new Vector2I(3, 1) 
-	];
 	// Позиции пил
 	private Vector2I[] _sawTrapPositions = [ 
-		new Vector2I(4, 1), 
-		new Vector2I(5, 1), 
-		new Vector2I(6, 1) 
 	];
 	// Нахождение шипов относительно ячейки
 	public enum RotationAngle 
@@ -64,27 +48,57 @@ public partial class LevelScene5 : LevelsSceneBase
 	}
 	// Позиции шипов и направлений
 	private (Vector2I position, RotationAngle rotation)[] _thornsTrapPositions = [ 
-		(new Vector2I(7, 1), RotationAngle.Up),
-		(new Vector2I(8, 1), RotationAngle.Right),
-		(new Vector2I(9, 1), RotationAngle.Down),
-		(new Vector2I(10, 1), RotationAngle.Left)
 	];
-	// Конфигурация лазеров: начальная позиция, направление, длина
-	private (Vector2I startPos, RotationAngle direction, int length)[] _laserConfigs = [ 
-		/*(new Vector2I(0, 4), RotationAngle.Right, 3), // Горизонтальный лазер длиной 3 (Вправо ->)
-		(new Vector2I(2, 5), RotationAngle.Left, 3), // Горизонтальный лазер длиной 3 (Влево <-)
-		(new Vector2I(0, 6), RotationAngle.Down, 3), // Вертикальный лазер длиной 3 (Вниз v)
-		(new Vector2I(1, 8), RotationAngle.Up, 3), // Вертикальный лазер длиной 3 (Вверх ^)*/
-	];
-	// Позиции зон ящиков
-	private Vector2I[] _boxTargetZonePositions = [ 
-		new Vector2I(8, 2),
-		new Vector2I(9, 2)
-	];
-	// Позиция зоны завершения уровня
-	private Vector2I _finishZonePosition = new Vector2I(7, 2);
 
-	private GlobalSignals globalSignals;
+    private (Vector2I startPos, RotationAngle direction, int length)[] _laserConfigs = [
+		(new Vector2I(1, 5), RotationAngle.Right, 3),  // Лазер влево длиной 5
+		//(new Vector2I(6, 0), RotationAngle.Down, 3),   // Лазер вниз длиной 6
+		(new Vector2I(8, 5), RotationAngle.Up, 5),    // Лазер вверх длиной 6
+];
+
+    // Позиции зон (куда нужно поставить ящики)
+    private Vector2I[] _boxTargetZonePositions = [
+        new Vector2I(3, 2),
+		new Vector2I(5, 1),
+		new Vector2I(5, 2),
+];
+
+    // Позиция зоны завершения уровня
+    private Vector2I _finishZonePosition = new Vector2I(0, 6);
+
+    // Стартовая позиция робота
+    private Vector2I _robotPosition = new Vector2I(0, 4);
+
+    // Стартовые позиции ящиков
+    private Vector2I[] _boxPositions = [
+        new Vector2I(2, 2),
+		new Vector2I(6, 3),
+		new Vector2I(6, 4),
+];
+
+    // Позиции стен/препятствий
+    private Vector2I[] _obstaclePositions = [
+        new Vector2I(0, 0),
+        new Vector2I(1, 0),
+        new Vector2I(2, 0),
+        new Vector2I(3, 0),
+        new Vector2I(4, 0),
+        new Vector2I(5, 0),
+        new Vector2I(6, 0),
+        new Vector2I(7, 0),
+        new Vector2I(8, 0),
+        new Vector2I(1, 2),
+        new Vector2I(4, 1),
+        new Vector2I(4, 2),
+        new Vector2I(4, 3),
+        new Vector2I(5, 3),
+        new Vector2I(8, 6),
+        new Vector2I(0, 5),
+        new Vector2I(4, 5),
+];
+
+
+    private GlobalSignals globalSignals;
 
 
 	// Инициализация уровня

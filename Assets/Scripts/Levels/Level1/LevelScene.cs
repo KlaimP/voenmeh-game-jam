@@ -36,23 +36,35 @@ public partial class LevelScene : LevelsSceneBase
 	
 	// Массивы позиций для всех объектов уровня
 	// Позиция робота
-	private Vector2I _robotPosition = new Vector2I(2, 2);
+	private Vector2I _robotPosition = new Vector2I(1, 1);
 	// Позиции ящиков
 	private Vector2I[] _boxPositions = [ 
-		new Vector2I(8, 3), 
-		new Vector2I(9, 3), 
 	];
 	// Позиции стенок
 	private Vector2I[] _obstaclePositions = [ 
-		new Vector2I(1, 1), 
-		new Vector2I(2, 1), 
-		new Vector2I(3, 1) 
+		new Vector2I(0, 0), 
+		new Vector2I(0, 1), 
+		new Vector2I(0, 2), 
+		new Vector2I(0, 3), 
+		new Vector2I(0, 4), 
+		new Vector2I(0, 5), 
+		new Vector2I(0, 6), 
+		new Vector2I(0, 7), 
+		new Vector2I(0, 8), 
+		new Vector2I(1, 0), 
+		new Vector2I(2, 0),
+		new Vector2I(2, 1),
+		new Vector2I(2, 2),
+		new Vector2I(2, 3),
+		new Vector2I(2, 4),
+		new Vector2I(2, 5),
+		new Vector2I(2, 6),
+		new Vector2I(2, 7),
+		new Vector2I(2, 8),
+		new Vector2I(1, 8),
 	];
 	// Позиции пил
 	private Vector2I[] _sawTrapPositions = [ 
-		new Vector2I(4, 1), 
-		new Vector2I(5, 1), 
-		new Vector2I(6, 1) 
 	];
 	// Нахождение шипов относительно ячейки
 	public enum RotationAngle 
@@ -64,25 +76,15 @@ public partial class LevelScene : LevelsSceneBase
 	}
 	// Позиции шипов и направлений
 	private (Vector2I position, RotationAngle rotation)[] _thornsTrapPositions = [ 
-		(new Vector2I(7, 1), RotationAngle.Up),
-		(new Vector2I(8, 1), RotationAngle.Right),
-		(new Vector2I(9, 1), RotationAngle.Down),
-		(new Vector2I(10, 1), RotationAngle.Left)
 	];
 	// Конфигурация лазеров: начальная позиция, направление, длина
 	private (Vector2I startPos, RotationAngle direction, int length)[] _laserConfigs = [ 
-		(new Vector2I(0, 4), RotationAngle.Right, 3), // Горизонтальный лазер длиной 3 (Вправо ->)
-		(new Vector2I(2, 5), RotationAngle.Left, 3), // Горизонтальный лазер длиной 3 (Влево <-)
-		(new Vector2I(0, 6), RotationAngle.Down, 3), // Вертикальный лазер длиной 3 (Вниз v)
-		(new Vector2I(1, 8), RotationAngle.Up, 3), // Вертикальный лазер длиной 3 (Вверх ^)
 	];
 	// Позиции зон ящиков
 	private Vector2I[] _boxTargetZonePositions = [ 
-		new Vector2I(8, 2),
-		new Vector2I(9, 2)
 	];
 	// Позиция зоны завершения уровня
-	private Vector2I _finishZonePosition = new Vector2I(7, 2);
+	private Vector2I _finishZonePosition = new Vector2I(1, 7);
 
 	private GlobalSignals globalSignals;
 
@@ -93,7 +95,7 @@ public partial class LevelScene : LevelsSceneBase
 		BackgroundImage.Visible = true;
 
 		globalSignals = GetNode("/root/GlobalSignals") as GlobalSignals;
-		globalSignals.EndGame += EndGame;
+		globalSignals.Connect("EndGame", new Callable(this, nameof(EndGame)));
 
 		// УСТАНАВЛИВАЕМ МУЗЫКУ УРОВНЯ - ДОБАВЬТЕ ЭТОТ БЛОК
 		if (LevelMusic != null && MusicManager.Instance != null)

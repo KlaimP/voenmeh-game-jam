@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://co5a3mfry8bgf"]
+[gd_scene load_steps=21 format=3 uid="uid://co5a3mfry8bgf"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/Level1/LevelScene.cs" id="1_s2tpb"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_mnvah"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bfmqcws35ms6g" path="res://Assets/Textures/Objects/White_Tile.png" id="12_txn14"]
 [ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="13_kahre"]
 [ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="14_vn1m0"]
+[ext_resource type="PackedScene" uid="uid://dllvgiv2jvrdm" path="res://Assets/Scripts/MainMenu/ExitButton.tscn" id="15_bl2sn"]
 [ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="17_nt87x"]
 
 [sub_resource type="Gradient" id="Gradient_xd5ua"]
@@ -84,16 +85,16 @@ LevelMusic = ExtResource("10_mfes7")
 
 [node name="BlackBackground" type="TextureRect" parent="."]
 visible = false
-offset_left = -1604.0
-offset_top = -998.0
-offset_right = 3601.0
-offset_bottom = 2412.0
+offset_left = -6504.0
+offset_top = -4190.0
+offset_right = 11399.0
+offset_bottom = 5912.0
 texture = SubResource("GradientTexture1D_ky4c8")
 
 [node name="Grid" type="Node2D" parent="."]
 position = Vector2(1, -1)
 script = ExtResource("11_yocwb")
-GridWidth = 16
+GridWidth = 3
 GridHeight = 9
 CellSize = 128
 CellTexture = ExtResource("12_txn14")
@@ -127,6 +128,7 @@ scroll_offset = Vector2(-419, -506.71)
 minimap_enabled = false
 
 [node name="Button" type="Button" parent="Canvas/Control"]
+visible = false
 layout_mode = 0
 offset_left = 6.0
 offset_top = 699.0
@@ -136,6 +138,7 @@ text = "Restart"
 script = SubResource("CSharpScript_0rkbw")
 
 [node name="Button2" type="Button" parent="Canvas/Control"]
+visible = false
 layout_mode = 0
 offset_left = 225.0
 offset_top = 701.0
@@ -143,6 +146,16 @@ offset_right = 310.0
 offset_bottom = 732.0
 text = "Check lvl"
 script = SubResource("CSharpScript_bl2sn")
+
+[node name="ExitButton" parent="Canvas/Control" instance=ExtResource("15_bl2sn")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Split")]
 position = Vector2(960, 540)

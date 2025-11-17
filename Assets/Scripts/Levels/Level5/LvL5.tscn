@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dbwg83n8x0jds"]
+[gd_scene load_steps=21 format=3 uid="uid://dbwg83n8x0jds"]
 
 [ext_resource type="Script" uid="uid://6xbug47e8iya" path="res://Assets/Scripts/Levels/Level5/LevelScene5.cs" id="1_yc8am"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_r5233"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bfmqcws35ms6g" path="res://Assets/Textures/Objects/White_Tile.png" id="12_05f78"]
 [ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="13_nv1kp"]
 [ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="14_cm06s"]
+[ext_resource type="PackedScene" uid="uid://dllvgiv2jvrdm" path="res://Assets/Scripts/MainMenu/ExitButton.tscn" id="15_mvayh"]
 [ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="15_w5vgg"]
 
 [sub_resource type="Gradient" id="Gradient_xd5ua"]
@@ -93,8 +94,8 @@ texture = SubResource("GradientTexture1D_ky4c8")
 [node name="Grid" type="Node2D" parent="."]
 position = Vector2(1, -1)
 script = ExtResource("11_m0t64")
-GridWidth = 16
-GridHeight = 9
+GridWidth = 9
+GridHeight = 7
 CellSize = 128
 CellTexture = ExtResource("12_05f78")
 CellTexture2 = ExtResource("13_nv1kp")
@@ -127,6 +128,7 @@ scroll_offset = Vector2(-419, -506.71)
 minimap_enabled = false
 
 [node name="Button" type="Button" parent="Canvas/Control"]
+visible = false
 layout_mode = 0
 offset_left = 6.0
 offset_top = 699.0
@@ -136,6 +138,7 @@ text = "Restart"
 script = SubResource("CSharpScript_0rkbw")
 
 [node name="Button2" type="Button" parent="Canvas/Control"]
+visible = false
 layout_mode = 0
 offset_left = 225.0
 offset_top = 701.0
@@ -143,6 +146,10 @@ offset_right = 310.0
 offset_bottom = 732.0
 text = "Check lvl"
 script = SubResource("CSharpScript_bl2sn")
+
+[node name="ExitButton" parent="Canvas/Control" instance=ExtResource("15_mvayh")]
+layout_mode = 0
+anchors_preset = 0
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Split")]
 position = Vector2(960, 540)

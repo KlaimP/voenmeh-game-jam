@@ -51,7 +51,7 @@ public partial class LevelSelection : Control
 		ConnectHoverSignals();
 
 		// Убеждаемся, что музыка играет
-	MusicManager.Instance.PlayMusic();
+		MusicManager.Instance.PlayMusic();
 	}
 
 	private void ConnectHoverSignals()
@@ -101,16 +101,16 @@ public partial class LevelSelection : Control
 				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
 				break;
 			case 2:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level2/LvL2.tscn");
 				break;
 			case 3:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level3/LvL3.tscn");
 				break;
 			case 4:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level4/LvL4.tscn");
 				break;
 			case 5:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level5/LvL5.tscn");
 				break;
 		}
 	}
