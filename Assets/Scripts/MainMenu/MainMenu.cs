@@ -9,6 +9,10 @@ public partial class MainMenu : Control
 	[Export]
 	public AudioStream ClickSound { get; set; }
 	
+	[Export]
+	public Button PlayButton { get; set; }
+	[Export]
+	public Button ExitButton { get; set; }
 	private AudioStreamPlayer audioPlayer;
 
 	public override void _Ready()
@@ -17,8 +21,8 @@ public partial class MainMenu : Control
 		audioPlayer = new AudioStreamPlayer();
 		AddChild(audioPlayer);
 		
-		var playButton = GetNode<Button>("PlayButton");
-		var exitButton = GetNode<Button>("ExitButton");
+		var playButton = PlayButton;
+		var exitButton = ExitButton;
 
 		playButton.Pressed += OnPlayButtonPressed;
 		exitButton.Pressed += OnExitButtonPressed;

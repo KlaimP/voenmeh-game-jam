@@ -1,0 +1,181 @@
+<<<<<<< HEAD:Assets/Scripts/Levels/Level1/LvL1.tscn
+[gd_scene load_steps=20 format=3 uid="uid://co5a3mfry8bgf"]
+
+[ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/Level1/LevelScene.cs" id="1_0rkbw"]
+[ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_mnvah"]
+[ext_resource type="PackedScene" uid="uid://3be76dk6kxpo" path="res://Assets/Scripts/Objects/Box/Box.tscn" id="3_60541"]
+[ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Assets/Scripts/Objects/Obstacle/Obstacle.tscn" id="4_0dlyk"]
+[ext_resource type="PackedScene" uid="uid://dkwxqas7tbcdt" path="res://Assets/Scripts/Objects/Saw/Saw.tscn" id="5_fnowh"]
+[ext_resource type="PackedScene" uid="uid://bq11ndxv2qh4t" path="res://Assets/Scripts/Objects/Thorns/Thorns.tscn" id="6_hcx6d"]
+[ext_resource type="PackedScene" uid="uid://uosleixv1f4e" path="res://Assets/Scripts/Objects/Laser/Lazer.tscn" id="7_b1sfy"]
+[ext_resource type="PackedScene" uid="uid://o8hv4vt3u7cs" path="res://Assets/Scripts/Objects/BoxTargetZone/BoxTargetZone.tscn" id="8_ivr0a"]
+[ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="9_u065j"]
+[ext_resource type="AudioStream" uid="uid://bbqttcnl4x1ni" path="res://Assets/Music/Eric Skiff - Underclocked (underunderclocked mix).mp3" id="10_mfes7"]
+[ext_resource type="Script" uid="uid://b2itdovntf6rq" path="res://Assets/Scripts/Grid/Grid.cs" id="11_yocwb"]
+[ext_resource type="Texture2D" uid="uid://bfmqcws35ms6g" path="res://Assets/Textures/Objects/White_Tile.png" id="12_txn14"]
+[ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="13_kahre"]
+[ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="14_vn1m0"]
+[ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="17_nt87x"]
+=======
+[gd_scene load_steps=20 format=3 uid="uid://byymuryf3dloc"]
+
+[ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
+[ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
+[ext_resource type="Script" uid="uid://b2itdovntf6rq" path="res://Assets/Scripts/Grid/Grid.cs" id="2_ub1qs"]
+[ext_resource type="PackedScene" uid="uid://3be76dk6kxpo" path="res://Assets/Scripts/Objects/Box/Box.tscn" id="3_6dcgm"]
+[ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Assets/Scripts/Objects/Obstacle/Obstacle.tscn" id="4_tw4xh"]
+[ext_resource type="PackedScene" uid="uid://dkwxqas7tbcdt" path="res://Assets/Scripts/Objects/Saw/Saw.tscn" id="5_kqtap"]
+[ext_resource type="PackedScene" uid="uid://bq11ndxv2qh4t" path="res://Assets/Scripts/Objects/Thorns/Thorns.tscn" id="6_3dph1"]
+[ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
+[ext_resource type="PackedScene" uid="uid://o8hv4vt3u7cs" path="res://Assets/Scripts/Objects/BoxTargetZone/BoxTargetZone.tscn" id="7_3d3ca"]
+[ext_resource type="PackedScene" uid="uid://uosleixv1f4e" path="res://Assets/Scripts/Objects/Laser/Lazer.tscn" id="7_ky4c8"]
+[ext_resource type="Script" uid="uid://cr74tmbabicf6" path="res://Assets/Scripts/Levels/RestartButton.cs" id="8_2x7io"]
+[ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="8_q1wgt"]
+[ext_resource type="Texture2D" uid="uid://bfmqcws35ms6g" path="res://Assets/Textures/Objects/White_Tile.png" id="10_ky4c8"]
+[ext_resource type="AudioStream" uid="uid://bbqttcnl4x1ni" path="res://Assets/Music/Eric Skiff - Underclocked (underunderclocked mix).mp3" id="10_tlq8a"]
+[ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="11_wsyd5"]
+[ext_resource type="Script" uid="uid://bx58dfetxapmi" path="res://Assets/Scripts/Levels/LevelCompleteButton.cs" id="12_q1wgt"]
+[ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="14_xd5ua"]
+>>>>>>> origin/LevelMusicMaybeNot:Assets/Scripts/Levels/LvL1.tscn
+
+[sub_resource type="Gradient" id="Gradient_xd5ua"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ky4c8"]
+gradient = SubResource("Gradient_xd5ua")
+
+[sub_resource type="CSharpScript" id="CSharpScript_0rkbw"]
+script/source = "using Godot;
+
+public partial class RestartButton : Button
+{
+    public override void _Ready()
+    {
+        this.Pressed += OnRestartPressed;
+    }
+    
+    private void OnRestartPressed()
+    {
+        var levelScene = GetTree().CurrentScene as LevelScene;
+        if (levelScene != null)
+        {
+            levelScene.RestartLevel();
+        }
+        else
+        {
+            GD.PrintErr(\"LevelScene не найден!\");
+        }
+    }
+}"
+
+[sub_resource type="CSharpScript" id="CSharpScript_bl2sn"]
+script/source = "using Godot;
+
+public partial class LevelCompleteButton : Button
+{
+    public override void _Ready()
+    {
+        this.Pressed += OnCheckPressed;
+    }
+    
+    private void OnCheckPressed()
+    {
+        var levelScene = GetTree().CurrentScene as LevelScene;
+        if (levelScene != null)
+        {
+            levelScene.OnLevelCompletionCheck();
+        }
+    }
+}"
+
+[node name="Level1" type="Node2D" node_paths=PackedStringArray("LevelGrid", "blockEditorUi", "BackgroundImage")]
+script = ExtResource("1_0rkbw")
+numNextLvL = 2
+LevelGrid = NodePath("Grid")
+RobotPrefab = ExtResource("2_mnvah")
+BoxPrefab = ExtResource("3_60541")
+ObstaclePrefab = ExtResource("4_0dlyk")
+SawTrapPrefab = ExtResource("5_fnowh")
+ThornsTrapPrefab = ExtResource("6_hcx6d")
+LaserTrapPrefab = ExtResource("7_b1sfy")
+BoxTargetZonePrefab = ExtResource("8_ivr0a")
+FinishZonePrefab = ExtResource("9_u065j")
+blockEditorUi = NodePath("Canvas/Control/SplitContainer/GraphEdit")
+BackgroundImage = NodePath("BlackBackground")
+<<<<<<< HEAD:Assets/Scripts/Levels/Level1/LvL1.tscn
+LevelMusic = ExtResource("10_mfes7")
+=======
+LevelMusic = ExtResource("10_tlq8a")
+>>>>>>> origin/LevelMusicMaybeNot:Assets/Scripts/Levels/LvL1.tscn
+
+[node name="BlackBackground" type="TextureRect" parent="."]
+visible = false
+offset_left = -1604.0
+offset_top = -998.0
+offset_right = 3601.0
+offset_bottom = 2412.0
+texture = SubResource("GradientTexture1D_ky4c8")
+
+[node name="Grid" type="Node2D" parent="."]
+position = Vector2(1, -1)
+script = ExtResource("11_yocwb")
+GridWidth = 16
+GridHeight = 9
+CellSize = 128
+CellTexture = ExtResource("12_txn14")
+CellTexture2 = ExtResource("13_kahre")
+UseCellSprites = true
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Canvas"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="SplitContainer" type="SplitContainer" parent="Canvas/Control"]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+split_offset = 1280
+touch_dragger_enabled = true
+
+[node name="Control" type="Control" parent="Canvas/Control/SplitContainer"]
+layout_mode = 2
+
+[node name="GraphEdit" parent="Canvas/Control/SplitContainer" instance=ExtResource("14_vn1m0")]
+custom_minimum_size = Vector2(0, 544)
+layout_mode = 2
+scroll_offset = Vector2(-419, -506.71)
+minimap_enabled = false
+
+[node name="Button" type="Button" parent="Canvas/Control"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 699.0
+offset_right = 91.0
+offset_bottom = 730.0
+text = "Restart"
+script = SubResource("CSharpScript_0rkbw")
+
+[node name="Button2" type="Button" parent="Canvas/Control"]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 701.0
+offset_right = 310.0
+offset_bottom = 732.0
+text = "Check lvl"
+script = SubResource("CSharpScript_bl2sn")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Split")]
+position = Vector2(960, 540)
+limit_enabled = false
+limit_left = 0
+limit_top = 0
+limit_right = 1920
+limit_bottom = 1080
+script = ExtResource("17_nt87x")
+Split = NodePath("../Canvas/Control/SplitContainer")

@@ -98,19 +98,19 @@ public partial class LevelSelection : Control
 		switch (levelNumber)
 		{
 			case 1:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
 				break;
 			case 2:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
 				break;
 			case 3:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
 				break;
 			case 4:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
 				break;
 			case 5:
-				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/LvL1.tscn");
+				GetTree().ChangeSceneToFile("res://Assets/Scripts/Levels/Level1/LvL1.tscn");
 				break;
 		}
 	}
