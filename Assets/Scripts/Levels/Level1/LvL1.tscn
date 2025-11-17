@@ -93,7 +93,7 @@ texture = SubResource("GradientTexture1D_ky4c8")
 [node name="Grid" type="Node2D" parent="."]
 position = Vector2(1, -1)
 script = ExtResource("11_yocwb")
-GridWidth = 16
+GridWidth = 3
 GridHeight = 9
 CellSize = 128
 CellTexture = ExtResource("12_txn14")
