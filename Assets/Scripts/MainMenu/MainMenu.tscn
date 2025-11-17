@@ -1,16 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://c1id05gr2t0ym"]
+[gd_scene load_steps=7 format=3 uid="uid://c1id05gr2t0ym"]
 
 [ext_resource type="Script" uid="uid://dwnv1sigkq8o3" path="res://Assets/Scripts/MainMenu/MainMenu.cs" id="1_otibh"]
+[ext_resource type="AudioStream" uid="uid://cja6r2k2aoc2u" path="res://Assets/Sounds/select_1.wav" id="2_uh6jg"]
 [ext_resource type="PackedScene" uid="uid://dt0p4qdkr1h0d" path="res://Assets/Scripts/Robot/hero_robot.tscn" id="3_4welw"]
+[ext_resource type="AudioStream" uid="uid://dg5oobdus6gpe" path="res://Assets/Sounds/cancel.wav" id="3_dkwtj"]
 [ext_resource type="Texture2D" uid="uid://bfdb3ce87kavh" path="res://Assets/Textures/Objects/Crate.png" id="4_epn6w"]
 [ext_resource type="Texture2D" uid="uid://d0hjj734gisn" path="res://Assets/Textures/Objects/rock.png" id="4_twgmf"]
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayButton", "ExitButton")]
+[node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayButton", "ExitButton", "EducationButton")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_otibh")
+HoverSound = ExtResource("2_uh6jg")
+ClickSound = ExtResource("3_dkwtj")
 PlayButton = NodePath("VBoxContainer/PlayButton")
 ExitButton = NodePath("VBoxContainer/ExitButton")
+EducationButton = NodePath("VBoxContainer/EducationButton")
 
 [node name="Control" type="Control" parent="."]
 anchors_preset = 0
@@ -546,7 +551,7 @@ layout_mode = 0
 offset_left = 792.0
 offset_top = 691.0
 offset_right = 1142.0
-offset_bottom = 903.0
+offset_bottom = 843.0
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(350, 50)
@@ -554,17 +559,10 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "Играть"
 
-[node name="LevelsButton" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(350, 50)
+[node name="EducationButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-text = "Уровни"
-
-[node name="SettingsButton3" type="Button" parent="VBoxContainer"]
-custom_minimum_size = Vector2(350, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 26
-text = "Настройки"
+text = "Обучение"
 
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(350, 50)

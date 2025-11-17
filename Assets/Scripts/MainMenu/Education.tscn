@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp7au5moauhst"]
+
+[ext_resource type="Script" uid="uid://cfd612saula1" path="res://Assets/Scripts/MainMenu/Education.cs" id="1_wwwh1"]
+[ext_resource type="AudioStream" uid="uid://cja6r2k2aoc2u" path="res://Assets/Sounds/select_1.wav" id="2_ihh3k"]
+[ext_resource type="AudioStream" uid="uid://dg5oobdus6gpe" path="res://Assets/Sounds/cancel.wav" id="3_7jrp0"]
+
+[node name="Education" type="Control" node_paths=PackedStringArray("BackButton", "PageIndicator")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wwwh1")
+BackButton = NodePath("BackButton")
+PageIndicator = NodePath("Label")
+HoverSound = ExtResource("2_ihh3k")
+ClickSound = ExtResource("3_7jrp0")
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_top = 1005.0
+offset_right = 150.0
+offset_bottom = 1080.0
+text = "Назад"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_font_sizes/font_size = 26
+text = "Краткое описание правил:
+Ваша задача помочь роботу выполнить его работу, а именно расставить ящики по местам и перейти на следующий уровень.
+Для управления роботом нужно выбрать соответствующую команду в правом окошке и
+соединить их линией, которая начинается с узла Start().
+Всего есть три команды:
+1) ForwardMove() - позволяет роботу двигаться вперед на заданное тобой число клеток;
+2) RotateRight() - позволяет роботу повернуться направо на 90 градусов;
+3) RotateLeft() - позволяет роботу повернуться налево на 90 градусов;
+На этом всё. Помогите роботу!"

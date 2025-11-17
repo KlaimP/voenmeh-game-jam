@@ -13,6 +13,8 @@ public partial class MainMenu : Control
 	public Button PlayButton { get; set; }
 	[Export]
 	public Button ExitButton { get; set; }
+	[Export]
+	public Button EducationButton { get; set; }
 	private AudioStreamPlayer audioPlayer;
 
 	public override void _Ready()
@@ -23,13 +25,16 @@ public partial class MainMenu : Control
 		
 		var playButton = PlayButton;
 		var exitButton = ExitButton;
+		var educationButton = EducationButton;
 
 		playButton.Pressed += OnPlayButtonPressed;
 		exitButton.Pressed += OnExitButtonPressed;
-		
+		educationButton.Pressed += OnEducationButtonPressed;
+
 		// Подключаем сигналы наведения мыши
 		playButton.MouseEntered += () => OnButtonHover();
 		exitButton.MouseEntered += () => OnButtonHover();
+		educationButton.MouseEntered += () => OnButtonHover();
 		
 		// ВОСПРОИЗВОДИМ МУЗЫКУ ГЛАВНОГО МЕНЮ
 		if (MusicManager.Instance != null)
@@ -64,6 +69,13 @@ public partial class MainMenu : Control
 		await ToSignal(GetTree().CreateTimer(0.1), "timeout");
 		GetTree().ChangeSceneToFile("res://Assets/Scripts/MainMenu/LevelSelection.tscn");
 	}
+
+	private async void OnEducationButtonPressed()
+    {
+        PlayClickSound();
+		await ToSignal(GetTree().CreateTimer(0.1), "timeout");
+		GetTree().ChangeSceneToFile("res://Assets/Scripts/MainMenu/Education.tscn");
+    }
 
 	private void OnExitButtonPressed()
 	{
