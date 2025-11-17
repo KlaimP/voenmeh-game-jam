@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://vhra7dnskwq8"
+path="res://.godot/imported/Density & Time - MAZE.mp3-76a4f6d5a8543669ebe2e8993454e08b.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Density & Time - MAZE.mp3"
+dest_files=["res://.godot/imported/Density & Time - MAZE.mp3-76a4f6d5a8543669ebe2e8993454e08b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
