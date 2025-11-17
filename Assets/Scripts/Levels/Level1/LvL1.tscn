@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Assets/Scripts/Levels/Level1/LvL1.tscn
 [gd_scene load_steps=20 format=3 uid="uid://co5a3mfry8bgf"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/Level1/LevelScene.cs" id="1_0rkbw"]
@@ -15,6 +16,27 @@
 [ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="13_kahre"]
 [ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="14_vn1m0"]
 [ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="17_nt87x"]
+=======
+[gd_scene load_steps=20 format=3 uid="uid://byymuryf3dloc"]
+
+[ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/LevelScene.cs" id="1_0twix"]
+[ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_aswjh"]
+[ext_resource type="Script" uid="uid://b2itdovntf6rq" path="res://Assets/Scripts/Grid/Grid.cs" id="2_ub1qs"]
+[ext_resource type="PackedScene" uid="uid://3be76dk6kxpo" path="res://Assets/Scripts/Objects/Box/Box.tscn" id="3_6dcgm"]
+[ext_resource type="PackedScene" uid="uid://dwmk8ys7ydfl5" path="res://Assets/Scripts/Objects/Obstacle/Obstacle.tscn" id="4_tw4xh"]
+[ext_resource type="PackedScene" uid="uid://dkwxqas7tbcdt" path="res://Assets/Scripts/Objects/Saw/Saw.tscn" id="5_kqtap"]
+[ext_resource type="PackedScene" uid="uid://bq11ndxv2qh4t" path="res://Assets/Scripts/Objects/Thorns/Thorns.tscn" id="6_3dph1"]
+[ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="6_tw4xh"]
+[ext_resource type="PackedScene" uid="uid://o8hv4vt3u7cs" path="res://Assets/Scripts/Objects/BoxTargetZone/BoxTargetZone.tscn" id="7_3d3ca"]
+[ext_resource type="PackedScene" uid="uid://uosleixv1f4e" path="res://Assets/Scripts/Objects/Laser/Lazer.tscn" id="7_ky4c8"]
+[ext_resource type="Script" uid="uid://cr74tmbabicf6" path="res://Assets/Scripts/Levels/RestartButton.cs" id="8_2x7io"]
+[ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="8_q1wgt"]
+[ext_resource type="Texture2D" uid="uid://bfmqcws35ms6g" path="res://Assets/Textures/Objects/White_Tile.png" id="10_ky4c8"]
+[ext_resource type="AudioStream" uid="uid://bbqttcnl4x1ni" path="res://Assets/Music/Eric Skiff - Underclocked (underunderclocked mix).mp3" id="10_tlq8a"]
+[ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="11_wsyd5"]
+[ext_resource type="Script" uid="uid://bx58dfetxapmi" path="res://Assets/Scripts/Levels/LevelCompleteButton.cs" id="12_q1wgt"]
+[ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="14_xd5ua"]
+>>>>>>> origin/LevelMusicMaybeNot:Assets/Scripts/Levels/LvL1.tscn
 
 [sub_resource type="Gradient" id="Gradient_xd5ua"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -80,7 +102,11 @@ BoxTargetZonePrefab = ExtResource("8_ivr0a")
 FinishZonePrefab = ExtResource("9_u065j")
 blockEditorUi = NodePath("Canvas/Control/SplitContainer/GraphEdit")
 BackgroundImage = NodePath("BlackBackground")
+<<<<<<< HEAD:Assets/Scripts/Levels/Level1/LvL1.tscn
 LevelMusic = ExtResource("10_mfes7")
+=======
+LevelMusic = ExtResource("10_tlq8a")
+>>>>>>> origin/LevelMusicMaybeNot:Assets/Scripts/Levels/LvL1.tscn
 
 [node name="BlackBackground" type="TextureRect" parent="."]
 visible = false
