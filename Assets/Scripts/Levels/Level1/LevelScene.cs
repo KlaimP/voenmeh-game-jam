@@ -1,8 +1,10 @@
 using Godot;
 
 /* Уровень 1 */
-public partial class LevelScene : Node2D
+public partial class LevelScene : LevelsSceneBase
 {
+	// Указание перехода на уровень
+	[Export] public uint numNextLvL = 1;
 	// Сетка 
 	[Export] public Grid LevelGrid { get; set; }
 	// Робот (Префаб)
@@ -176,7 +178,7 @@ public partial class LevelScene : Node2D
 	}
 
 	// Функция перезапуска уровня (можно вызвать из кнопки)
-	public void RestartLevel()
+	public override void RestartLevel()
 	{
 		GD.Print("=== ПЕРЕЗАПУСК УРОВНЯ ===");
 		InitializeLevel();
@@ -432,6 +434,9 @@ public partial class LevelScene : Node2D
 		if (CheckLevelCompletion())
 		{
 			GD.Print("🎉 УРОВЕНЬ ПРОЙДЕН! 🎉");
+			
+			LoadNextLevel();
+
 			// Здесь можно добавить:
 			// - Показать сообщение о победе
 			// - Воспроизвести звук
@@ -441,6 +446,63 @@ public partial class LevelScene : Node2D
 		else
 		{
 			GD.Print("💪 Продолжайте выполнение команд...");
+			RestartLevel();
+		}
+	}
+
+	// Загрузка следующего уровня
+	public void LoadNextLevel()
+	{
+		// Если номер следующего уровня равен 0 - возврат в главное меню
+		if (numNextLvL == 0)
+		{
+			GD.Print($"Возврат в главное меню: {MainMenuPath}");
+			
+			var menuSceneResource = ResourceLoader.Load<PackedScene>(MainMenuPath);
+			if (menuSceneResource != null)
+			{
+				// Удаляем текущую сцену перед загрузкой новой
+				GetTree().CurrentScene.QueueFree();
+				globalSignals.EndGame -= EndGame;
+				GetTree().ChangeSceneToPacked(menuSceneResource);
+			}
+			else
+			{
+				GD.PrintErr($"Не удалось загрузить главное меню: {MainMenuPath}");
+				RestartLevel();
+			}
+			return;
+		}
+
+		// Формируем путь к следующему уровню
+		string nextLevel = $"{LevelsFolderPath}Level{numNextLvL}/LvL{numNextLvL}.tscn";
+		
+		GD.Print($"Переход к следующему уровню: {nextLevel}");
+		
+		// Загружаем следующую сцену
+		var nextScene = ResourceLoader.Load<PackedScene>(nextLevel);
+		if (nextScene != null)
+		{
+			// Удаляем текущую сцену перед загрузкой новой
+			GetTree().CurrentScene.QueueFree();
+			globalSignals.EndGame -= EndGame;
+			GetTree().ChangeSceneToPacked(nextScene);
+		}
+		else
+		{
+			GD.PrintErr($"Не удалось загрузить сцену: {nextLevel}");
+			// Если следующий уровень не найден - возврат в главное меню
+			var menuSceneResource = ResourceLoader.Load<PackedScene>(MainMenuPath);
+			if (menuSceneResource != null)
+			{
+				GetTree().CurrentScene.QueueFree();
+				globalSignals.EndGame -= EndGame;
+				GetTree().ChangeSceneToPacked(menuSceneResource);
+			}
+			else
+			{
+				RestartLevel();
+			}
 		}
 	}
 	
