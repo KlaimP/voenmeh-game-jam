@@ -71,11 +71,11 @@ public partial class MainMenu : Control
 	}
 
 	private async void OnEducationButtonPressed()
-    {
-        PlayClickSound();
+	{
+		PlayClickSound();
 		await ToSignal(GetTree().CreateTimer(0.1), "timeout");
 		GetTree().ChangeSceneToFile("res://Assets/Scripts/MainMenu/Education.tscn");
-    }
+	}
 
 	private void OnExitButtonPressed()
 	{

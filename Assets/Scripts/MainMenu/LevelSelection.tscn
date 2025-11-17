@@ -1,19 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpwbkqsm7uttd"]
+[gd_scene load_steps=7 format=3 uid="uid://cpwbkqsm7uttd"]
 
 [ext_resource type="Script" uid="uid://dhurng5qfsbiw" path="res://Assets/Scripts/MainMenu/LevelSelection.cs" id="1_rby1f"]
 [ext_resource type="AudioStream" uid="uid://cja6r2k2aoc2u" path="res://Assets/Sounds/select_1.wav" id="2_crxit"]
 [ext_resource type="AudioStream" uid="uid://dg5oobdus6gpe" path="res://Assets/Sounds/cancel.wav" id="3_s3xb4"]
 [ext_resource type="Texture2D" uid="uid://d0hjj734gisn" path="res://Assets/Textures/Objects/rock.png" id="4_s3xb4"]
+[ext_resource type="FontFile" uid="uid://ck10tk0ay2012" path="res://Assets/Fonts/Blazma-Regular.ttf" id="5_b1337"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b1337"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.027070314, 0.027059821, 0.13035715, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="LevelSelection" type="Control" node_paths=PackedStringArray("Level1Button", "Level2Button", "Level3Button", "Level4Button", "Level5Button", "BackButton")]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_rby1f")
-Level1Button = NodePath("Level1Button")
-Level2Button = NodePath("Level2Button")
-Level3Button = NodePath("Level3Button")
-Level4Button = NodePath("Level4Button")
-Level5Button = NodePath("Level5Button")
+Level1Button = NodePath("VBoxContainer/Level1Button")
+Level2Button = NodePath("VBoxContainer/Level2Button")
+Level3Button = NodePath("VBoxContainer/Level3Button")
+Level4Button = NodePath("VBoxContainer/Level4Button")
+Level5Button = NodePath("VBoxContainer/Level5Button")
 BackButton = NodePath("BackButton")
 HoverSound = ExtResource("2_crxit")
 ClickSound = ExtResource("3_s3xb4")
@@ -533,49 +545,54 @@ offset_right = 183.0
 offset_bottom = 364.0
 texture = ExtResource("4_s3xb4")
 
-[node name="Level1Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 860.0
-offset_top = 200.0
-offset_right = 1060.0
-offset_bottom = 250.0
-text = "Уровень 1"
-
-[node name="Level2Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 860.0
-offset_top = 260.0
-offset_right = 1060.0
-offset_bottom = 310.0
-text = "Уровень 2"
-
-[node name="Level3Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 860.0
-offset_top = 320.0
-offset_right = 1060.0
-offset_bottom = 370.0
-text = "Уровень 3"
-
-[node name="Level4Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 860.0
-offset_top = 380.0
-offset_right = 1060.0
-offset_bottom = 430.0
-text = "Уровень 4"
-
-[node name="Level5Button" type="Button" parent="."]
-layout_mode = 0
-offset_left = 860.0
-offset_top = 440.0
-offset_right = 1060.0
-offset_bottom = 490.0
-text = "Уровень 5"
-
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 0
 offset_top = 1005.0
 offset_right = 150.0
 offset_bottom = 1080.0
+theme_override_fonts/font = ExtResource("5_b1337")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_b1337")
 text = "Назад"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 860.0
+offset_top = 200.0
+offset_right = 1145.0
+offset_bottom = 566.0
+
+[node name="Level1Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_b1337")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_b1337")
+text = "Уровень 1"
+
+[node name="Level2Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_b1337")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_b1337")
+text = "Уровень 2"
+
+[node name="Level3Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_b1337")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_b1337")
+text = "Уровень 3"
+
+[node name="Level4Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_b1337")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_b1337")
+text = "Уровень 4"
+
+[node name="Level5Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_b1337")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_b1337")
+text = "Уровень 5"

@@ -95,7 +95,7 @@ public partial class LevelScene : LevelsSceneBase
 		BackgroundImage.Visible = true;
 
 		globalSignals = GetNode("/root/GlobalSignals") as GlobalSignals;
-		globalSignals.EndGame += EndGame;
+		globalSignals.Connect("EndGame", new Callable(this, nameof(EndGame)));
 
 		// УСТАНАВЛИВАЕМ МУЗЫКУ УРОВНЯ - ДОБАВЬТЕ ЭТОТ БЛОК
 		if (LevelMusic != null && MusicManager.Instance != null)

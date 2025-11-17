@@ -1,8 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp7au5moauhst"]
+[gd_scene load_steps=6 format=3 uid="uid://dp7au5moauhst"]
 
 [ext_resource type="Script" uid="uid://cfd612saula1" path="res://Assets/Scripts/MainMenu/Education.cs" id="1_wwwh1"]
 [ext_resource type="AudioStream" uid="uid://cja6r2k2aoc2u" path="res://Assets/Sounds/select_1.wav" id="2_ihh3k"]
 [ext_resource type="AudioStream" uid="uid://dg5oobdus6gpe" path="res://Assets/Sounds/cancel.wav" id="3_7jrp0"]
+[ext_resource type="FontFile" uid="uid://ck10tk0ay2012" path="res://Assets/Fonts/Blazma-Regular.ttf" id="4_7jrp0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7jrp0"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.027331848, 0.02733728, 0.19811237, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="Education" type="Control" node_paths=PackedStringArray("BackButton", "PageIndicator")]
 layout_mode = 3
@@ -22,12 +34,16 @@ layout_mode = 0
 offset_top = 1005.0
 offset_right = 150.0
 offset_bottom = 1080.0
+theme_override_fonts/font = ExtResource("4_7jrp0")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_7jrp0")
 text = "Назад"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
+theme_override_fonts/font = ExtResource("4_7jrp0")
 theme_override_font_sizes/font_size = 26
 text = "Краткое описание правил:
 Ваша задача помочь роботу выполнить его работу, а именно расставить ящики по местам и перейти на следующий уровень.
@@ -37,4 +53,6 @@ text = "Краткое описание правил:
 1) ForwardMove() - позволяет роботу двигаться вперед на заданное тобой число клеток;
 2) RotateRight() - позволяет роботу повернуться направо на 90 градусов;
 3) RotateLeft() - позволяет роботу повернуться налево на 90 градусов;
+По полю можно перемещаться зажав колесико на мышке.
+Крутя колесико камера будет приближаться и отдаляться.
 На этом всё. Помогите роботу!"

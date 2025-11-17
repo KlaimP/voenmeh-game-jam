@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c1id05gr2t0ym"]
+[gd_scene load_steps=9 format=3 uid="uid://c1id05gr2t0ym"]
 
 [ext_resource type="Script" uid="uid://dwnv1sigkq8o3" path="res://Assets/Scripts/MainMenu/MainMenu.cs" id="1_otibh"]
 [ext_resource type="AudioStream" uid="uid://cja6r2k2aoc2u" path="res://Assets/Sounds/select_1.wav" id="2_uh6jg"]
@@ -6,6 +6,18 @@
 [ext_resource type="AudioStream" uid="uid://dg5oobdus6gpe" path="res://Assets/Sounds/cancel.wav" id="3_dkwtj"]
 [ext_resource type="Texture2D" uid="uid://bfdb3ce87kavh" path="res://Assets/Textures/Objects/Crate.png" id="4_epn6w"]
 [ext_resource type="Texture2D" uid="uid://d0hjj734gisn" path="res://Assets/Textures/Objects/rock.png" id="4_twgmf"]
+[ext_resource type="FontFile" uid="uid://ck10tk0ay2012" path="res://Assets/Fonts/Blazma-Regular.ttf" id="7_dkwtj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dkwtj"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.029995974, 0.029991636, 0.06582352, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="MainMenu" type="Control" node_paths=PackedStringArray("PlayButton", "ExitButton", "EducationButton")]
 layout_mode = 3
@@ -533,15 +545,15 @@ offset_bottom = 364.0
 texture = ExtResource("4_twgmf")
 
 [node name="Hero Robot" parent="." instance=ExtResource("3_4welw")]
-position = Vector2(967, 240)
+position = Vector2(967, 464)
 scale = Vector2(3, 3)
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 1358.0
-offset_top = 364.00003
+offset_top = 588.00006
 offset_right = 1522.0
-offset_bottom = 528.00006
+offset_bottom = 752.0001
 rotation = 0.46650466
 scale = Vector2(2, 2)
 texture = ExtResource("4_epn6w")
@@ -549,9 +561,9 @@ texture = ExtResource("4_epn6w")
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_left = 323.0
-offset_top = 311.0
+offset_top = 535.0
 offset_right = 487.0
-offset_bottom = 475.0
+offset_bottom = 699.0
 rotation = -0.15973464
 scale = Vector2(2, 2)
 texture = ExtResource("4_epn6w")
@@ -559,23 +571,44 @@ texture = ExtResource("4_epn6w")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 792.0
-offset_top = 691.0
+offset_top = 915.0
 offset_right = 1142.0
-offset_bottom = 843.0
+offset_bottom = 1067.0
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(350, 50)
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_fonts/font = ExtResource("7_dkwtj")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkwtj")
 text = "Играть"
 
 [node name="EducationButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_fonts/font = ExtResource("7_dkwtj")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkwtj")
 text = "Обучение"
 
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
 custom_minimum_size = Vector2(350, 50)
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_fonts/font = ExtResource("7_dkwtj")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_dkwtj")
 text = "Выход"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 15.0
+offset_right = 1951.0
+offset_bottom = 330.0
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("7_dkwtj")
+theme_override_font_sizes/font_size = 62
+text = "Я думал, что это просто геймджем ВОЕНМЕХ-а, 
+а оказался выбранным программистом, 
+которому нужно собрать идеального робота из блоков кода 
+и пройти смертельный лабиринт"
+horizontal_alignment = 1

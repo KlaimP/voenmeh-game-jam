@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://df1du822b71h8"]
+[gd_scene load_steps=21 format=3 uid="uid://df1du822b71h8"]
 
 [ext_resource type="Script" uid="uid://fwjvdjarxgkt" path="res://Assets/Scripts/Levels/Level2/LevelScene2.cs" id="1_83j51"]
 [ext_resource type="Script" uid="uid://b2itdovntf6rq" path="res://Assets/Scripts/Grid/Grid.cs" id="1_iuyuy"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://o8hv4vt3u7cs" path="res://Assets/Scripts/Objects/BoxTargetZone/BoxTargetZone.tscn" id="8_tjk11"]
 [ext_resource type="PackedScene" uid="uid://dw3v4vfu58bk2" path="res://Assets/Scripts/Objects/FinishZone/FinishZone.tscn" id="9_1btug"]
 [ext_resource type="AudioStream" uid="uid://cnoycla4me5tr" path="res://Assets/Music/Joshua McLean - Mountain Trials.mp3" id="10_83j51"]
+[ext_resource type="PackedScene" uid="uid://dllvgiv2jvrdm" path="res://Assets/Scripts/MainMenu/ExitButton.tscn" id="15_ti23s"]
 
 [sub_resource type="Gradient" id="Gradient_xd5ua"]
 colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
@@ -145,6 +146,10 @@ offset_right = 310.0
 offset_bottom = 732.0
 text = "Check lvl"
 script = SubResource("CSharpScript_bl2sn")
+
+[node name="ExitButton" parent="Canvas/Control" instance=ExtResource("15_ti23s")]
+layout_mode = 0
+anchors_preset = 0
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Split")]
 position = Vector2(960, 540)

@@ -147,7 +147,7 @@ public partial class BlockEditorUi : GraphEdit
 				if(x is GraphNode node)
 				{
 					BlockNodeUI nodeUI = (BlockNodeUI)x;
-					if (node.Selected && nodeUI.Title != "Start")
+					if (node.Selected && nodeUI.Title != "Start()")
 					{
 						foreach (var y in this.GetChildren())
 						{

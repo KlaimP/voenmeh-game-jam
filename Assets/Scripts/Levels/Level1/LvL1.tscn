@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://co5a3mfry8bgf"]
+[gd_scene load_steps=21 format=3 uid="uid://co5a3mfry8bgf"]
 
 [ext_resource type="Script" uid="uid://cln573sv4q5nq" path="res://Assets/Scripts/Levels/Level1/LevelScene.cs" id="1_s2tpb"]
 [ext_resource type="PackedScene" uid="uid://8e1m25hqjyrw" path="res://Assets/Scripts/Robot/Robot.tscn" id="2_mnvah"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://bfmqcws35ms6g" path="res://Assets/Textures/Objects/White_Tile.png" id="12_txn14"]
 [ext_resource type="Texture2D" uid="uid://capysmpmu1hls" path="res://Assets/Textures/Objects/Black_Tile.png" id="13_kahre"]
 [ext_resource type="PackedScene" uid="uid://deb3tl8suw5of" path="res://Assets/Scripts/VisualScripting/BlockEditorUI.tscn" id="14_vn1m0"]
+[ext_resource type="PackedScene" uid="uid://dllvgiv2jvrdm" path="res://Assets/Scripts/MainMenu/ExitButton.tscn" id="15_bl2sn"]
 [ext_resource type="Script" uid="uid://cox0b7oyeafsj" path="res://Assets/Scripts/Camera 2D/ZoomCamera2D.cs" id="17_nt87x"]
 
 [sub_resource type="Gradient" id="Gradient_xd5ua"]
@@ -145,6 +146,16 @@ offset_right = 310.0
 offset_bottom = 732.0
 text = "Check lvl"
 script = SubResource("CSharpScript_bl2sn")
+
+[node name="ExitButton" parent="Canvas/Control" instance=ExtResource("15_bl2sn")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("Split")]
 position = Vector2(960, 540)

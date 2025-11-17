@@ -58,7 +58,7 @@ public partial class Robot : GridObject
 	// Покадровое обновление
 	public override void _Process(double delta)
 	{
-		if (!_isMoving && !_isRotating) HandleInput();
+		//if (!_isMoving && !_isRotating) HandleInput();
 	}
 
 	public void EndGame()
