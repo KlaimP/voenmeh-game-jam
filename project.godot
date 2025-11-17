@@ -13,7 +13,7 @@ config_version=5
 config/name="VOENMEH GameJam"
 run/main_scene="uid://c1id05gr2t0ym"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://bsk6vc3tntcti"
 
 [autoload]
 
