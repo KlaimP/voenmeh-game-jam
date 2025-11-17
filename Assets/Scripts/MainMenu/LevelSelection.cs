@@ -51,7 +51,7 @@ public partial class LevelSelection : Control
 		ConnectHoverSignals();
 
 		// Убеждаемся, что музыка играет
-	MusicManager.Instance.PlayMusic();
+		MusicManager.Instance.PlayMusic();
 	}
 
 	private void ConnectHoverSignals()
